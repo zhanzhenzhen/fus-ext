@@ -1,0 +1,16 @@
+# OS X
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Node
+node_modules
+
+*.log
+
+/target

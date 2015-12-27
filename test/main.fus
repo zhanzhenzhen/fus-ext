@@ -1,0 +1,6 @@
+fus 0.1.0, radical
+
+import "./manifest" all
+assert: import "assert"
+
+repeat[5, <> console.log "haha"]

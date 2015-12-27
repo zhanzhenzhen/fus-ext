@@ -1,0 +1,14 @@
+fus 0.1.0, radical
+
+repeat'export: <>
+    if @ is Function
+        do <> fun() if @0() /= break
+    else if @ is Array
+        do (i: 0) -> fun() if i < @0 and @1() /= break
+    else if @ is Object
+        do [i: @from, step: @by ifvoid 1] ->
+            fun[i + step, step] if i <= @to and @for(i) /= break
+    else
+        throw Error("`repeat` syntax error.")
+
+break'export: Symbol()
