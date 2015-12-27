@@ -4,7 +4,7 @@ repeat'export: <>
     if @ is Function
         do <> if @0() /= break then fun()
     else if @ is Array
-        do (i: 0) -> if i < @0 and @1() /= break then fun(i + 1)
+        do (i: 0) -> if i < @0 and @1(i) /= break then fun(i + 1)
     else if @ is Object
         do [i: @from, step: @by ifvoid 1] ->
             if i <= @to and @for(i) /= break then fun[i + step, step]

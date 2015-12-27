@@ -4,3 +4,4 @@ import "./manifest" all
 assert: import "assert"
 
 repeat[5, <> console.log "haha"]
+repeat[5, i -> console.log i]
