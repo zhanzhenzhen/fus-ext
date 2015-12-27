@@ -1,5 +1,5 @@
 fus 0.1.0, radical
 
-{repeat, break}: import "../lib/main"
+{repeat, break}: import "../target/main"
 export repeat
 export break
