@@ -24,9 +24,10 @@ repeat'export: <>
         "
     else if @ is Object
         step: @by ifvoid 1
+        endIndex: @to ifvoid Infinity
         js"
             (() => {
-                for (let i = arg.from; i <= arg.to; i += step) {
+                for (let i = arg.from; step >= 0 ? i <= endIndex : i >= endIndex; i += step) {
                     if (arg.for(i) === theBreak) break;
                 }
             })()

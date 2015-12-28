@@ -10,3 +10,18 @@ repeat[10, i ->
     if i > 5
         break
 ]
+repeat{from: 1, to: 5, for: i ->
+    console.log "third \(i)"
+}
+repeat{from: 5, to: 1, by: -1, for: i ->
+    console.log "fourth \(i)"
+}
+repeat i ->
+    console.log "fifth \(i)"
+    if i > 3
+        break
+repeat{from: 1, by: 2, for: i ->
+    console.log "sixth \(i)"
+    if i > 9
+        break
+}
