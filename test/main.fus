@@ -5,3 +5,8 @@ assert: import "assert"
 
 repeat[5, <> console.log "haha"]
 repeat[5, i -> console.log i]
+repeat[10, i ->
+    console.log "still here"
+    if i > 5
+        break
+]

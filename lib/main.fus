@@ -1,14 +1,39 @@
 fus 0.1.0, radical
 
 repeat'export: <>
+    theBreak: break # compatibility for embedded JS (`break` is a JS keyword)
+    arg: @
+
     if @ is Function
-        do <> if @0() /= break then fun()
+        js"
+            (() => {
+                let i = 0;
+                while (true) {
+                    if (arg(i) === theBreak) break;
+                    i++;
+                }
+            })()
+        "
     else if @ is Array
-        do (i: 0) -> if i < @0 and @1(i) /= break then fun(i + 1)
+        js"
+            (() => {
+                for (let i = 0; i < arg[0]; i++) {
+                    if (arg[1](i) === theBreak) break;
+                }
+            })()
+        "
     else if @ is Object
-        do [i: @from, step: @by ifvoid 1] ->
-            if i <= @to and @for(i) /= break then fun[i + step, step]
+        step: @by ifvoid 1
+        js"
+            (() => {
+                for (let i = arg.from; i <= arg.to; i += step) {
+                    if (arg.for(i) === theBreak) break;
+                }
+            })()
+        "
     else
         throw Error("`repeat` syntax error.")
+
+    void
 
 break'export: Symbol()
