@@ -1,0 +1,14 @@
+{
+    "name": "fus-ext",
+    "version": "0.1.0",
+    "description": "FutureScript Extension",
+    "keywords": ["futurescript", "fus"],
+    "author": "Zhenzhen Zhan <zhanzhenzhen@hotmail.com>",
+    "homepage": "http://futurescript.org/",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zhanzhenzhen/fus-ext.git"
+    },
+    "main": "./target/main"
+}
