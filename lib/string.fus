@@ -7,15 +7,15 @@ deepSplit'export: (str, args) ->
         if args.1 = 0
             [arr.join(args.0)]
         else if args.1 <= arr.length - 2
-            arr |> ea.portion(0, args.1 - 1) :: concat[
-                arr |> ea.portion(args.1) :: join(args.0)
+            arr |> ea.portion[0, args.1 - 1] :: concat[
+                arr |> ea.portion[args.1] :: join(args.0)
             ]
         else
             arr
     else if args.length <= 1
         arr
     else
-        arr.map(s -> s.deepSplit(args |> ea.portion(1)))
+        arr.map(s -> s |> deepSplit(args |> ea.portion[1]))
 
 stripTrailingNewline'export: str ->
     if str.(str.length - 2) = "\r" and str.(str.length - 1) = "\n"

@@ -40,7 +40,7 @@ request'export: options -> Promise((resolve, reject) ->
                     headerFields:
                         xhr.getAllResponseHeaders()
                         |> es.stripTrailingNewline()
-                        |> es.deepSplit("\r\n", ": ", 1)
+                        |> es.deepSplit["\r\n", ": ", 1]
                         :: map(field -> [field.0.toLowerCase(), field.1])
                         |> ea.toObject()
                     body:
