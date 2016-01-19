@@ -7,6 +7,8 @@ isNode'export: js"
     typeof process === "object" &&
     typeof process.release === "object" &&
     process.release.name === "node"
-" ? true | false
+"
 
-global'export: isNode ? global | window
+# we can't directly name the variable as `global`, otherwise the Node.js `global` is inaccessible.
+theGlobal: isNode ? global | window
+export theGlobal as global

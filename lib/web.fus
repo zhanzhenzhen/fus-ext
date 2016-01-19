@@ -111,7 +111,7 @@ request'export: options -> Promise((resolve, reject) ->
 )
 
 get'export: (uri, options) ->
-    [uri, options]: @ if @ is Array
+    [uri, options]: uri if uri is Array
     actualOptions: {
         method: "GET"
         uri: uri
@@ -120,7 +120,7 @@ get'export: (uri, options) ->
     web.request(actualOptions)
 
 jsonGet'export: (uri, options) ->
-    [uri, options]: @ if @ is Array
+    [uri, options]: uri if uri is Array
     actualOptions: {
         method: "GET"
         uri: uri
@@ -130,7 +130,7 @@ jsonGet'export: (uri, options) ->
     web.request(actualOptions)
 
 binaryGet'export: (uri, options) ->
-    [uri, options]: @ if @ is Array
+    [uri, options]: uri if uri is Array
     actualOptions: {
         method: "GET"
         uri: uri
@@ -140,7 +140,7 @@ binaryGet'export: (uri, options) ->
     web.request(actualOptions)
 
 post'export: (uri, body, options) ->
-    [uri, body, options]: @ if @ is Array
+    [uri, body, options]: uri if uri is Array
     actualOptions: {
         method: "POST"
         uri: uri
@@ -150,7 +150,7 @@ post'export: (uri, body, options) ->
     web.request(actualOptions)
 
 jsonPost'export: (uri, body, options) ->
-    [uri, body, options]: @ if @ is Array
+    [uri, body, options]: uri if uri is Array
     actualOptions: {
         method: "POST"
         uri: uri

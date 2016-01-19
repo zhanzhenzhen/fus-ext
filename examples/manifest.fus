@@ -1,5 +1,11 @@
 fus 0.1.0, radical
 
-{repeat, break}: import "fus-ext"
+{repeat, break, fail, sys, web, es, ea}: import "fus-ext"
 export repeat
 export break
+export fail
+export sys
+export web
+export es
+export ea
+export sys.global as global
