@@ -1,6 +1,6 @@
 {
     "name": "fus-ext",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "FutureScript Extension",
     "keywords": ["futurescript", "fus"],
     "author": "Zhenzhen Zhan <zhanzhenzhen@hotmail.com>",
@@ -9,6 +9,11 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/zhanzhenzhen/fus-ext.git"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+        "babel": "5.x"
     },
     "main": "./target/main"
 }

@@ -1,0 +1,12 @@
+fus 0.1.0, radical
+import "./main" all
+
+feVersion'export: require("../package.json").version
+
+isNode'export: js"
+    typeof process === "object" &&
+    typeof process.release === "object" &&
+    process.release.name === "node"
+" ? true | false
+
+global'export: isNode ? global | window

@@ -1,0 +1,22 @@
+fus 0.1.0
+import "./main" all
+
+portion'export: (arr, args) ->
+    [startIndex, length, endIndex]: args
+    arr.slice(
+        startIndex,
+        if length'ok
+            startIndex + length
+        else
+            if endIndex'ok
+                endIndex + 1
+            else
+                void
+    )
+
+toObject'export: arr ->
+    r: {}
+    arr.forEach(element ->
+        r.(element.0): element.1
+    )
+    r
