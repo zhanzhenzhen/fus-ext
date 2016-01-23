@@ -25,8 +25,39 @@ Here we used the "batch import" feature. Note that the export of `manifest.fus` 
 
 The following document lists the API. Note that all functions that take 2 or more parameters can also be called using an array argument.
 
-repeat
+global
 ======
+
+Syntax: `global`
+
+Equivalent to `sys.global`. Note, that Node.js `global` is a global variable, but this variable is local, though they are the same in practice.
+
+sys
+====
+
+global
+------
+
+Syntax: `sys.global`
+
+The global object. In browser, it's equivalent to `window`. In Node.js, it's equivalent to `global`.
+
+feVersion
+---------
+
+Syntax: `sys.feVersion`
+
+Returns the fus-ext version.
+
+isNode
+------
+
+Syntax: `sys.isNode`
+
+Returns true if it's in Node.js, or false otherwise.
+
+repeat, break
+=============
 
 If the iterator returns `break` then it means to jump out of the loop, similar to JS's `break`, but different in essence. Here `break` is an expression, and only capable of cancelling the remaining cycles, not capable of cancelling the remaining part of the function. If `break` then the `repeat` function returns `break`。This example is a loop, from 0 to 9, but it will jump out on 5:
 
