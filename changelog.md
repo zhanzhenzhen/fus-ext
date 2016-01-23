@@ -1,5 +1,14 @@
+v0.2.1
+======
+
+2016-01-23T14:03:41Z
+
+Fix an example bug.
+
 v0.2.0
 ======
+
+2016-01-23T12:36:34Z
 
 Add `web` and many other namespaces.
 
