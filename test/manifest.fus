@@ -1,9 +1,10 @@
 fus 0.1.0, radical
 
-{repeat, break, fail, sys, web, es, ea}: import "../target/main"
+{repeat, break, enum, fail, sys, web, es, ea}: import "../target/main"
 
 export repeat
 export break
+export enum
 export fail
 export sys
 export web

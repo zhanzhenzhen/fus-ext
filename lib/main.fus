@@ -24,10 +24,11 @@ repeat'export: <>
         "
     else if @ is Object
         step: @by ifvoid 1
+        startIndex: @from ifvoid @.""
         endIndex: @to ifvoid Infinity
         js"
             (() => {
-                for (let i = arg.from; step >= 0 ? i <= endIndex : i >= endIndex; i += step) {
+                for (let i = startIndex; step >= 0 ? i <= endIndex : i >= endIndex; i += step) {
                     if (arg.for(i) === theBreak) break;
                 }
             })()
@@ -38,6 +39,14 @@ repeat'export: <>
     void
 
 break'export: Symbol()
+
+enum'export: <>
+    k: 0
+    r: {}
+    Object.keys(@).forEach <>
+        r.(@): k
+        k: k + 1
+    r
 
 fail'export: errorMessage -> throw Error(errorMessage)
 
