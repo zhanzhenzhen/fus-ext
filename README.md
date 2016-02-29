@@ -13,7 +13,7 @@ Copy `node_modules/fus-ext/examples/manifest.fus` file to your code's directory.
 You code can be like this:
 
 ```fus
-fus 0.1.0
+fus 1.0.1
 import "./manifest" all
 
 repeat[10, i ->

@@ -1,4 +1,4 @@
-fus 0.1.0, radical
+fus 1.0.1, radical
 
 {repeat, break, fail, sys, web, es, ea}: import "fus-ext"
 
