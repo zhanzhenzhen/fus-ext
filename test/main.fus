@@ -5,8 +5,9 @@ assert: import "assert"
 
 it("repeat number", --
     r: []
-    repeat[5, <> r.push(1)]
+    ret: repeat[5, <> r.push(1)]
     assert.deepStrictEqual(r, [1, 1, 1, 1, 1])
+    assert.strictEqual(ret, void)
 )
 
 it("repeat number with index", --

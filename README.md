@@ -59,7 +59,7 @@ Returns true if it's in Node.js, or false otherwise.
 repeat, break
 =============
 
-If the iterator returns `break` then it means to jump out of the loop, similar to JS's `break`, but different in essence. Here `break` is an expression, and only capable of cancelling the remaining cycles, not capable of cancelling the remaining part of the function. If `break` then the `repeat` function returns `break`。This example is a loop, from 0 to 9, but it will jump out on 5:
+If the iterator returns `break` then it means to jump out of the loop, similar to JS's `break`, but different in essence. Here `break` is an expression, and only capable of cancelling the remaining cycles, not capable of cancelling the remaining part of the function. If `break` then the `repeat` function returns `break`. This example is a loop, from 0 to 9, but it will jump out on 5:
 
 ```fus
 repeat[10, i ->
@@ -83,7 +83,7 @@ repeat --
 This corresponds to JS's `for` loop, from 1 to 10:
 
 ```fus
-repeat{from: 1, to: 10, for: i ->
+repeat{1 to 10 for i ->
     console.log i
 }
 ```
@@ -91,7 +91,7 @@ repeat{from: 1, to: 10, for: i ->
 This corresponds to JS's `for` loop, from 10 to 1:
 
 ```fus
-repeat{from: 10, to: 1, by: -1, for: i ->
+repeat{10 to 1 by -1 for i ->
     console.log i
 }
 ```
