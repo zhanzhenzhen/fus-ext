@@ -1,4 +1,4 @@
-fus 1.0.1
+fus 1.2.0
 import "./main" all
 
 deepSplit'export: (str, args) ->
