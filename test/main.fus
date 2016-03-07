@@ -1,27 +1,69 @@
-fus 1.0.1, radical
+fus 1.2.0, radical
 
 import "./manifest" all
 assert: import "assert"
 
-repeat[5, <> console.log "haha"]
-repeat[5, i -> console.log i]
-repeat[10, i ->
-    console.log "still here"
-    if i > 5
-        break
-]
-repeat{from: 1, to: 5, for: i ->
-    console.log "third \(i)"
-}
-repeat{from: 5, to: 1, by: -1, for: i ->
-    console.log "fourth \(i)"
-}
-repeat i ->
-    console.log "fifth \(i)"
-    if i > 3
-        break
-repeat{from: 1, by: 2, for: i ->
-    console.log "sixth \(i)"
-    if i > 9
-        break
-}
+it("repeat number", --
+    r: []
+    repeat[5, <> r.push(1)]
+    assert.deepStrictEqual(r, [1, 1, 1, 1, 1])
+)
+
+it("repeat number with index", --
+    r: []
+    repeat[5, i -> r.push(i)]
+    assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
+)
+
+it("repeat number with index and break", --
+    r: []
+    repeat[10, i ->
+        r.push(i)
+        if i > 5
+            break
+    ]
+    assert.deepStrictEqual(r, [0, 1, 2, 3, 4, 5, 6])
+)
+
+it("repeat canonical object", --
+    r: []
+    repeat{from: 1, to: 5, for: i ->
+        r.push(i)
+    }
+    assert.deepStrictEqual(r, [1, 2, 3, 4, 5])
+)
+
+it("repeat object", --
+    r: []
+    repeat{1 to 5 for i ->
+        r.push(i)
+    }
+    assert.deepStrictEqual(r, [1, 2, 3, 4, 5])
+)
+
+it("repeat object by -1", --
+    r: []
+    repeat{5 to 1 by -1 for i ->
+        r.push(i)
+    }
+    assert.deepStrictEqual(r, [5, 4, 3, 2, 1])
+)
+
+it("repeat index and break", --
+    r: []
+    repeat i ->
+        r.push i
+        if i > 3
+            break
+    assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
+)
+
+it("repeat by 2 with index and break", --
+    r: []
+    repeat{1 by 2 for i ->
+        r.push i
+        if i > 9
+            break
+    }
+    assert.deepStrictEqual(r, [1, 3, 5, 7, 9, 11])
+)
