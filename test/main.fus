@@ -3,88 +3,81 @@ fus 1.2.0, radical
 import "./manifest" all
 assert: import "assert"
 
-it("loop number", --
-    r: []
-    ret: loop[5, <> r.push(1)]
-    assert.deepStrictEqual(r, [1, 1, 1, 1, 1])
-    assert.strictEqual(ret, void)
+describe("loop", --
+    it("array: number, diamond function", --
+        r: []
+        ret: loop[5, <> r.push(1)]
+        assert.deepStrictEqual(r, [1, 1, 1, 1, 1])
+        assert.strictEqual(ret, void)
+    )
+
+    it("array: number, arrow function", --
+        r: []
+        loop[5, i -> r.push(i)]
+        assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
+    )
+
+    it("object: by 2 with break", --
+        r: []
+        loop{1 by 2 for i ->
+            r.push i
+            if i > 9
+                break
+        }
+        assert.deepStrictEqual(r, [1, 3, 5, 7, 9, 11])
+    )
+
+    it("array: number, arrow function with break", --
+        r: []
+        loop[10, i ->
+            r.push(i)
+            if i > 5
+                break
+        ]
+        assert.deepStrictEqual(r, [0, 1, 2, 3, 4, 5, 6])
+    )
+
+    it("object: canonical", --
+        r: []
+        loop{from: 1, to: 5, for: i ->
+            r.push(i)
+        }
+        assert.deepStrictEqual(r, [1, 2, 3, 4, 5])
+    )
+
+    it("object: normal", --
+        r: []
+        loop{1 to 5 for i ->
+            r.push(i)
+        }
+        assert.deepStrictEqual(r, [1, 2, 3, 4, 5])
+    )
+
+    it("object: by -1", --
+        r: []
+        loop{5 to 1 by -1 for i ->
+            r.push(i)
+        }
+        assert.deepStrictEqual(r, [5, 4, 3, 2, 1])
+    )
+
+    it("function: with break", --
+        r: []
+        loop i ->
+            r.push i
+            if i > 3
+                break
+        assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
+    )
 )
 
-it("loop number with index", --
-    r: []
-    loop[5, i -> r.push(i)]
-    assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
-)
-
-it("repeat number with index", --
-    r: repeat[5, i -> i]
-    assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
-)
-
-it("repeat number without function", --
-    r: repeat[5]
-    assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
-)
-
-it("repeat number without function", --
-    r: repeat(5)
-    assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
-)
-
-it("loop number with index and break", --
-    r: []
-    loop[10, i ->
-        r.push(i)
-        if i > 5
-            break
-    ]
-    assert.deepStrictEqual(r, [0, 1, 2, 3, 4, 5, 6])
-)
-
-it("loop canonical object", --
-    r: []
-    loop{from: 1, to: 5, for: i ->
-        r.push(i)
-    }
-    assert.deepStrictEqual(r, [1, 2, 3, 4, 5])
-)
-
-it("loop object", --
-    r: []
-    loop{1 to 5 for i ->
-        r.push(i)
-    }
-    assert.deepStrictEqual(r, [1, 2, 3, 4, 5])
-)
-
-it("loop object by -1", --
-    r: []
-    loop{5 to 1 by -1 for i ->
-        r.push(i)
-    }
-    assert.deepStrictEqual(r, [5, 4, 3, 2, 1])
-)
-
-it("loop index and break", --
-    r: []
-    loop i ->
-        r.push i
-        if i > 3
-            break
-    assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
-)
-
-it("loop by 2 with index and break", --
-    r: []
-    loop{1 by 2 for i ->
-        r.push i
-        if i > 9
-            break
-    }
-    assert.deepStrictEqual(r, [1, 3, 5, 7, 9, 11])
-)
-
-it("repeat object without function", --
-    r: repeat{1 to 10 by 2}
-    assert.deepStrictEqual(r, [1, 3, 5, 7, 9])
+describe("repeat", --
+    it("repeat", --
+        assert.deepStrictEqual(repeat[5, i -> i + 2], [2, 3, 4, 5, 6])
+        assert.deepStrictEqual(repeat(5, i -> i + 2), [2, 3, 4, 5, 6])
+        assert.deepStrictEqual(repeat[5], [0, 1, 2, 3, 4])
+        assert.deepStrictEqual(repeat(5), [0, 1, 2, 3, 4])
+        assert.deepStrictEqual(repeat{1 to 10 by 2}, [1, 3, 5, 7, 9])
+        assert.deepStrictEqual(repeat{1 by 2 for i -> i > 9 ? break else i}, [1, 3, 5, 7, 9])
+    )
 )
