@@ -21,7 +21,7 @@ internalLoop: [data, enablesReturns] ->
         js"
             (() => {
                 for (let i = 0; i < data[0]; i++) {
-                    let r = data[1](i);
+                    let r = data[1] === undefined ? i : data[1](i);
                     if (r === theBreak) break;
                     if (enablesReturns) results.push(r);
                 }
@@ -35,7 +35,7 @@ internalLoop: [data, enablesReturns] ->
         js"
             (() => {
                 for (let i = startIndex; step >= 0 ? i <= endIndex : i >= endIndex; i += step) {
-                    let r = data.for(i);
+                    let r = data.for === undefined ? i : data.for(i);
                     if (r === theBreak) break;
                     if (enablesReturns) results.push(r);
                 }

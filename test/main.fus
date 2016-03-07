@@ -16,6 +16,16 @@ it("loop number with index", --
     assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
 )
 
+it("repeat number with index", --
+    r: repeat[5, i -> i]
+    assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
+)
+
+it("repeat number", --
+    r: repeat[5]
+    assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
+)
+
 it("loop number with index and break", --
     r: []
     loop[10, i ->
