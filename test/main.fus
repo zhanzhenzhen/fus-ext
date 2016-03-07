@@ -26,6 +26,11 @@ it("repeat number without function", --
     assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
 )
 
+it("repeat number without function", --
+    r: repeat(5)
+    assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
+)
+
 it("loop number with index and break", --
     r: []
     loop[10, i ->

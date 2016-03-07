@@ -4,7 +4,16 @@ internalLoop: [data, enablesReturns] ->
     theBreak: break # compatibility for embedded JS (`break` is a JS keyword)
     results: enablesReturns ? [] | void
 
-    if data is Function
+    if data is Number
+        js"
+            (() => {
+                for (let i = 0; i < data; i++) {
+                    if (enablesReturns) results.push(i);
+                }
+                return results;
+            })()
+        "
+    else if data is Function
         js"
             (() => {
                 let i = 0;
@@ -45,8 +54,8 @@ internalLoop: [data, enablesReturns] ->
     else
         throw Error("`repeat` syntax error.")
 
-repeat'export: <> internalLoop[@, true]
-loop'export: <> internalLoop[@, false]
+repeat'export: (a, b) -> internalLoop[b = void ? a | [a, b], true]
+loop'export: (a, b) -> internalLoop[b = void ? a | [a, b], false]
 
 break'export: Symbol()
 
