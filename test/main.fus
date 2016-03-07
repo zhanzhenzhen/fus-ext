@@ -3,22 +3,22 @@ fus 1.2.0, radical
 import "./manifest" all
 assert: import "assert"
 
-it("repeat number", --
+it("loop number", --
     r: []
-    ret: repeat[5, <> r.push(1)]
+    ret: loop[5, <> r.push(1)]
     assert.deepStrictEqual(r, [1, 1, 1, 1, 1])
     assert.strictEqual(ret, void)
 )
 
-it("repeat number with index", --
+it("loop number with index", --
     r: []
-    repeat[5, i -> r.push(i)]
+    loop[5, i -> r.push(i)]
     assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
 )
 
-it("repeat number with index and break", --
+it("loop number with index and break", --
     r: []
-    repeat[10, i ->
+    loop[10, i ->
         r.push(i)
         if i > 5
             break
@@ -26,42 +26,42 @@ it("repeat number with index and break", --
     assert.deepStrictEqual(r, [0, 1, 2, 3, 4, 5, 6])
 )
 
-it("repeat canonical object", --
+it("loop canonical object", --
     r: []
-    repeat{from: 1, to: 5, for: i ->
+    loop{from: 1, to: 5, for: i ->
         r.push(i)
     }
     assert.deepStrictEqual(r, [1, 2, 3, 4, 5])
 )
 
-it("repeat object", --
+it("loop object", --
     r: []
-    repeat{1 to 5 for i ->
+    loop{1 to 5 for i ->
         r.push(i)
     }
     assert.deepStrictEqual(r, [1, 2, 3, 4, 5])
 )
 
-it("repeat object by -1", --
+it("loop object by -1", --
     r: []
-    repeat{5 to 1 by -1 for i ->
+    loop{5 to 1 by -1 for i ->
         r.push(i)
     }
     assert.deepStrictEqual(r, [5, 4, 3, 2, 1])
 )
 
-it("repeat index and break", --
+it("loop index and break", --
     r: []
-    repeat i ->
+    loop i ->
         r.push i
         if i > 3
             break
     assert.deepStrictEqual(r, [0, 1, 2, 3, 4])
 )
 
-it("repeat by 2 with index and break", --
+it("loop by 2 with index and break", --
     r: []
-    repeat{1 by 2 for i ->
+    loop{1 by 2 for i ->
         r.push i
         if i > 9
             break

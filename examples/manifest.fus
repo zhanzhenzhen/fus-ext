@@ -1,7 +1,8 @@
 fus 1.0.1, radical
 
-{repeat, break, fail, sys, web, es, ea}: import "fus-ext"
+{loop, repeat, break, fail, sys, web, es, ea}: import "fus-ext"
 
+export loop
 export repeat
 export break
 export fail

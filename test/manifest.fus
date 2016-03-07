@@ -1,7 +1,8 @@
 fus 1.0.1, radical
 
-{repeat, break, enum, fail, sys, web, es, ea}: import "../target/main"
+{loop, repeat, break, enum, fail, sys, web, es, ea}: import "../target/main"
 
+export loop
 export repeat
 export break
 export enum
