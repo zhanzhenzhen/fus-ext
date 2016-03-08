@@ -69,6 +69,23 @@ enum'export: <>
 
 fail'export: errorMessage -> throw Error(errorMessage)
 
+compose'export: (functions...) ->
+    functions: functions.0 if functions.0 is Array
+    (args...) ->
+        this: me
+        functions.forEach(m ->
+            args: [m.apply(this, args)]
+        )
+        args.0
+
+assert'export: (condition, message) ->
+    [condition, message]: condition if condition is Array
+    if not condition then fail(message)
+
+spread'export: (value, count) ->
+    [value, count]: value if count = void
+    repeat[count, -- value]
+
 sys: import "./sys" all
 export sys
 
