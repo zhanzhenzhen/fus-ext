@@ -79,12 +79,45 @@ compose'export: (functions...) ->
         args.0
 
 assert'export: (condition, message) ->
-    [condition, message]: condition if condition is Array
     if not condition then fail(message)
 
 spread'export: (value, count) ->
     [value, count]: value if count = void
     repeat[count, -- value]
+
+# This function `f` is weird and hard to understand, but we must use this mechanism
+# (function+object hybrid) to support cascade (chaining).
+# For chaining, I mean not `obj.onAbc.bind(a).unbind(a)`, but `obj.onAbc(a).onDef(b).doSth()`.
+eventField'export: --
+    f: (method, arg) ->
+        if method is Function
+            arg: method
+            method: "bind"
+        assert(method is String)
+        f.(method)(arg)
+        @
+    f._listeners: []
+    f.getListeners: --
+        f._listeners.clone()
+    f.bind: listener ->
+        f._listeners.push(listener) if listener not in f._listeners
+        f
+    f.unbind: listener ->
+        f._listeners.removeAll(listener)
+        f
+    f.unbindAll: --
+        f._listeners: []
+        f
+    f.fire: arg ->
+        f._listeners.every(listener ->
+            if arg'ok.blocksListeners
+                false
+            else
+                listener(arg)
+                true
+        )
+        f
+    f
 
 sys: import "./sys" all
 export sys
