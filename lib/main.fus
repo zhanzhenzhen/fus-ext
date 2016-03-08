@@ -90,6 +90,7 @@ spread'export: (value, count) ->
 # For chaining, I mean not `obj.onAbc.bind(a).unbind(a)`, but `obj.onAbc(a).onDef(b).doSth()`.
 eventField'export: --
     f: (method, arg) ->
+        [method, arg]: method if method is Array
         if method is Function
             arg: method
             method: "bind"
