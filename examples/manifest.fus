@@ -1,6 +1,20 @@
 fus 1.2.0, radical
 
-{loop, repeat, break, enum, fail, compose, assert, spread, sys, web, es, ea}: import "fus-ext"
+{
+    loop
+    repeat
+    break
+    enum
+    fail
+    compose
+    assert
+    spread
+    eventField
+    sys
+    web
+    es
+    ea
+}: import "fus-ext"
 
 export loop
 export repeat
@@ -10,6 +24,7 @@ export fail
 export compose
 export assert
 export spread
+export eventField
 export sys
 export web
 export es

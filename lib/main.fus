@@ -96,7 +96,7 @@ eventField'export: --
             method: "bind"
         assert(method is String)
         f.(method)(arg)
-        @
+        me
     f._listeners: []
     f.getListeners: --
         f._listeners.clone()

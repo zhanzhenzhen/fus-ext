@@ -106,3 +106,19 @@ describe("spread", --
         ass.deepStrictEqual(spread[0, 3], [0, 0, 0])
     )
 )
+
+describe("eventField", --
+    it("eventField", --
+        r: null
+        Obj: class
+            new: --
+                me.onClick: eventField()
+            makeClick: -- me.onClick.fire()
+        obj: Obj()
+        obj.onClick(--
+            r: true
+        )
+        obj.makeClick()
+        ass.strictEqual(r, true)
+    )
+)
