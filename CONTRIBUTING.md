@@ -1,4 +1,4 @@
-# How to publish
+# Compile
 
 Before testing or publishing, it must be compiled to JS using:
 
@@ -7,3 +7,9 @@ fus c lib target && node node_modules/babel/bin/babel -d target target && fus c 
 ```
 
 Before publishing write the changelog.
+
+# Test
+
+```bash
+mocha test-target/main
+```
