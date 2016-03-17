@@ -1,4 +1,4 @@
-fus 1.2.0, radical
+fus 1.3.0, radical
 import "./main" all
 
 # According to RFC-7230, for HTTP response status we use "status reason"
@@ -39,10 +39,10 @@ request'export: options -> Promise((resolve, reject) ->
                     statusReason: xhr.statusText
                     headerFields:
                         xhr.getAllResponseHeaders()
-                        |> es.stripTrailingNewline()
-                        |> es.deepSplit["\r\n", ": ", 1]
-                        :: map(field -> [field.0.toLowerCase(), field.1])
-                        |> ea.toObject()
+                        ..stripTrailingNewline()
+                        ..deepSplit["\r\n", ": ", 1]
+                        .map(field -> [field.0.toLowerCase(), field.1])
+                        ..toObject()
                     body:
                         if responseBodyType = "binary"
                             Uint8Array(xhr.response)

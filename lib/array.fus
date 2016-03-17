@@ -1,8 +1,8 @@
-fus 1.2.0
+fus 1.3.0
 import "./main" all
 
-portion'export: (arr, args) ->
-    [startIndex, length, endIndex]: args
+portion'export: (arr, args...) ->
+    [startIndex, length, endIndex]: args.0 is Array ? args.0 | args
     arr.slice(
         startIndex,
         if length'ok
