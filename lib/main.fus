@@ -126,14 +126,14 @@ export sys
 web: import "./web" all
 export web
 
-es: import "./string" all
-export es
+feString: import "./string" all
+export feString
 
-ea: import "./array" all
-export ea
+feArray: import "./array" all
+export feArray
 
 ..'export: x ->
     if x is String
-        es
+        feString
     else if x is Array
-        ea
+        feArray

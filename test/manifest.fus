@@ -12,8 +12,8 @@ fus 1.3.1, radical
     eventField
     sys
     web
-    es
-    ea
+    feString
+    feArray
     ..
 }: import "../target/main"
 
@@ -28,8 +28,8 @@ export spread
 export eventField
 export sys
 export web
-export es
-export ea
+export feString
+export feArray
 export ..
 
 global'export: sys.global
