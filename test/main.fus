@@ -125,7 +125,7 @@ describe("eventField", --
 
 describe("string", --
     it("deepSplit", --
-        console.log "a:b,c:d"..deepSplit(",", ":")
         ass.deepStrictEqual("a:b,c:d"..deepSplit(",", ":"), [["a", "b"], ["c", "d"]])
+        ass.deepStrictEqual("a:b,c:d"..deepSplit[",", ":"], [["a", "b"], ["c", "d"]])
     )
 )
