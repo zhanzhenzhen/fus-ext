@@ -86,7 +86,7 @@ loop --
         doSomething()
 ```
 
-This corresponds to JS's `for` loop, from 1 to 10:
+The following corresponds to JS's `for` loop, from 1 to 10:
 
 ```fus
 loop{1 to 10 for i ->
@@ -94,7 +94,7 @@ loop{1 to 10 for i ->
 }
 ```
 
-This corresponds to JS's `for` loop, from 10 to 1:
+The following corresponds to JS's `for` loop, from 10 to 1:
 
 ```fus
 loop{10 to 1 by -1 for i ->
@@ -102,23 +102,71 @@ loop{10 to 1 by -1 for i ->
 }
 ```
 
-This will output `[1, 3, 5, 7, 9]`:
+The following will output `[1, 3, 5, 7, 9]`:
 
 ```fus
 console.log repeat{1 to 10 by 2}
 ```
 
-This will output `[0, 1, 2, 3, 4]`:
+The following will output `[0, 1, 2, 3, 4]`:
 
 ```fus
 console.log repeat(5)
 ```
 
-This will output `[2, 3, 4, 5, 6]`:
+The following will output `[2, 3, 4, 5, 6]`:
 
 ```fus
 console.log repeat(5, i -> i + 2)
 ```
+
+enum
+====
+
+This can simulate the `enum` type in many other languages. For example:
+
+```fus
+Color: enum{red, green, blue}
+
+console.log(Color.red, Color.green, Color.blue)
+```
+
+This will output `0 1 2`.
+
+compose
+=======
+
+Syntax: `compose(function1, [function2, ...])`
+
+Returns the math composition of functions. For example:
+
+```fus
+a: compose(Math.min, Math.abs)
+console.log a(-2, -3)
+```
+
+This will output `3`.
+
+spread
+======
+
+Syntax: `spread(value, count)`
+
+Returns a length=`count` array. In this array each element is `value`.
+
+For example, `spread(0, 3)` will be `[0, 0, 0]`
+
+fail
+====
+
+Syntax: `fail([errorMessage])`
+
+Shorthand function for `throw Error(errorMessage)`. So you can write `fail()` in many use cases.
+
+assert
+======
+
+This function is equivalent to Node.js `assert` function, but it also works in browser.
 
 web
 ====
