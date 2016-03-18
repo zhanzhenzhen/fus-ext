@@ -128,6 +128,14 @@ describe("string", --
         ass.deepStrictEqual("a:b,c:d"..deepSplit(",", ":"), [["a", "b"], ["c", "d"]])
         ass.deepStrictEqual("a:b,c:d"..deepSplit[",", ":"], [["a", "b"], ["c", "d"]])
     )
+    it("stripTrailingNewline", --
+        ass.strictEqual("a\nb\n"..stripTrailingNewline(), "a\nb")
+        ass.strictEqual("a\nb"..stripTrailingNewline(), "a\nb")
+    )
+    it("ensureTrailingNewline", --
+        ass.strictEqual("a\nb\n"..ensureTrailingNewline(), "a\nb\n")
+        ass.strictEqual("a\nb"..ensureTrailingNewline(), "a\nb\n")
+    )
 )
 
 describe("array", --
