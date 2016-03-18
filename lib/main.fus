@@ -131,3 +131,9 @@ export es
 
 ea: import "./array" all
 export ea
+
+..'export: x ->
+    if x is String
+        es
+    else if x is Array
+        ea

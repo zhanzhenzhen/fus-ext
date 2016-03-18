@@ -14,6 +14,7 @@ fus 1.3.0, radical
     web
     es
     ea
+    ..
 }: import "fus-ext"
 
 export loop
@@ -29,9 +30,6 @@ export sys
 export web
 export es
 export ea
-
-..'export: x -> match y -> x is y
-    String ? es
-    Array ? ea
+export ..
 
 global'export: sys.global
