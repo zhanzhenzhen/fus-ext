@@ -14,6 +14,8 @@ In `node_modules/fus-ext/examples` directory, there're 3 manifest files. Copy on
 - `manifest-lodash.fus`: Suitable if you want to bind `..` to Lodash (or Underscore after modification) instead of the fus-ext built-in.
 - `manifest-no-op.fus`: Suitable if you don't want to bind `..` to anything, or you want to bind later in your own code.
 
+You can remove some exports in the manifest. For example, you can remove `assert` if you want this name to bind to Node.js `assert` module in your own code.
+
 Your code can be like this:
 
 ```fus
@@ -219,3 +221,13 @@ jsonPost
 Syntax: `web.post(uri, body, [options])`
 
 Do HTTP POST for the `uri` and `body`, returning a promise of a response with its body represented as a JSON value. The argument `body` must be also a JSON value, which will be stringified by the library before sending. Options valid in `web.request` are also valid in this method.
+
+feString
+========
+
+Under development.
+
+feArray
+=======
+
+Under development.
