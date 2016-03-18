@@ -1,3 +1,10 @@
+v1.0.0
+======
+
+2016-03-18T19:10:59Z
+
+Add many functions. Rename `repeat` to `loop`.
+
 v0.3.0
 ======
 
