@@ -8,17 +8,21 @@ While you can use this library in normal JavaScript, it's highly recommended to 
 npm install fus-ext
 ```
 
-Copy `node_modules/fus-ext/examples/manifest.fus` file to your code's directory.
+In `node_modules/fus-ext/examples` directory, there're 3 manifest files. Copy one of them to your code's directory. Rename the new file to `manifest.fus` if needed.
 
-You code can be like this:
+- `manifest.fus`: For general purposes.
+- `manifest-lodash.fus`: Suitable if you want to bind `..` to Lodash (or Underscore after modification) instead of the fus-ext built-in.
+- `manifest-no-op.fus`: Suitable if you don't want to bind `..` to anything, or you want to bind later in your own code.
+
+Your code can be like this:
 
 ```fus
 fus 1.3.1
 import "./manifest" all
 
-repeat[10, i ->
+loop(10, i ->
     console.log "This is \(i) time"
-]
+)
 ```
 
 Here we used the "batch import" feature. Note that the export of `manifest.fus` should match the import of yours. If you want to use `node` instead of `es`, then you'll need to make corresponding changes in the version line of the two files.
@@ -56,24 +60,26 @@ Syntax: `sys.isNode`
 
 Returns true if it's in Node.js, or false otherwise.
 
-repeat, break
-=============
+loop, repeat, break
+===================
 
-If the iterator returns `break` then it means to jump out of the loop, similar to JS's `break`, but different in essence. Here `break` is an expression, and only capable of cancelling the remaining cycles, not capable of cancelling the remaining part of the function. If `break` then the `repeat` function returns `break`. This example is a loop, from 0 to 9, but it will jump out on 5:
+`loop` and `repeat` are similar. The only difference is that `repeat` returns the results as an array while `loop` returns `void`. So, `repeat` make cause performance issue if you run a huge number of cycles. For example, if there're 1,000,000,000 cycles and you use `repeat`, then the results array will be too big.
+
+If the iterator returns `break` then it means to jump out of the loop, similar to JS's `break`, but different in essence. Here `break` is an expression, and only capable of cancelling the remaining cycles, not capable of cancelling the remaining part of the function. If `break` then the `loop` or `repeat` function returns `break`. This example is a loop, from 0 to 9, but it will jump out on 5:
 
 ```fus
-repeat[10, i ->
+loop(10, i ->
     if i < 5
         console.log "This is \(i) time"
     else
         break
-]
+)
 ```
 
 If no count is set, it means forever, equivalent to JS's `while (true)`:
 
 ```fus
-repeat --
+loop --
     if abc()
         break
     else
@@ -83,7 +89,7 @@ repeat --
 This corresponds to JS's `for` loop, from 1 to 10:
 
 ```fus
-repeat{1 to 10 for i ->
+loop{1 to 10 for i ->
     console.log i
 }
 ```
@@ -91,9 +97,27 @@ repeat{1 to 10 for i ->
 This corresponds to JS's `for` loop, from 10 to 1:
 
 ```fus
-repeat{10 to 1 by -1 for i ->
+loop{10 to 1 by -1 for i ->
     console.log i
 }
+```
+
+This will output `[1, 3, 5, 7, 9]`:
+
+```fus
+console.log repeat{1 to 10 by 2}
+```
+
+This will output `[0, 1, 2, 3, 4]`:
+
+```fus
+console.log repeat(5)
+```
+
+This will output `[2, 3, 4, 5, 6]`:
+
+```fus
+console.log repeat(5, i -> i + 2)
 ```
 
 web
