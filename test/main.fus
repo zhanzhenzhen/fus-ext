@@ -132,11 +132,11 @@ describe("string", --
 
 describe("array", --
     it("portion", --
-        ass.deepStrictEqual([1, 2, 3, 4, 5]..portion(2, 2), [3, 4])
-        ass.deepStrictEqual([1, 2, 3, 4, 5]..portion[2, 2], [3, 4])
-        ass.deepStrictEqual([1, 2, 3, 4, 5]..portion(2, void, 2), [3])
-        ass.deepStrictEqual([1, 2, 3, 4, 5]..portion[2, void, 2], [3])
-        ass.deepStrictEqual([1, 2, 3, 4, 5]..portion(2), [3, 4, 5])
-        ass.deepStrictEqual([1, 2, 3, 4, 5]..portion[2], [3, 4, 5])
+        ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion(2, 3), [3, 4, 5])
+        ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion[2, 3], [3, 4, 5])
+        ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion(2, void, 3), [3, 4])
+        ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion[2, void, 3], [3, 4])
+        ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion(2), [3, 4, 5, 6])
+        ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion[2], [3, 4, 5, 6])
     )
 )
