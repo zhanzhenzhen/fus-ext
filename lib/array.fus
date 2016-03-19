@@ -60,18 +60,11 @@ clone'export: arr -> arr.slice()
 
 isEmpty'export: arr -> arr.length = 0
 
-portion'export: (arr, args...) ->
-    [startIndex, length, endIndex]: args.0 is Array ? args.0 | args
-    arr.slice(
-        startIndex,
-        if length'ok
-            startIndex + length
-        else
-            if endIndex'ok
-                endIndex + 1
-            else
-                void
-    )
+portion'export: (arr, startIndex, length, endIndex) ->
+    startIndex: arr._positionToIndex(startIndex)
+    length: arr._amountToLength(length) if length'ok
+    endIndex: arr._positionToIndex(endIndex) if endIndex'ok
+    arr.slice(startIndex, length'ok ? startIndex + length | endIndex + 1)
 
 toObject'export: arr ->
     r: {}
