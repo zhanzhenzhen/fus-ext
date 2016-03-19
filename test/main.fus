@@ -294,6 +294,10 @@ describe("array", --
         ass.deepStrictEqual([1, 2, 3]..intersect([2, 3, 4, 5]), [2, 3])
         ass.deepStrictEqual([1, 2, 3]..intersect([4, 5]), [])
     )
+    it("flatten", --
+        ass.deepStrictEqual([1, [[2, 3], 4], 5]..flatten(), [1, 2, 3, 4, 5])
+        ass.deepStrictEqual([1, [[2, 3], 4], 5]..flatten(1), [1, [2, 3], 4, 5])
+    )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
     )

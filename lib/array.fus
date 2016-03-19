@@ -260,9 +260,9 @@ flatten'export: (arr, level) ->
                 if level = 1
                     r
                 else
-                    r.flatten(level - 1)
+                    r..flatten(level - 1)
             else
-                r.flatten()
+                r..flatten()
         else
             r
 
