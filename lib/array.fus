@@ -179,6 +179,69 @@ product'export: (arr, selector) ->
             * _elementOrUseSelector(b, selector)
         )
 
+# These methods use sorting. For `keySelector`, note that the keys of all elements must be either
+# all numbers, all booleans, or all strings. ====================[
+
+# Why don't use {key: ..., value: ...}, but a non-intuitive array for the key-value pair?
+# Because ECMAScript 6th's Map constructor only accepts the array form to denote a key-value pair.
+# I don't want to break the consistency.
+group'export: (arr, keySelector, valueSelector) ->
+    if arr..isEmpty()
+        []
+    else
+        sorted: arr..sort(keySelector)
+        results: []
+        comparedKey: _elementOrUseSelector(sorted..first(), keySelector)
+        elements: []
+        sorted.forEach(m ->
+            key: _elementOrUseSelector(m, keySelector)
+            if key ≠ comparedKey
+                results.push[
+                    comparedKey
+                    _elementOrUseSelector(elements, valueSelector)
+                ]
+                comparedKey: key
+                elements: []
+            elements.push(m)
+        )
+        results.push[
+            comparedKey
+            _elementOrUseSelector(elements, valueSelector)
+        ]
+        results
+
+_sort'export: (arr, keySelector, isDescending) ->
+    arr..clone().sort((a, b) ->
+        a1: _elementOrUseSelector(a, keySelector)
+        b1: _elementOrUseSelector(b, keySelector)
+        if a1 < b1 then (isDescending ? 1 | -1)
+        else if a1 > b1 then (isDescending ? -1 | 1)
+        else 0
+    )
+sort'export: (arr, keySelector) -> arr.._sort(keySelector, false)
+sortDescending'export: (arr, keySelector) -> arr.._sort(keySelector, true)
+# ]========================================
+
+reverse'export: arr -> arr..clone().reverse()
+
+except'export: (arr, array, equalityComparer: (a, b) -> a = b) ->
+    arr.filter(m ->
+        not array.some(n -> equalityComparer(n, m))
+    )
+distinct'export: (arr, equalityComparer: (a, b) -> a = b) ->
+    r: []
+    arr.forEach(m ->
+        r.push(m) if not r.some(n -> equalityComparer(n, m))
+    )
+    r
+union'export: (arr, array, equalityComparer) -> arr.concat(array)..distinct(equalityComparer)
+intersect'export: (arr, array, equalityComparer: (a, b) -> a = b) ->
+    r: []
+    arr..distinct(equalityComparer).forEach(m ->
+        r.push(m) if array.some(n -> equalityComparer(n, m))
+    )
+    r
+
 toObject'export: arr ->
     r: {}
     arr.forEach(element ->
