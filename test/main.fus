@@ -198,6 +198,30 @@ describe("array", --
         ass.strictEqual([1, 2, 3]..includes(3), true)
         ass.strictEqual([1, 2, 3]..includes(4), false)
     )
+    it("first", --
+        ass.strictEqual([1, 2, 3, 4, 5]..first(), 1)
+        ass.strictEqual([1, 2, 3, 4, 5]..first(m -> m mod 2 = 0), 2)
+    )
+    it("firstOrNull", --
+        ass.strictEqual([1, 2, 3, 4, 5]..firstOrNull(m -> m mod 2 = 0), 2)
+        ass.strictEqual([1, 2, 3, 4, 5]..firstOrNull(m -> m mod 2 = 2), null)
+    )
+    it("firstOrVoid", --
+        ass.strictEqual([1, 2, 3, 4, 5]..firstOrVoid(m -> m mod 2 = 0), 2)
+        ass.strictEqual([1, 2, 3, 4, 5]..firstOrVoid(m -> m mod 2 = 2), void)
+    )
+    it("last", --
+        ass.strictEqual([1, 2, 3, 4, 5]..last(), 5)
+        ass.strictEqual([1, 2, 3, 4, 5]..last(m -> m mod 2 = 0), 4)
+    )
+    it("lastOrNull", --
+        ass.strictEqual([1, 2, 3, 4, 5]..lastOrNull(m -> m mod 2 = 0), 4)
+        ass.strictEqual([1, 2, 3, 4, 5]..lastOrNull(m -> m mod 2 = 2), null)
+    )
+    it("lastOrVoid", --
+        ass.strictEqual([1, 2, 3, 4, 5]..lastOrVoid(m -> m mod 2 = 0), 4)
+        ass.strictEqual([1, 2, 3, 4, 5]..lastOrVoid(m -> m mod 2 = 2), void)
+    )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
     )
