@@ -301,4 +301,8 @@ describe("array", --
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
     )
+    it("deepJoin", --
+        ass.strictEqual([["a", "b"], ["c", "d"]]..deepJoin(":", ","), "a:b,c:d")
+        ass.strictEqual([["a", "b"], ["c", "d"]]..deepJoin[":", ","], "a:b,c:d")
+    )
 )
