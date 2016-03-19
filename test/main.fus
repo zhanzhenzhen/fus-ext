@@ -222,6 +222,35 @@ describe("array", --
         ass.strictEqual([1, 2, 3, 4, 5]..lastOrVoid(m -> m mod 2 = 0), 4)
         ass.strictEqual([1, 2, 3, 4, 5]..lastOrVoid(m -> m mod 2 = 2), void)
     )
+    it("single", --
+        ass.throws(-- [1, 2, 3, 4, 5]..single())
+        ass.throws(-- [1, 2, 3, 4, 5]..single(m -> m = 10))
+        ass.strictEqual([1, 2, 3, 4, 5]..single(m -> m = 3), 3)
+    )
+    it("singleOrNull", --
+        ass.strictEqual([1, 2, 3, 4, 5]..singleOrNull(m -> m = 3), 3)
+        ass.strictEqual([1, 2, 3, 4, 5]..singleOrNull(m -> m = 10), null)
+    )
+    it("singleOrVoid", --
+        ass.strictEqual([1, 2, 3, 4, 5]..singleOrVoid(m -> m = 3), 3)
+        ass.strictEqual([1, 2, 3, 4, 5]..singleOrVoid(m -> m = 10), void)
+    )
+    it("withMax", --
+        ass.strictEqual([1, 2, 3, 4, 5]..withMax(m -> -m), 1)
+        ass.strictEqual([1, 2, 3, 4, 5]..withMax(), 5)
+    )
+    it("withMin", --
+        ass.strictEqual([1, 2, 3, 4, 5]..withMin(m -> -m), 5)
+        ass.strictEqual([1, 2, 3, 4, 5]..withMin(), 1)
+    )
+    it("max", --
+        ass.strictEqual([1, 2, 3, 4, 5]..max(m -> -m), -1)
+        ass.strictEqual([1, 2, 3, 4, 5]..max(), 5)
+    )
+    it("min", --
+        ass.strictEqual([1, 2, 3, 4, 5]..min(m -> -m), -5)
+        ass.strictEqual([1, 2, 3, 4, 5]..min(), 1)
+    )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
     )
