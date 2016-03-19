@@ -11,7 +11,6 @@ import "./main" all
 # 无法在正则表达式体系中解决这个问题，就改用了循环。
 # 目前这个函数只支持最多10个自定义转义符。
 format'export: (str, args...) ->
-    args: args.0 if args.0 is Array
     s: str.valueOf()
     m: []
     i: 0
@@ -36,13 +35,10 @@ format'export: (str, args...) ->
     m.join("")
 
 insert'export: (str, index, value) ->
-    [index, value]: index if index is Array
     s: str.valueOf()
     s.substr(0, index) + value + s.substr(index)
 
-remove'export: (str, start, length) ->
-    [start, length]: start if start is Array
-    length ifvoid: 1
+remove'export: (str, start, length: 1) ->
     s: str.valueOf()
     s.substr(0, start) + s.substr(start + length)
 
@@ -71,13 +67,13 @@ deepSplit'export: (str, args...) ->
     if args.length = 2 and args.1 is Number
         if args.1 = 0
             [arr.join(args.0)]
-        else if args.1 <= arr.length - 2
-            arr..portion[0, args.1 - 1].concat[
+        else if args.1 ≤ arr.length - 2
+            arr..portion(0, args.1 - 1).concat[
                 arr..portion(args.1).join(args.0)
             ]
         else
             arr
-    else if args.length <= 1
+    else if args.length ≤ 1
         arr
     else
         arr.map(s -> s..deepSplit(args..portion(1)))

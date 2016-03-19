@@ -29,7 +29,7 @@ loop(10, i ->
 
 Here we used the "batch import" feature. Note that the export of `manifest.fus` should match the import of yours. If you want to use `node` instead of `es`, then you'll need to make corresponding changes in the version line of the two files.
 
-The following document lists the API. Note that all functions that take 2 or more parameters can also be called using an array argument.
+The following document lists the API.
 
 global
 ======
@@ -138,9 +138,11 @@ This will output `0 1 2`.
 compose
 =======
 
-Syntax: `compose(function1, [function2, ...])`
+Syntax 1: `compose(function1, [function2, ...])`
 
-Returns the math composition of functions. For example:
+Syntax 2: `compose(functionArray)`
+
+Returns the math composition of functions. Functions can be passed as multiple arguments, or a single array argument. For example:
 
 ```fus
 a: compose(Math.min, Math.abs)
