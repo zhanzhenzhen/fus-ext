@@ -6,14 +6,14 @@ ass: import "assert"
 describe("loop", --
     it("array: number, diamond function", --
         r: []
-        ret: loop[5, <> r.push(1)]
+        ret: loop(5, <> r.push(1))
         ass.deepStrictEqual(r, [1, 1, 1, 1, 1])
         ass.strictEqual(ret, void)
     )
 
     it("array: number, arrow function", --
         r: []
-        loop[5, i -> r.push(i)]
+        loop(5, i -> r.push(i))
         ass.deepStrictEqual(r, [0, 1, 2, 3, 4])
     )
 
@@ -29,11 +29,11 @@ describe("loop", --
 
     it("array: number, arrow function with break", --
         r: []
-        loop[10, i ->
+        loop(10, i ->
             r.push(i)
             if i > 5
                 break
-        ]
+        )
         ass.deepStrictEqual(r, [0, 1, 2, 3, 4, 5, 6])
     )
 
@@ -73,9 +73,7 @@ describe("loop", --
 
 describe("repeat", --
     it("repeat", --
-        ass.deepStrictEqual(repeat[5, i -> i + 2], [2, 3, 4, 5, 6])
         ass.deepStrictEqual(repeat(5, i -> i + 2), [2, 3, 4, 5, 6])
-        ass.deepStrictEqual(repeat[5], [0, 1, 2, 3, 4])
         ass.deepStrictEqual(repeat(5), [0, 1, 2, 3, 4])
         ass.deepStrictEqual(repeat{1 to 10 by 2}, [1, 3, 5, 7, 9])
         ass.deepStrictEqual(repeat{1 by 2 for i -> i > 9 ? break else i}, [1, 3, 5, 7, 9])
@@ -103,7 +101,6 @@ describe("compose", --
 describe("spread", --
     it("spread", --
         ass.deepStrictEqual(spread(0, 3), [0, 0, 0])
-        ass.deepStrictEqual(spread[0, 3], [0, 0, 0])
     )
 )
 
@@ -126,17 +123,13 @@ describe("eventField", --
 describe("string", --
     it("format", --
         ass.strictEqual("a {0} b {1}"..format("qq", "r"), "a qq b r")
-        ass.strictEqual("a {0} b {1}"..format["qq", "r"], "a qq b r")
     )
     it("insert", --
         ass.strictEqual("aaa"..insert(1, "b"), "abaa")
-        ass.strictEqual("aaa"..insert[1, "b"], "abaa")
     )
     it("remove", --
         ass.strictEqual("abcde"..remove(1, 2), "ade")
-        ass.strictEqual("abcde"..remove[1, 2], "ade")
         ass.strictEqual("abcde"..remove(1), "acde")
-        ass.strictEqual("abcde"..remove[1], "acde")
     )
     it("matches", --
         matches: "aaa bbb"..matches(r"a")
@@ -175,11 +168,8 @@ describe("string", --
 describe("array", --
     it("portion", --
         ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion(2, 3), [3, 4, 5])
-        ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion[2, 3], [3, 4, 5])
         ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion(2, void, 3), [3, 4])
-        ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion[2, void, 3], [3, 4])
         ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion(2), [3, 4, 5, 6])
-        ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion[2], [3, 4, 5, 6])
     )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
