@@ -5,7 +5,7 @@ import "./main" all
 # to use the element itself without a selector.
 _elementOrUseSelector: (element, selector) -> if selector'ok then selector(element) else element
 
-_ratioToIndex: (arr, ratio) ->
+_ratioToIndex'export: (arr, ratio) ->
     r: Math.round(ratio * arr.length - 0.5)
     if r ≤ 0 # `≤` can correct -0
         0
@@ -14,7 +14,7 @@ _ratioToIndex: (arr, ratio) ->
     else
         r
 
-_ratioToLength: (arr, ratio) ->
+_ratioToLength'export: (arr, ratio) ->
     r: Math.round(ratio * (arr.length + 1) - 0.5)
     if r ≤ 0 # `≤` can correct -0
         0
@@ -23,10 +23,10 @@ _ratioToLength: (arr, ratio) ->
     else
         r
 
-_reverseToIndex: (arr, reverseIndex) ->
+_reverseToIndex'export: (arr, reverseIndex) ->
     arr.length - 1 - reverseIndex
 
-_positionToIndex: (arr, pos) ->
+_positionToIndex'export: (arr, pos) ->
     if pos is Number
         if 0 < pos < 1
             pos: {Ratio: pos}
@@ -37,22 +37,22 @@ _positionToIndex: (arr, pos) ->
     if pos is Number
         pos
     else if pos'ok.Reverse'ok.Ratio'ok
-        arr._reverseToIndex(arr._ratioToIndex(pos.Reverse.Ratio))
+        arr.._reverseToIndex(arr.._ratioToIndex(pos.Reverse.Ratio))
     else if pos'ok.Reverse'ok
-        arr._reverseToIndex(pos.Reverse)
+        arr.._reverseToIndex(pos.Reverse)
     else if pos'ok.Ratio'ok
-        arr._ratioToIndex(pos.Ratio)
+        arr.._ratioToIndex(pos.Ratio)
     else
         fail()
 
-_amountToLength: (arr, amount) ->
+_amountToLength'export: (arr, amount) ->
     if amount is Number
         if 0 < amount < 1
             amount: {Ratio: amount}
     if amount is Number
         amount
     else if amount'ok.Ratio'ok
-        arr._ratioToLength(amount.Ratio)
+        arr.._ratioToLength(amount.Ratio)
     else
         fail()
 
@@ -61,10 +61,10 @@ clone'export: arr -> arr.slice()
 isEmpty'export: arr -> arr.length = 0
 
 portion'export: (arr, startIndex, length, endIndex) ->
-    startIndex: arr._positionToIndex(startIndex)
-    length: arr._amountToLength(length) if length'ok
-    endIndex: arr._positionToIndex(endIndex) if endIndex'ok
-    arr.slice(startIndex, length'ok ? startIndex + length | endIndex + 1)
+    startIndex: arr.._positionToIndex(startIndex)
+    length: arr.._amountToLength(length) if length'ok
+    endIndex: arr.._positionToIndex(endIndex) if endIndex'ok
+    arr.slice(startIndex, length'ok ? startIndex + length | (endIndex'ok ? endIndex + 1 | void))
 
 toObject'export: arr ->
     r: {}
