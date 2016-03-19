@@ -242,9 +242,88 @@ intersect'export: (arr, array, equalityComparer: (a, b) -> a = b) ->
     )
     r
 
+flatten'export: (arr, level) ->
+    if level ≤ 0
+        fail()
+    else
+        r: []
+        canContinue: false
+        arr.forEach(m ->
+            if m is Array
+                canContinue: true
+                m.forEach(n -> r.push(n))
+            else
+                r.push(m)
+        )
+        if canContinue
+            if level'ok
+                if level = 1
+                    r
+                else
+                    r.flatten(level - 1)
+            else
+                r.flatten()
+        else
+            r
+
 toObject'export: arr ->
     r: {}
     arr.forEach(element ->
         r.(element.0): element.1
     )
     r
+
+deepJoin'export: (arr, args...) ->
+    args: args.0 if args.0 is Array
+    if args.length ≤ 1
+        arr.join(args.0)
+    else
+        arr.map(m -> m..deepJoin(args.slice(0, -1))).join(args..last())
+
+randomOne'export: arr -> arr.(Math..randomInt(arr.length))
+random'export: (arr, count) -> arr..clone()..takeRandom(count)
+takeRandomOne'export: arr ->
+    index: Math..randomInt(arr.length)
+    r: arr.(index)
+    arr..removeAt(index)
+    r
+takeRandom'export: (arr, count) ->
+    count ifnull: arr.length
+    count: arr.._amountToLength(count)
+    repeat(count, <> arr..takeRandomOne())
+
+removeAt'export: (arr, index) ->
+    arr.splice(index, 1)
+    arr
+
+# remove the first, not all
+remove'export: (arr, element) ->
+    index: arr.indexOf(element)
+    assert(index > -1)
+    arr..removeAt(index)
+
+# TODO: performance
+removeAll'export: (arr, element) ->
+    loop ->
+        index: arr.indexOf(element)
+        if index = -1
+            break
+        else
+            arr..removeAt(index)
+    arr
+
+# remove the first, not all
+removeMatch'export: (arr, predicate) ->
+    index: arr.findIndex(predicate)
+    assert(index > -1)
+    arr..removeAt(index)
+
+# TODO: performance
+removeAllMatch'export: (arr, predicate) ->
+    loop ->
+        index: arr.findIndex(predicate)
+        if index = -1
+            break
+        else
+            arr..removeAt(index)
+    arr
