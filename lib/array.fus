@@ -1,6 +1,65 @@
 fus 1.3.1
 import "./main" all
 
+# If the element is a number or string, it will be more convenient
+# to use the element itself without a selector.
+_elementOrUseSelector: (element, selector) -> if selector'ok then selector(element) else element
+
+_ratioToIndex: (arr, ratio) ->
+    r: Math.round(ratio * arr.length - 0.5)
+    if r ≤ 0 # `≤` can correct -0
+        0
+    else if r > arr.length - 1
+        arr.length - 1
+    else
+        r
+
+_ratioToLength: (arr, ratio) ->
+    r: Math.round(ratio * (arr.length + 1) - 0.5)
+    if r ≤ 0 # `≤` can correct -0
+        0
+    else if r > arr.length
+        arr.length
+    else
+        r
+
+_reverseToIndex: (arr, reverseIndex) ->
+    arr.length - 1 - reverseIndex
+
+_positionToIndex: (arr, pos) ->
+    if pos is Number
+        if 0 < pos < 1
+            pos: {Ratio: pos}
+        else if -1 < pos < 0
+            pos: {Reverse: {Ratio: -pos}}
+        else if pos < 0
+            pos: {Reverse: -pos - 1}
+    if pos is Number
+        pos
+    else if pos'ok.Reverse'ok.Ratio'ok
+        arr._reverseToIndex(arr._ratioToIndex(pos.Reverse.Ratio))
+    else if pos'ok.Reverse'ok
+        arr._reverseToIndex(pos.Reverse)
+    else if pos'ok.Ratio'ok
+        arr._ratioToIndex(pos.Ratio)
+    else
+        fail()
+
+_amountToLength: (arr, amount) ->
+    if amount is Number
+        if 0 < amount < 1
+            amount: {Ratio: amount}
+    if amount is Number
+        amount
+    else if amount'ok.Ratio'ok
+        arr._ratioToLength(amount.Ratio)
+    else
+        fail()
+
+clone'export: arr -> arr.slice()
+
+isEmpty'export: arr -> arr.length = 0
+
 portion'export: (arr, args...) ->
     [startIndex, length, endIndex]: args.0 is Array ? args.0 | args
     arr.slice(
