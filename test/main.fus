@@ -251,6 +251,19 @@ describe("array", --
         ass.strictEqual([1, 2, 3, 4, 5]..min(m -> -m), -5)
         ass.strictEqual([1, 2, 3, 4, 5]..min(), 1)
     )
+    it("sum", --
+        ass.strictEqual([1, 2, 3, 4, 5]..sum(), 15)
+    )
+    it("average", --
+        ass.strictEqual([1, 2, 3, 4, 5]..average(), 3)
+    )
+    it("median", --
+        ass.strictEqual([1, 2, 3, 4, 10]..median(), 3)
+        ass.strictEqual([1, 2, 3, 4, 5, 10]..median(), 3.5)
+    )
+    it("product", --
+        ass.strictEqual([1, 2, 3, 4, 5]..product(), 120)
+    )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
     )
