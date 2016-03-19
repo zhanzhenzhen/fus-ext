@@ -172,10 +172,31 @@ describe("array", --
         ass.notStrictEqual(b, a)
         ass.deepStrictEqual(b, a)
     )
+    it("isEmpty", --
+        ass.strictEqual([]..isEmpty(), true)
+        ass.strictEqual([1]..isEmpty(), false)
+    )
     it("portion", --
         ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion(2, 3), [3, 4, 5])
         ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion(2, void, 3), [3, 4])
         ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion(2), [3, 4, 5, 6])
+        ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..portion(2, void, 0.999), [3, 4, 5, 6])
+    )
+    it("at", --
+        ass.strictEqual([1, 2, 3, 4, 5]..at(1), 2)
+        ass.strictEqual([1, 2, 3, 4, 5]..at(0.5), 3)
+    )
+    it("atOrNull", --
+        ass.strictEqual([1, 2, 3, 4, 5]..atOrNull(1), 2)
+        ass.strictEqual([1, 2, 3, 4, 5]..atOrNull(10), null)
+    )
+    it("atOrVoid", --
+        ass.strictEqual([1, 2, 3, 4, 5]..atOrVoid(1), 2)
+        ass.strictEqual([1, 2, 3, 4, 5]..atOrVoid(10), void)
+    )
+    it("includes", --
+        ass.strictEqual([1, 2, 3]..includes(3), true)
+        ass.strictEqual([1, 2, 3]..includes(4), false)
     )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
