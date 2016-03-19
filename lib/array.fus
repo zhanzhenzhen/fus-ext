@@ -66,6 +66,119 @@ portion'export: (arr, startIndex, length, endIndex) ->
     endIndex: arr.._positionToIndex(endIndex) if endIndex'ok
     arr.slice(startIndex, length'ok ? startIndex + length | (endIndex'ok ? endIndex + 1 | void))
 
+at'export: (arr, index) ->
+    index: arr.._positionToIndex(index)
+
+    # useful for validating element operations like `first`, `last`
+    assert(Number.isInteger(index) and 0 ≤ index < arr.length)
+
+    arr.(index)
+
+atOrNull'export: (arr, index) ->
+    try
+        arr..at(index)
+    catch
+        null
+atOrVoid'export: (arr, index) ->
+    try
+        arr..at(index)
+    catch
+        void
+
+# TODO: In TC39, there's no `contains` but `includes`. I keep `contains` for old code.
+includes'export: (arr, value) -> value in arr
+contains'export: includes
+
+# TODO: performance
+first'export: (arr, predicate) ->
+    queryResult: predicate'ok ? arr.filter(predicate) | arr
+    queryResult..at(0)
+
+firstOrNull'export: (arr, predicate) ->
+    try
+        arr..first(predicate)
+    catch
+        null
+firstOrVoid'export: (arr, predicate) ->
+    try
+        arr..first(predicate)
+    catch
+        void
+
+# TODO: performance
+last'export: (arr, predicate) ->
+    queryResult: predicate'ok ? arr.filter(predicate) | arr
+    queryResult..at(queryResult.length - 1)
+
+lastOrNull'export: (arr, predicate) ->
+    try
+        arr..last(predicate)
+    catch
+        null
+lastOrVoid'export: (arr, predicate) ->
+    try
+        arr..last(predicate)
+    catch
+        void
+
+single'export: (arr, predicate) ->
+    queryResult: predicate'ok ? arr.filter(predicate) | arr
+    assert(queryResult.length = 1)
+    queryResult..at(0)
+
+# In Microsoft LINQ it still throws if matched elements > 1, because I think
+# it shouldn't throw. I want it more consistent.
+singleOrNull'export: (arr, predicate) ->
+    try
+        arr..single(predicate)
+    catch
+        null
+singleOrVoid'export: (arr, predicate) ->
+    try
+        arr..single(predicate)
+    catch
+        void
+
+# If array length is 1, then `reduce` will return the single element. That's exactly what
+# `withMax` and `withMin` are for, so we don't need to copy what we did in `sum` method.
+withMax'export: (arr, selector) -> arr.reduce((a, b, index) ->
+    _elementOrUseSelector(a, selector) > _elementOrUseSelector(b, selector) ? a | b
+)
+withMin'export: (arr, selector) -> arr.reduce((a, b, index) ->
+    _elementOrUseSelector(a, selector) < _elementOrUseSelector(b, selector) ? a | b
+)
+
+max'export: (arr, selector) -> _elementOrUseSelector(arr..withMax(selector), selector)
+min'export: (arr, selector) -> _elementOrUseSelector(arr..withMin(selector), selector)
+
+sum'export: (arr, selector) ->
+    if arr.length = 1
+        _elementOrUseSelector(arr..first(), selector)
+    else
+        arr.reduce((a, b, index) ->
+            (index = 1 ? _elementOrUseSelector(a, selector) | a)
+            + _elementOrUseSelector(b, selector)
+        )
+
+average'export: (arr, selector) -> arr..sum(selector) / arr.length
+
+median'export: (arr, selector) ->
+    sorted: arr..sort(selector)
+    a: sorted..at(0.5 - Number.EPSILON)
+    b: sorted..at(0.5 + Number.EPSILON)
+    m: _elementOrUseSelector(a, selector)
+    n: _elementOrUseSelector(b, selector)
+    (m + n) / 2
+
+product'export: (arr, selector) ->
+    if arr.length = 1
+        _elementOrUseSelector(arr..first(), selector)
+    else
+        arr.reduce((a, b, index) ->
+            (index = 1 ? _elementOrUseSelector(a, selector) | a)
+            * _elementOrUseSelector(b, selector)
+        )
+
 toObject'export: arr ->
     r: {}
     arr.forEach(element ->
