@@ -124,6 +124,20 @@ describe("eventField", --
 )
 
 describe("string", --
+    it("format", --
+        ass.strictEqual("a {0} b {1}"..format("qq", "r"), "a qq b r")
+        ass.strictEqual("a {0} b {1}"..format["qq", "r"], "a qq b r")
+    )
+    it("insert", --
+        ass.strictEqual("aaa"..insert(1, "b"), "abaa")
+        ass.strictEqual("aaa"..insert[1, "b"], "abaa")
+    )
+    it("remove", --
+        ass.strictEqual("abcde"..remove(1, 2), "ade")
+        ass.strictEqual("abcde"..remove[1, 2], "ade")
+        ass.strictEqual("abcde"..remove(1), "acde")
+        ass.strictEqual("abcde"..remove[1], "acde")
+    )
     it("deepSplit", --
         ass.deepStrictEqual("a:b,c:d"..deepSplit(",", ":"), [["a", "b"], ["c", "d"]])
         ass.deepStrictEqual("a:b,c:d"..deepSplit[",", ":"], [["a", "b"], ["c", "d"]])
