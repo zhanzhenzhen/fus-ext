@@ -304,7 +304,7 @@ remove'export: (arr, element) ->
 
 # TODO: performance
 removeAll'export: (arr, element) ->
-    loop ->
+    loop --
         index: arr.indexOf(element)
         if index = -1
             break
@@ -320,7 +320,7 @@ removeMatch'export: (arr, predicate) ->
 
 # TODO: performance
 removeAllMatch'export: (arr, predicate) ->
-    loop ->
+    loop --
         index: arr.findIndex(predicate)
         if index = -1
             break
