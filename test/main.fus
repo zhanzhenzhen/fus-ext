@@ -375,5 +375,15 @@ describe("array", --
         r: arr..remove(2)
         ass.strictEqual(r, arr)
         ass.deepStrictEqual(arr, [1, 2, 3, 4])
+        ass.throws(-- arr..remove(5))
+    )
+    it("removeAll", --
+        arr: [1, 2, 2, 3, 4]
+        r: arr..removeAll(2)
+        ass.strictEqual(r, arr)
+        ass.deepStrictEqual(arr, [1, 3, 4])
+        r: arr..removeAll(2)
+        ass.strictEqual(r, arr)
+        ass.deepStrictEqual(arr, [1, 3, 4])
     )
 )
