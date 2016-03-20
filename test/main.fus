@@ -308,6 +308,27 @@ describe("array", --
     it("randomOne", --
         arr: [1, 2, 3, 4, 5, 6, 7, 8, 9]
         r: repeat(20, <> arr..randomOne())
-        ass(r..distinct().length > 1)
+        ass(r.every(m -> m is Number))
+        ass(r..distinct().length > 1) # This is to test random. If not random, then length will be 1.
+    )
+    it("random without argument", --
+        arr: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        r1: arr..random()
+        r2: arr..random()
+        ass.strictEqual(r1.length, arr.length)
+        ass.strictEqual(r2.length, arr.length)
+        ass(r1.every(m -> m is Number))
+        ass(r2.every(m -> m is Number))
+        ass.notDeepStrictEqual(r1, r2)
+    )
+    it("random with argument", --
+        arr: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+        r1: arr..random(20)
+        r2: arr..random(20)
+        ass.strictEqual(r1.length, 20)
+        ass.strictEqual(r2.length, 20)
+        ass(r1.every(m -> m is Number))
+        ass(r2.every(m -> m is Number))
+        ass.notDeepStrictEqual(r1, r2)
     )
 )
