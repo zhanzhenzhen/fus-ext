@@ -364,4 +364,10 @@ describe("array", --
         ass.strictEqual(arr1.length, 2)
         ass.strictEqual(arr2.length, 2)
     )
+    it("removeAt", --
+        arr: [1, 2, 3, 4, 5]
+        r: arr..removeAt(1)
+        ass.strictEqual(r, void)
+        ass.deepStrictEqual(arr, [1, 3, 4, 5])
+    )
 )

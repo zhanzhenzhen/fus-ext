@@ -294,7 +294,7 @@ takeRandom'export: (arr, count) ->
 
 removeAt'export: (arr, index) ->
     arr.splice(index, 1)
-    arr
+    void
 
 # remove the first, not all
 remove'export: (arr, element) ->
@@ -310,7 +310,6 @@ removeAll'export: (arr, element) ->
             break
         else
             arr..removeAt(index)
-    arr
 
 # remove the first, not all
 removeMatch'export: (arr, predicate) ->
@@ -326,4 +325,3 @@ removeAllMatch'export: (arr, predicate) ->
             break
         else
             arr..removeAt(index)
-    arr
