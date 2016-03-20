@@ -165,6 +165,23 @@ describe("string", --
     )
 )
 
+describe("math", --
+    it("randomNumber", --
+        r: repeat(60, <> Math..randomNumber(1, 3))
+        ass(r.every(m -> 1 ≤ m < 3))
+        ass(r.some(m -> 1 ≤ m < 2))
+        ass(r.some(m -> 2 ≤ m < 3))
+        ass(r..distinct().length > 1) # This is to test random. If not random, then length will be 1.
+    )
+    it("randomInt", --
+        r: repeat(60, <> Math..randomInt(1, 3))
+        ass(r.every(m -> m = 1 or m = 2))
+        ass(r.some(m -> m = 1))
+        ass(r.some(m -> m = 2))
+        ass(r..distinct().length > 1)
+    )
+)
+
 describe("array", --
     it("clone", --
         a: [1, 2, 3]
