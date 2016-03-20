@@ -133,10 +133,25 @@ export feArray
 feMath: import "./math" all
 export feMath
 
+feJson: import "./json" all
+export feJson
+
+feDate: import "./date" all
+export feDate
+
+feConsole: import "./console" all
+export feConsole
+
 ..'export: x ->
     if x = Math
         feMath
+    else if x = JSON
+        feJson
+    else if x = console
+        feConsole
     else if x is String
         feString
     else if x is Array
         feArray
+    else if x is Date
+        feDate

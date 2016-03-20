@@ -15,6 +15,9 @@ fus 1.3.1, radical
     feString
     feArray
     feMath
+    feJson
+    feDate
+    feConsole
 }: import "fus-ext"
 
 export loop
@@ -31,5 +34,8 @@ export web
 export feString
 export feArray
 export feMath
+export feJson
+export feDate
+export feConsole
 
 global'export: sys.global
