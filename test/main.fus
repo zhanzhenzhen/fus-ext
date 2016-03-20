@@ -306,11 +306,8 @@ describe("array", --
         ass.strictEqual([["a", "b"], ["c", "d"]]..deepJoin[":", ","], "a:b,c:d")
     )
     it("randomOne", --
-        console.log [1, 2, 3, 4, 5]..randomOne()
-        console.log [1, 2, 3, 4, 5]..randomOne()
-        console.log [1, 2, 3, 4, 5]..randomOne()
-        console.log [1, 2, 3, 4, 5]..randomOne()
-        console.log [1, 2, 3, 4, 5]..randomOne()
-        ass.strictEqual([1, 2, 3, 4, 5]..randomOne(), [1, 2, 4, 5])
+        arr: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        r: repeat(20, <> arr..randomOne())
+        ass(r..distinct().length > 1)
     )
 )
