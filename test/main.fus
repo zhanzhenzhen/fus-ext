@@ -473,4 +473,7 @@ describe("number", --
         ass.strictEqual((1)..approxLessThan(1.001), true)
         ass.strictEqual((1)..approxLessThan(0.999), false)
     )
+    it("pad", --
+        ass.strictEqual((123.4)..pad(5, 2), "00123.40")
+    )
 )

@@ -6,7 +6,7 @@ approxGreaterThan'export: (num, x) -> Math..approxGreaterThan(num.valueOf(), x)
 approxLessThan'export: (num, x) -> Math..approxLessThan(num.valueOf(), x)
 
 pad'export: (num, integerSize, fractionalSize) ->
-    num.valueOf().format{
+    num.valueOf()..format{
         integerSize: integerSize
         fractionalSize: fractionalSize
     }
@@ -48,7 +48,7 @@ format'export: (num, options) ->
             Math.round(x).toString(radix)
     isNegative: s.0 = "-"
     if s.0 = "+" or s.0 = "-"
-        s: s.remove(0)
+        s: s..remove(0)
     do --
         pos: s.indexOf(".")
         rawIntegerSize: pos = -1 ? s.length | pos
@@ -73,12 +73,12 @@ format'export: (num, options) ->
         if fractionalGroupEnabled
             fractionalStart: (pos = -1 ? s.length | pos) + 1 + fractionalGroupSize
             repeat{fractionalStart to s.length - 1 by fractionalGroupSize}
-            .funReverse()
-            .forEach(i -> s: s.insert(i, fractionalGroupSeparator))
+            ..reverse()
+            .forEach(i -> s: s..insert(i, fractionalGroupSeparator))
         if integerGroupEnabled
             integerStart: (pos = -1 ? s.length | pos) - integerGroupSize
             repeat{integerStart to 1 by -integerGroupSize}
-            .forEach(i -> s: s.insert(i, integerGroupSeparator))
+            .forEach(i -> s: s..insert(i, integerGroupSeparator))
     if forcesSign
         if isNegative
             s: "-" + s
