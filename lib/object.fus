@@ -29,9 +29,11 @@ allKeys'export: (ns, x) ->
     r: []
     key: null
     js"
-        for (key in x) {
-            r.push(key);
-        }
+        (() => {
+            for (key in x) {
+                r.push(key);
+            }
+        })()
     "
     r
 keyValues'export: (ns, x) -> Object.keys(x).map(key -> [key, x.(key)])
