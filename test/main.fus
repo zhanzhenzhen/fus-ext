@@ -441,3 +441,11 @@ describe("json", --
         ass.deepStrictEqual(b, a)
     )
 )
+
+describe("number static", --
+    it("isFraction", --
+        ass.strictEqual(Number..isFraction(1.5), true)
+        ass.strictEqual(Number..isFraction(1), false)
+        ass.strictEqual(Number..isFraction(null), false)
+    )
+)
