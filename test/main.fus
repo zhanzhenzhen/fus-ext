@@ -420,3 +420,24 @@ describe("array", --
         ass.deepStrictEqual(arr, [1, 3, 5])
     )
 )
+
+describe("date", --
+    it("add", --
+        ass.strictEqual(Date(50000)..add(20000).getTime(), 70000)
+    )
+    it("subtract", --
+        ass.strictEqual(Date(50000)..subtract(20000).getTime(), 30000)
+    )
+    it("equals", --
+        ass.strictEqual(Date(50000)..equals(Date(50000)), true)
+    )
+)
+
+describe("json", --
+    it("clone", --
+        a: {foo: 1}
+        b: JSON..clone(a)
+        ass.notStrictEqual(b, a)
+        ass.deepStrictEqual(b, a)
+    )
+)
