@@ -40,8 +40,8 @@ allKeyValues'export: (ns, x) -> Object..allKeys(x).map(key -> [key, x.(key)])
 forEach'export: (ns, x, callback) -> Object.keys(x).forEach(key -> callback(key, x.(key)))
 forEachOfAll'export: (ns, x, callback) -> Object..allKeys(x).forEach(key -> callback(key, x.(key)))
 
-deepAssign'export: (ns, target, sources...) ->
-    sources.forEach(source ->
+deepAssign'export: (ns, theTarget, sources...) ->
+    sources.forEach(theSource ->
         internalDeepAssign: (target, source) ->
             Object..forEach(source, (key, value) ->
                 if Object..isObject(value) and not Array.isArray(value)
@@ -50,9 +50,9 @@ deepAssign'export: (ns, target, sources...) ->
                 else
                     target.(key): Object..deepClone(value)
             )
-        internalDeepAssign(target, source)
+        internalDeepAssign(theTarget, theSource)
     )
-    target
+    theTarget
 
 absorb'export: (ns, subject, objects...) ->
     objects.forEach(object ->
@@ -62,8 +62,8 @@ absorb'export: (ns, subject, objects...) ->
     )
     subject
 
-deepAbsorb'export: (ns, subject, objects...) ->
-    objects.forEach(object ->
+deepAbsorb'export: (ns, theSubject, objects...) ->
+    objects.forEach(theObject ->
         internalDeepAbsorb: (subject, object) ->
             Object..forEach(object, (key, value) ->
                 if Object..isObject(value) and not Array.isArray(value)
@@ -72,9 +72,9 @@ deepAbsorb'export: (ns, subject, objects...) ->
                 else
                     subject.(key): Object..deepClone(value) if subject.(key) = void
             )
-        internalDeepAbsorb(subject, object)
+        internalDeepAbsorb(theSubject, theObject)
     )
-    subject
+    theSubject
 
 deepClone'export: (ns, x) ->
     if Object..isObject(x)
