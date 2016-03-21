@@ -475,5 +475,36 @@ describe("number", --
     )
     it("pad", --
         ass.strictEqual((123.4)..pad(5, 2), "00123.40")
+        ass.strictEqual((123.4)..pad(5), "00123")
+    )
+    it("format", --
+        ass.strictEqual((123.4)..format{integerSize: 5, fractionalSize: 2}, "00123.40")
+        ass.strictEqual((123.4)..format{integerSize: 5}, "00123")
+        ass.strictEqual((123.4)..format(), "123")
+        ass.strictEqual((123.6)..format(), "124")
+        ass.strictEqual((123.4)..format{forcesSign}, "+123")
+        ass.strictEqual((123.4)..format{radix: 16}, "7b")
+        ass.strictEqual((1234567.890123)..format{integerGroupEnabled}, "1,234,568")
+        ass.strictEqual((1234567.890123)..format{
+            integerGroupEnabled
+            integerGroupSeparator: "|"
+            integerGroupSize: 4
+        }, "123|4568")
+        ass.strictEqual((1234567.890123)..format{
+            fractionalSize: 9
+            integerGroupEnabled
+            fractionalGroupEnabled
+        }, "1,234,567.890 123 000")
+        ass.strictEqual((1234567.890123)..format{
+            integerSize: 12
+            fractionalSize: 9
+            forcesSign
+            integerGroupEnabled
+            integerGroupSeparator: "|"
+            integerGroupSize: 4
+            fractionalGroupEnabled
+            fractionalGroupSeparator: ","
+            fractionalGroupSize: 2
+        }, "+0000|0123|4567.89,01,23,00,0")
     )
 )
