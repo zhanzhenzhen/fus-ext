@@ -1,4 +1,4 @@
 fus 1.3.1
 import "./main" all
 
-logt'export: (con, args...) -> console.log.apply(console, [Date().toISOString()].concat(args))
+logt'export: (ns, args...) -> console.log.apply(console, [Date().toISOString()].concat(args))

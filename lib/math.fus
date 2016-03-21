@@ -2,11 +2,11 @@ fus 1.3.1
 import "./main" all
 
 # Returns a random number x where m≤x<n.
-randomNumber'export: (math, m, n) -> m < n ? m + Math.random() * (n - m) | fail()
+randomNumber'export: (ns, m, n) -> m < n ? m + Math.random() * (n - m) | fail()
 
 # If n is omitted, returns a random integer x where 0≤x<m.
 # If n is not omitted, Returns a random integer x where m≤x<n.
-randomInt'export: (math, m, n) ->
+randomInt'export: (ns, m, n) ->
     min: n = void ? 0 | m
     max: n = void ? m | n
     Math.floor(Math..randomNumber(min, max))
