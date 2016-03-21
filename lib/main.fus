@@ -133,6 +133,9 @@ export feNumberStatic
 feString: import "./string" all
 export feString
 
+feObject: import "./object" all
+export feObject
+
 feArray: import "./array" all
 export feArray
 
@@ -151,6 +154,8 @@ export feConsole
 ..'export: x ->
     if x = Number
         feNumberStatic
+    else if x = Object
+        feObject
     else if x = Math
         feMath
     else if x = JSON
