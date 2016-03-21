@@ -448,4 +448,8 @@ describe("number static", --
         ass.strictEqual(Number..isFraction(1), false)
         ass.strictEqual(Number..isFraction(null), false)
     )
+    it("parseFloat", --
+        ass.strictEqual(Number..parseFloat("1.5"), 1.5)
+        ass.strictEqual(Number..parseFloat("1.5%"), 0.015)
+    )
 )
