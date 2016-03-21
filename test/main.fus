@@ -453,3 +453,24 @@ describe("number static", --
         ass.strictEqual(Number..parseFloat("1.5%"), 0.015)
     )
 )
+
+describe("number", --
+    it("approxEquals", --
+        ass.strictEqual((1)..approxEquals(1.000000001), true)
+        ass.strictEqual((1)..approxEquals(0.999999999), true)
+        ass.strictEqual((1)..approxEquals(1.001), false)
+        ass.strictEqual((1)..approxEquals(0.999), false)
+    )
+    it("approxGreaterThan", --
+        ass.strictEqual((1)..approxGreaterThan(1.000000001), true)
+        ass.strictEqual((1)..approxGreaterThan(0.999999999), true)
+        ass.strictEqual((1)..approxGreaterThan(1.001), false)
+        ass.strictEqual((1)..approxGreaterThan(0.999), true)
+    )
+    it("approxLessThan", --
+        ass.strictEqual((1)..approxLessThan(1.000000001), true)
+        ass.strictEqual((1)..approxLessThan(0.999999999), true)
+        ass.strictEqual((1)..approxLessThan(1.001), true)
+        ass.strictEqual((1)..approxLessThan(0.999), false)
+    )
+)

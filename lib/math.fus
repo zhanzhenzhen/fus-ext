@@ -12,8 +12,8 @@ approxEquals'export: (ns, a, b) ->
 
     1 / threshold < a / b < threshold
 
-approxGreaterThan'export: (ns, a, b) -> a > b or Math.approxEquals(a, b)
-approxLessThan'export: (ns, a, b) -> a < b or Math.approxEquals(a, b)
+approxGreaterThan'export: (ns, a, b) -> a > b or Math..approxEquals(a, b)
+approxLessThan'export: (ns, a, b) -> a < b or Math..approxEquals(a, b)
 # ]========================================
 
 radiansToDegrees'export: (ns, radians) -> radians / Math.PI * 180
