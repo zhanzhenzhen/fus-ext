@@ -482,7 +482,9 @@ describe("number", --
         ass.strictEqual((123.4)..format{integerSize: 5}, "00123")
         ass.strictEqual((123.4)..format(), "123")
         ass.strictEqual((123.6)..format(), "124")
+        ass.strictEqual((-123.4)..format(), "-123")
         ass.strictEqual((123.4)..format{forcesSign}, "+123")
+        ass.strictEqual((-123.4)..format{forcesSign}, "-123")
         ass.strictEqual((123.4)..format{radix: 16}, "7b")
         ass.strictEqual((1234567.890123)..format{integerGroupEnabled}, "1,234,568")
         ass.strictEqual((1234567.890123)..format{
