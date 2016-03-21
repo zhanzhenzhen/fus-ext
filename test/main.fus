@@ -166,6 +166,50 @@ describe("string", --
 )
 
 describe("math", --
+    it("approxEquals", --
+        ass.strictEqual(Math..approxEquals(1, 1.000000001), true)
+        ass.strictEqual(Math..approxEquals(1, 0.999999999), true)
+        ass.strictEqual(Math..approxEquals(1, 1.001), false)
+        ass.strictEqual(Math..approxEquals(1, 0.999), false)
+    )
+    it("approxGreaterThan", --
+        ass.strictEqual(Math..approxGreaterThan(1, 1.000000001), true)
+        ass.strictEqual(Math..approxGreaterThan(1, 0.999999999), true)
+        ass.strictEqual(Math..approxGreaterThan(1, 1.001), false)
+        ass.strictEqual(Math..approxGreaterThan(1, 0.999), true)
+    )
+    it("approxLessThan", --
+        ass.strictEqual(Math..approxLessThan(1, 1.000000001), true)
+        ass.strictEqual(Math..approxLessThan(1, 0.999999999), true)
+        ass.strictEqual(Math..approxLessThan(1, 1.001), true)
+        ass.strictEqual(Math..approxLessThan(1, 0.999), false)
+    )
+    it("radiansToDegrees", --
+        ass.strictEqual(Math..radiansToDegrees(Math.PI), 180)
+        ass.strictEqual(Math..radiansToDegrees(Math.PI * 2), 360)
+    )
+    it("degreesToRadians", --
+        ass.strictEqual(Math..degreesToRadians(180), Math.PI)
+        ass.strictEqual(Math..degreesToRadians(360), Math.PI * 2)
+    )
+    it("principalRadians", --
+        ass.strictEqual(Math..principalRadians(Math.PI * 0.5), Math.PI * 0.5)
+        ass.strictEqual(Math..principalRadians(Math.PI), Math.PI)
+        ass.strictEqual(Math..principalRadians(Math.PI * 2), 0)
+        ass.strictEqual(Math..principalRadians(-Math.PI), Math.PI)
+        ass.strictEqual(Math..principalRadians(Math.PI * 1.5), -Math.PI * 0.5)
+    )
+    it("principalDegrees", --
+        ass.strictEqual(Math..principalDegrees(90), 90)
+        ass.strictEqual(Math..principalDegrees(180), 180)
+        ass.strictEqual(Math..principalDegrees(360), 0)
+        ass.strictEqual(Math..principalDegrees(-180), 180)
+        ass.strictEqual(Math..principalDegrees(270), -90)
+    )
+    it("roundDecimal", --
+        ass.strictEqual(Math..roundDecimal(1.678), 2)
+        ass.strictEqual(Math..roundDecimal(1.678, 2), 1.68)
+    )
     it("randomNumber", --
         r: repeat(60, <> Math..randomNumber(1, 3))
         ass(r.every(m -> 1 ≤ m < 3))
