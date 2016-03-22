@@ -674,3 +674,11 @@ describe("object", --
         ass.deepStrictEqual(d, {a: {m1: 5}, b: 7})
     )
 )
+
+describe("timer", --
+    it("IntervalTimer", --
+        timer: IntervalTimer()
+        timer.onArrive <>
+            console.log Math.random()
+    )
+)

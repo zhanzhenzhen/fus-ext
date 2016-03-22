@@ -1,6 +1,9 @@
 fus 1.3.1
 import "./main" all
 
+# Why use the name `TheTimer`, etc? Because we import the global name `Timer`. We must avoid
+# conflict.
+
 # Why default precision is 30ms? Because in most cases we don't want it to bring more CPU usage.
 # In my test if it's 1ms then CPU usage will be around 5%. If 30ms then 0.4%.
 # These two numbers are in single-core, so it's 1.25% and 0.1% in all my 4 cores.
@@ -11,7 +14,7 @@ import "./main" all
 # 100 `setInterval`, callback is very simple: 13% CPU usage
 # So, single `setInterval` is better. The real production will not reach 100000 cycles.
 
-Timer'export: class
+TheTimer'export: class
     static _endOfTime: new Date("9999-12-30T00:00:00Z")
     static _precision: 30
 
@@ -78,7 +81,7 @@ Timer'export: class
         me
     getCounter: <> me._counter
 
-IntervalTimer'export: class from Timer
+TheIntervalTimer'export: class from TheTimer
     new: options ->
         super(options)
         me.interval: options'ok.interval ifnull 1000
@@ -115,7 +118,7 @@ IntervalTimer'export: class from Timer
                     me.stop()
         )
 
-Observer'export: class from IntervalTimer
+TheObserver'export: class from TheIntervalTimer
     static _error: Error()
     new: <>
         [options, fun]: @0 is Function ? [@1, @0] | [@0, @1]
