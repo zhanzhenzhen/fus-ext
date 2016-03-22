@@ -97,12 +97,12 @@ eventField'export: --
         me
     f._listeners: []
     f.getListeners: --
-        f._listeners.clone()
+        f._listeners..clone()
     f.bind: listener ->
         f._listeners.push(listener) if listener not in f._listeners
         f
     f.unbind: listener ->
-        f._listeners.removeAll(listener)
+        f._listeners..removeAll(listener)
         f
     f.unbindAll: --
         f._listeners: []

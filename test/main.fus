@@ -676,9 +676,20 @@ describe("object", --
 )
 
 describe("timer", --
-    it("IntervalTimer", --
-        timer: IntervalTimer()
-        timer.onArrive <>
-            console.log Math.random()
+    it("IntervalTimer", done ->
+        timer: IntervalTimer{interval: 100}
+        count: 0
+        timer.onArrive e ->
+            now: Date()
+            ass(now - e.nowTime < 200)
+            ass(0 ≤ e.nowTime - e.idealTime < 200)
+            ass.strictEqual(e.index, count)
+            ass.strictEqual(timer.getCounter(), e.index + 1)
+            ass.strictEqual(timer.getRunning(), true)
+            count: self + 1
+            if count = 5
+                timer.stop()
+                ass.strictEqual(timer.getRunning(), false)
+                done()
     )
 )
