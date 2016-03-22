@@ -236,12 +236,12 @@ IntervalTimer'export: class from Timer
 Observer'export: class from IntervalTimer
     static _error: Error()
     new: <>
-        [options, fun]: @0 is Function ? [@1, @0] | [@0, @1]
+        [options, fn]: @0 is Function ? [@1, @0] | [@0, @1]
         clonedOptions: options'ok ? Object..clone(options) | {}
         clonedOptions.interval ifnull: 100
         clonedOptions.skipsPast ifnull: true
         super(clonedOptions)
-        me._fun: fun
+        me._fun: fn
         me.onChange: eventField()
         me.onUpdate: eventField()
         me.onArrive.bind(<>
