@@ -611,4 +611,66 @@ describe("object", --
             f: 0
         })
     )
+    it("absorb", --
+        settings: {
+            port: 8080
+        }
+        defaultSettings: {
+            host: "127.0.0.1"
+            port: 80
+        }
+        Object..absorb(settings, defaultSettings)
+        ass.deepStrictEqual(settings, {host: "127.0.0.1", port: 8080})
+    )
+    it("deepAbsorb", --
+        subjectSettings: {
+            a: 1
+            b: {
+                c: 5
+                d: 4
+            }
+            e: 8
+        }
+        objectSettings: {
+            a: 2
+            b: {
+                c: 6
+                g: 3
+            }
+            f: 0
+        }
+        Object..deepAbsorb(subjectSettings, objectSettings)
+        ass.deepStrictEqual(subjectSettings, {
+            a: 1
+            b: {
+                c: 5
+                d: 4
+                g: 3
+            }
+            e: 8
+            f: 0
+        })
+    )
+    it("deepClone", --
+        a: {
+            a: 1
+            b: {
+                c: 5
+                d: 4
+            }
+            e: 8
+        }
+        b: Object..deepClone(a)
+        ass.deepStrictEqual(b, a)
+        ass.notStrictEqual(b, a)
+        ass.deepStrictEqual(b.b, a.b)
+        ass.notStrictEqual(b.b, a.b)
+        c: {
+            a: <>
+            b: 7
+        }
+        c.a.m1: 5
+        d: Object..deepClone(c)
+        ass.deepStrictEqual(d, {a: {m1: 5}, b: 7})
+    )
 )
