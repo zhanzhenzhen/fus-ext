@@ -13,8 +13,10 @@ fus 1.3.1, radical
     Timer
     IntervalTimer
     Observer
+    Point
     sys
     web
+    cmath
     feNumber
     feNumberStatic
     feString
@@ -39,8 +41,10 @@ export eventField
 export Timer
 export IntervalTimer
 export Observer
+export Point
 export sys
 export web
+export cmath
 export feNumber
 export feNumberStatic
 export feString
