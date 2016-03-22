@@ -266,6 +266,337 @@ Observer'export: class from IntervalTimer
 
 # ]========================================
 
+# This class is a combination of 3 things: complex number, 2d point, and 2d vector.
+# It can even be used for all "ordered pair" things such as size (width and height).
+Point'export: class
+    constructor: (x, y) ->
+        me.x: x
+        me.y: y
+
+    static from: (value, second) ->
+        if value is Number
+            if second is Number
+                Point(value, second)
+            else
+                Point(value, 0)
+        else if value is Point
+            value.clone()
+        else if value is String
+            Point.fromString(value)
+        else if value is Array
+            Point.fromArray(value)
+        else
+            fail()
+
+    static fromArray: array -> Point(array.0, array.1)
+
+    static fromString: s ->
+        adjustedString: s.replace(r"[ ()] "g, "")
+        normalMatch: adjustedString.match(r"^([^,]*),(.*)$")
+        if normalMatch'ok
+            Point(
+                Number..parseFloat(normalMatch.1),
+                Number..parseFloat(normalMatch.2)
+            )
+        else
+            complexMatch: adjustedString.match(r"
+                ^
+                    (
+                        [+-]?
+                        [0-9]*
+                        \.?
+                        [0-9]*
+                        (?:
+                            [Ee]
+                            [+-]?
+                            [0-9]+
+                        )?
+                        (?! [i0-9Ee.] )
+                    )?
+                    (?:
+                        (
+                            [+-]?
+                            [0-9]*
+                            \.?
+                            [0-9]*
+                            (?:
+                                [Ee]
+                                [+-]?
+                                [0-9]+
+                            )?
+                        )
+                        i
+                    )?
+                $
+            ")
+            if complexMatch'ok
+                real: complexMatch.1 ifnull "0"
+                imaginary: complexMatch.2 ifnull "0"
+                if real = "" then real: "1"
+                if imaginary = "" then imaginary: "1"
+                if real = "+" then real: "1"
+                if imaginary = "+" then imaginary: "1"
+                if real = "-" then real: "-1"
+                if imaginary = "-" then imaginary: "-1"
+                Point(
+                    parseFloat(real),
+                    parseFloat(imaginary)
+                )
+            else
+                fail()
+
+    static fromPolar: (r, angle) -> Point(r * Math.cos(angle), r * Math.sin(angle))
+
+    static fromPolarInDegrees: (r, angle) -> match Math..principalDegrees(angle)
+        # avoid approximation
+        0   ? Point(r, 0)
+        90  ? Point(0, r)
+        -90 ? Point(0, -r)
+        180 ? Point(-r, 0)
+
+        |     Point.fromPolar(r, Math..degreesToRadians(angle))
+
+    real: <> me.x
+    imaginary: <> me.y
+
+    toString: <> "(\(me.x),\(me.y))"
+    toComplexString: <>
+        sign: me.y ≥ 0 ? "+" | "-"
+        "\(me.x)\(sign)\(Math.abs(me.y))i"
+
+    clone: <> Point(me.x, me.y)
+
+    equals: p -> cmath.equals(me, p)
+    approxEquals: p -> cmath.approxEquals(me, p)
+    opposite: <> cmath.opposite(me)
+    reciprocal: <> cmath.reciprocal(me)
+    conjugate: <> cmath.conjugate(me)
+    abs: <> cmath.abs(me)
+    add: p -> cmath.add(me, p)
+    subtract: p -> cmath.subtract(me, p)
+    multiply: p -> cmath.multiply(me, p)
+    divide: p -> cmath.divide(me, p)
+    distance: p -> cmath.distance(me, p)
+
+    dotProduct: p ->
+        p: Point.from(p)
+        me.x * p.x + me.y * p.y
+
+    # There's no need to return the direction, because the direction is certain
+    # and not in x-y plane.
+    crossProduct: p ->
+        p: Point.from(p)
+        me.x * p.y - me.y * p.x
+
+    isOppositeTo: p -> me.opposite().equals(p)
+
+    phase: <> cmath.phase(me)
+    phaseTo: p ->
+        p: Point.from(p)
+        Math..principalRadians(p.phase() - me.phase())
+    phaseInDegrees: <> cmath.phaseInDegrees(me)
+    phaseInDegreesTo: p ->
+        p: Point.from(p)
+        Math..principalDegrees(p.phaseInDegrees() - me.phaseInDegrees())
+
+    scale: size ->
+        size: Point.from(size)
+        Point(me.x * size.x, me.y * size.y)
+
+    rotate: angle -> me.multiply(Point.fromPolar(1, angle))
+    rotateDegrees: angle -> me.multiply(Point.fromPolarInDegrees(1, angle))
+
+# `Point`'s non-static methods are not allowed to be written here. This is to
+# avoid circular calling.
+# Also, 2d vector related things are not written here. They may be in `Point`.
+cmath'export: {
+    equals: (a, b) ->
+        a: Point.from(a)
+        b: Point.from(b)
+        a.x = b.x and a.y = b.y
+
+    approxEquals: (a, b) ->
+        a: Point.from(a)
+        b: Point.from(b)
+        a.x..approxEquals(b.x) and a.y..approxEquals(b.y)
+
+    opposite: p ->
+        p: Point.from(p)
+        Point(-p.x, -p.y)
+
+    reciprocal: p ->
+        p: Point.from(p)
+        n: p.x * p.x + p.y * p.y
+        Point(p.x / n, -p.y / n)
+
+    conjugate: p ->
+        p: Point.from(p)
+        Point(p.x, -p.y)
+
+    abs: p ->
+        p: Point.from(p)
+
+        # If on x-axis or y-axis, then it doesn't calculate square root.
+        # This is not for performance, but for preventing approximation.
+        # Though all modern browsers already don't generate approximations,
+        # we make it even much safer.
+        if p.x = 0
+            Math.abs(p.y)
+        else if p.y = 0
+            Math.abs(p.x)
+        else
+            Math.sqrt(p.x * p.x + p.y * p.y)
+
+    phase: p -> # We use `phase` instead of `argument` to avoid ambiguity.
+        p: Point.from(p)
+        Math.atan2(p.y, p.x)
+
+    phaseInDegrees: p ->
+        p: Point.from(p)
+
+        # avoid approximation
+        if p.x = 0 and p.y = 0
+            0
+        else if p.x = 0 and p.y > 0
+            90
+        else if p.x = 0 and p.y < 0
+            -90
+        else if p.x > 0 and p.y = 0
+            0
+        else if p.x < 0 and p.y = 0
+            180
+
+        else
+            d: Math..radiansToDegrees(cmath.phase(p))
+            if d ≤ -180
+                180
+            else
+                d
+
+    add: (a, b) ->
+        a: Point.from(a)
+        b: Point.from(b)
+        Point(a.x + b.x, a.y + b.y)
+
+    subtract: (a, b) -> cmath.add(a, cmath.opposite(b))
+
+    multiply: (a, b) ->
+        a: Point.from(a)
+        b: Point.from(b)
+        Point(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x)
+
+    divide: (a, b) -> cmath.multiply(a, cmath.reciprocal(b))
+
+    distance: (a, b) -> cmath.abs(cmath.subtract(a, b))
+
+    exp: p ->
+        p: Point.from(p)
+        Point.fromPolar(Math.exp(p.x), p.y)
+
+    log: p -> Point(Math.log(cmath.abs(p)), cmath.phase(p))
+
+    pow: (a, b) -> cmath.exp(cmath.multiply(cmath.log(a), b))
+
+    sqrt: p ->
+        p: Point.from(p)
+        r: cmath.abs(p)
+        Point(Math.sqrt((r + p.x) / 2), Math.sign(p.y) * Math.sqrt((r - p.x) / 2))
+
+    cos: p ->
+        cmath.divide(
+            cmath.add(
+                cmath.exp(
+                    cmath.multiply(p, Point(0, 1))
+                ),
+                cmath.exp(
+                    cmath.multiply(
+                        cmath.opposite(p), Point(0, 1)
+                    )
+                )
+            ),
+            2
+        )
+
+    sin: p ->
+        cmath.divide(
+            cmath.subtract(
+                cmath.exp(
+                    cmath.multiply(p, Point(0, 1))
+                ),
+                cmath.exp(
+                    cmath.multiply(
+                        cmath.opposite(p), Point(0, 1)
+                    )
+                )
+            ),
+            Point(0, 2)
+        )
+
+    tan: p -> cmath.divide(cmath.sin(p), cmath.cos(p))
+
+    acos: p ->
+        cmath.opposite(
+            cmath.multiply(
+                cmath.log(
+                    cmath.add(
+                        p,
+                        cmath.multiply(
+                            cmath.sqrt(
+                                cmath.add(
+                                    cmath.opposite(
+                                        cmath.multiply(p, p)
+                                    ),
+                                    1
+                                )
+                            ),
+                            Point(0, 1)
+                        )
+                    )
+                ),
+                Point(0, 1)
+            )
+        )
+
+    asin: p ->
+        cmath.opposite(
+            cmath.multiply(
+                cmath.log(
+                    cmath.add(
+                        cmath.multiply(p, Point(0, 1)),
+                        cmath.sqrt(
+                            cmath.add(
+                                cmath.opposite(
+                                    cmath.multiply(p, p)
+                                ),
+                                1
+                            )
+                        )
+                    )
+                ),
+                Point(0, 1)
+            )
+        )
+
+    atan: p ->
+        cmath.multiply(
+            cmath.subtract(
+                cmath.log(
+                    cmath.subtract(
+                        1,
+                        cmath.multiply(p, Point(0, 1))
+                    )
+                ),
+                cmath.log(
+                    cmath.add(
+                        1,
+                        cmath.multiply(p, Point(0, 1))
+                    )
+                )
+            ),
+            Point(0, 0.5)
+        )
+}
+
 sys: import "./sys" all
 export sys
 
