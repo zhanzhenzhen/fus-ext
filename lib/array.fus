@@ -273,12 +273,12 @@ toObject'export: arr ->
     )
     r
 
-deepJoin'export: (arr, args...) ->
+join'export: (arr, args...) ->
     args: args.0 if args.0 is Array
     if args.length ≤ 1
         arr.join(args.0)
     else
-        arr.map(m -> m..deepJoin(args.slice(0, -1))).join(args..last())
+        arr.map(m -> m..join(args.slice(0, -1))).join(args..last())
 
 randomOne'export: arr -> arr.(Math..randomInt(arr.length))
 random'export: (arr, count) -> arr..clone()..takeRandom(count)

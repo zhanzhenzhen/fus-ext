@@ -61,7 +61,7 @@ capitalize'export: str ->
     # Use `charAt(0)` instead of `.0` because `.0` will return void if string is empty.
     str.charAt(0).toUpperCase() + str.substr(1)
 
-deepSplit'export: (str, args...) ->
+split'export: (str, args...) ->
     args: args.0 if args.0 is Array
     arr: str.split(args.0)
     if args.length = 2 and args.1 is Number
@@ -76,7 +76,7 @@ deepSplit'export: (str, args...) ->
     else if args.length ≤ 1
         arr
     else
-        arr.map(s -> s..deepSplit(args..portion(1)))
+        arr.map(s -> s..split(args..portion(1)))
 
 stripTrailingNewline'export: str ->
     if str.(str.length - 2) = "\r" and str.(str.length - 1) = "\n"

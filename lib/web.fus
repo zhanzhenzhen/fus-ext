@@ -40,7 +40,7 @@ request'export: options -> Promise((resolve, reject) ->
                     headerFields:
                         xhr.getAllResponseHeaders()
                         ..stripTrailingNewline()
-                        ..deepSplit("\r\n", ": ", 1)
+                        ..split("\r\n", ": ", 1)
                         .map(field -> [field.0.toLowerCase(), field.1])
                         ..toObject()
                     body:

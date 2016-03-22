@@ -151,9 +151,9 @@ describe("string", --
     it("capitalize", --
         ass.strictEqual("abc"..capitalize(), "Abc")
     )
-    it("deepSplit", --
-        ass.deepStrictEqual("a:b,c:d"..deepSplit(",", ":"), [["a", "b"], ["c", "d"]])
-        ass.deepStrictEqual("a:b,c:d"..deepSplit[",", ":"], [["a", "b"], ["c", "d"]])
+    it("split", --
+        ass.deepStrictEqual("a:b,c:d"..split(",", ":"), [["a", "b"], ["c", "d"]])
+        ass.deepStrictEqual("a:b,c:d"..split[",", ":"], [["a", "b"], ["c", "d"]])
     )
     it("stripTrailingNewline", --
         ass.strictEqual("a\nb\n"..stripTrailingNewline(), "a\nb")
@@ -362,9 +362,9 @@ describe("array", --
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
     )
-    it("deepJoin", --
-        ass.strictEqual([["a", "b"], ["c", "d"]]..deepJoin(":", ","), "a:b,c:d")
-        ass.strictEqual([["a", "b"], ["c", "d"]]..deepJoin[":", ","], "a:b,c:d")
+    it("join", --
+        ass.strictEqual([["a", "b"], ["c", "d"]]..join(":", ","), "a:b,c:d")
+        ass.strictEqual([["a", "b"], ["c", "d"]]..join[":", ","], "a:b,c:d")
     )
     it("randomOne", --
         arr: [1, 2, 3, 4, 5, 6, 7, 8, 9]
