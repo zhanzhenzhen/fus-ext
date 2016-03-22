@@ -118,16 +118,159 @@ eventField'export: --
         f
     f
 
+# Timers ========================================[
+# Why default precision is 30ms? Because in most cases we don't want it to bring more CPU usage.
+# In my test if it's 1ms then CPU usage will be around 5%. If 30ms then 0.4%.
+# These two numbers are in single-core, so it's 1.25% and 0.1% in all my 4 cores.
+
+# Why use one "global" `setInterval` to do checking? Because in my test, multiple `setInterval`
+# or `setTimeout` are expensive. Here's the test result (both using 1ms interval):
+# Single `setInterval`, callback has a 100000-cycle loop: 16% CPU usage
+# 100 `setInterval`, callback is very simple: 13% CPU usage
+# So, single `setInterval` is better. The real production will not reach 100000 cycles.
+
+Timer'export: class
+    static _endOfTime: new Date("9999-12-30T00:00:00Z")
+    static _precision: 30
+
+    static _enable: <>
+        Me._internalTimer ifnull: setInterval(--
+            Me._onCheck.fire()
+        , Me._precision)
+    static _disable: <>
+        if Me._internalTimer'ok
+            clearInterval(Me._internalTimer)
+        Me._internalTimer: null
+
+    static setPrecision: precision ->
+        if Me._internalTimer'ok
+            Me._disable()
+            Me._precision: precision
+            Me._enable()
+        else
+            Me._precision: precision
+        void
+    static getPrecision: <>
+        Me._precision
+
+    static getEndOfTime: <>
+        Me._endOfTime
+
+    static _onCheck: eventField()
+
+    new: options ->
+        me.targetTime: options'ok.targetTime ifnull Me._endOfTime
+        me.allowsEqual: options'ok.allowsEqual ifnull true
+        me._counter: 0
+        me._running: false
+        me.onArrive: eventField()
+        me.run()
+
+    run: <>
+        if not me._running
+            me._running: true
+            Me._enable()
+            me._checker: <>
+                nowTime: Date()
+                if (me.allowsEqual ? nowTime ≥ me.targetTime | nowTime > me.targetTime)
+                    me._counter: self + 1
+                    lastTargetTime: me.targetTime
+                    me.targetTime: Me._endOfTime
+                    me.onArrive.fire{
+                        idealTime: lastTargetTime
+                        nowTime: nowTime
+                        index: me._counter - 1
+                    }
+            Me._onCheck.bind(me._checker)
+        me
+    stop: <>
+        if me._running
+            me._running: false
+            Me._onCheck.unbind(me._checker)
+            if Me._onCheck.getListeners()..isEmpty()
+                Me._disable()
+        me
+    getRunning: <> me._running
+    resetCounter: <>
+        me._counter: 0
+        me
+    getCounter: <> me._counter
+
+IntervalTimer'export: class from Timer
+    new: options ->
+        super(options)
+        me.interval: options'ok.interval ifnull 1000
+        me.startTime: options'ok.startTime ifnull Date()
+        me.endTime: options'ok.endTime ifnull Me.getEndOfTime()..subtract(1000)
+        me.includesStart: options'ok.includesStart ifnull true
+        me.includesEnd: options'ok.includesEnd ifnull false
+        me.skipsPast: options'ok.skipsPast ifnull false
+        me.targetTime: me.startTime
+        me._started: false
+        me.onStart: eventField()
+        me.onArrive.bind(event ->
+            if me.interval < Me.getPrecision() * 2
+                me.stop()
+            else
+                now: Date()
+                me.targetTime:
+                    if me.skipsPast
+                        now - (now - event.idealTime) rem me.interval + me.interval
+                    else
+                        event.idealTime..add(me.interval)
+                if not me._started
+                    me._started: true
+                    if not me.includesStart
+                        me.resetCounter()
+                        event.blocksListeners: true
+                    me.onStart.fire()
+                if (
+                    if me.includesEnd
+                        me.targetTime > me.endTime
+                    else
+                        me.targetTime ≥ me.endTime
+                )
+                    me.stop()
+        )
+
+Observer'export: class from IntervalTimer
+    static _error: Error()
+    new: <>
+        [options, fun]: @0 is Function ? [@1, @0] | [@0, @1]
+        clonedOptions: options'ok ? Object..clone(options) | {}
+        clonedOptions.interval ifnull: 100
+        clonedOptions.skipsPast ifnull: true
+        super(clonedOptions)
+        me._fun: fun
+        me.onChange: eventField()
+        me.onUpdate: eventField()
+        me.onArrive.bind(<>
+            newValue:
+                try
+                    me._fun()
+                catch
+                    Me._error
+            if newValue = void
+                newValue: Me._error
+
+            # Must use `Object.is`, otherwise if NaN then the events will be fired endlessly.
+            if me._oldValue = void or not Object.is(newValue, me._oldValue)
+                me.onUpdate.fire{value: newValue}
+                if me._oldValue ≠ void
+                    me.onChange.fire{
+                        oldValue: me._oldValue
+                        newValue: newValue
+                    }
+                me._oldValue: newValue
+        )
+
+# ]========================================
+
 sys: import "./sys" all
 export sys
 
 web: import "./web" all
 export web
-
-{TheTimer as Timer, TheIntervalTimer as IntervalTimer, TheObserver as Observer}: import "./timer"
-export Timer
-export IntervalTimer
-export Observer
 
 feNumber: import "./number" all
 export feNumber

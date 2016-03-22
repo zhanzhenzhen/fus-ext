@@ -10,11 +10,11 @@ fus 1.3.1, radical
     assert
     spread
     eventField
-    sys
-    web
     Timer
     IntervalTimer
     Observer
+    sys
+    web
     feNumber
     feNumberStatic
     feString
@@ -35,11 +35,11 @@ export compose
 export assert
 export spread
 export eventField
-export sys
-export web
 export Timer
 export IntervalTimer
 export Observer
+export sys
+export web
 export feNumber
 export feNumberStatic
 export feString
