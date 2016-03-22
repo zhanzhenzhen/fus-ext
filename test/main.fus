@@ -554,3 +554,61 @@ describe("number", --
         }, "+0000|0123|4567.89,01,23,00,0")
     )
 )
+
+describe("object", --
+    it("isObject", --
+        ass.strictEqual(Object..isObject{}, true)
+        ass.strictEqual(Object..isObject[], true)
+        ass.strictEqual(Object..isObject(<>), true)
+        ass.strictEqual(Object..isObject(null), false)
+        ass.strictEqual(Object..isObject(void), false)
+        ass.strictEqual(Object..isObject(3), false)
+    )
+    it("isNormalObject", --
+        ass.strictEqual(Object..isNormalObject{}, true)
+        ass.strictEqual(Object..isNormalObject[], false)
+        ass.strictEqual(Object..isNormalObject(<>), false)
+        ass.strictEqual(Object..isNormalObject(null), false)
+        ass.strictEqual(Object..isNormalObject(void), false)
+        ass.strictEqual(Object..isNormalObject(3), false)
+    )
+    it("clone", --
+        a: {foo: {bar: 1}, other: 2}
+        b: Object..clone(a)
+        ass.deepStrictEqual(b, a)
+        ass.notStrictEqual(b, a)
+        ass.strictEqual(b.foo, a.foo)
+    )
+    it("keyValues", --
+        ass.deepStrictEqual(Object..keyValues{one: 1, other: 2}, [["one", 1], ["other", 2]])
+    )
+    it("deepAssign", --
+        slaveSettings: {
+            a: 1
+            b: {
+                c: 5
+                d: 4
+            }
+            e: 8
+        }
+        masterSettings: {
+            a: 2
+            b: {
+                c: 6
+                g: 3
+            }
+            f: 0
+        }
+        Object..deepAssign(slaveSettings, masterSettings)
+        ass.deepStrictEqual(slaveSettings, {
+            a: 2
+            b: {
+                c: 6
+                d: 4
+                g: 3
+            }
+            e: 8
+            f: 0
+        })
+    )
+)

@@ -14,7 +14,7 @@ isObject'export: (ns, x) ->
         typeof x === "object" || typeof x === "function"
     " and x ≠ null
 isNormalObject'export: (ns, x) ->
-    Object.isObject(x) and js"
+    Object..isObject(x) and js"
         typeof x !== "function"
     " and not Array.isArray(x)
 
@@ -27,12 +27,10 @@ clone'export: (ns, x) ->
 
 keyValues'export: (ns, x) -> Object.keys(x).map(key -> [key, x.(key)])
 
-forEach'export: (ns, x, callback) -> Object.keys(x).forEach(key -> callback(key, x.(key)))
-
 deepAssign'export: (ns, theTarget, sources...) ->
     sources.forEach(theSource ->
         internalDeepAssign: (target, source) ->
-            Object..forEach(source, (key, value) ->
+            Object..keyValues(source).forEach([key, value] ->
                 if Object..isObject(value) and not Array.isArray(value)
                 and Object..isObject(target.(key)) and not Array.isArray(target.(key))
                     internalDeepAssign(target.(key), value)
@@ -45,7 +43,7 @@ deepAssign'export: (ns, theTarget, sources...) ->
 
 absorb'export: (ns, subject, objects...) ->
     objects.forEach(object ->
-        Object..forEach(object, (key, value) ->
+        Object..keyValues(object).forEach([key, value] ->
             subject.(key): value if subject.(key) = void
         )
     )
@@ -54,7 +52,7 @@ absorb'export: (ns, subject, objects...) ->
 deepAbsorb'export: (ns, theSubject, objects...) ->
     objects.forEach(theObject ->
         internalDeepAbsorb: (subject, object) ->
-            Object..forEach(object, (key, value) ->
+            Object..keyValues(object).forEach([key, value] ->
                 if Object..isObject(value) and not Array.isArray(value)
                 and Object..isObject(subject.(key)) and not Array.isArray(subject.(key))
                     internalDeepAbsorb(subject.(key), value)
@@ -69,7 +67,7 @@ deepClone'export: (ns, x) ->
     if Object..isObject(x)
         theTarget: Array.isArray(x) ? [] | {}
         deepCopyFrom: (target, source) ->
-            Object..forEach(source, (key, value) ->
+            Object..keyValues(source).forEach([key, value] ->
                 if Object..isObject(value)
                     target.(key): Array.isArray(value) ? [] | {}
                     deepCopyFrom(target.(key), value)
