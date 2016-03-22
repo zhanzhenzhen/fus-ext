@@ -25,22 +25,9 @@ clone'export: (ns, x) ->
         y.(key): x.(key)
     y
 
-allKeys'export: (ns, x) ->
-    r: []
-    key: null
-    js"
-        (() => {
-            for (key in x) {
-                r.push(key);
-            }
-        })()
-    "
-    r
 keyValues'export: (ns, x) -> Object.keys(x).map(key -> [key, x.(key)])
-allKeyValues'export: (ns, x) -> Object..allKeys(x).map(key -> [key, x.(key)])
 
 forEach'export: (ns, x, callback) -> Object.keys(x).forEach(key -> callback(key, x.(key)))
-forEachOfAll'export: (ns, x, callback) -> Object..allKeys(x).forEach(key -> callback(key, x.(key)))
 
 deepAssign'export: (ns, theTarget, sources...) ->
     sources.forEach(theSource ->
