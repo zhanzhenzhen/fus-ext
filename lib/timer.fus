@@ -32,12 +32,15 @@ Timer'export: class
         else
             Me._precision: precision
         void
-    static getPrecision: ->
+    static getPrecision: <>
         Me._precision
+
+    static getEndOfTime: <>
+        Me._endOfTime
 
     static _onCheck: eventField()
 
-    constructor: options ->
+    new: options ->
         me.targetTime: options'ok.targetTime ifnull Me._endOfTime
         me.allowsEqual: options'ok.allowsEqual ifnull true
         me._counter: 0
@@ -66,7 +69,7 @@ Timer'export: class
         if me._running
             me._running: false
             Me._onCheck.unbind(me._checker)
-            if Me._onCheck.getListeners().isEmpty()
+            if Me._onCheck.getListeners()..isEmpty()
                 Me._disable()
         me
     getRunning: <> me._running
@@ -75,41 +78,41 @@ Timer'export: class
         me
     getCounter: <> me._counter
 
-class Date.IntervalTimer extends Date.Timer
-    constructor: (options) ->
+IntervalTimer'export: class from Timer
+    new: options ->
         super(options)
-        @interval = options?.interval ? 1000
-        @startTime = options?.startTime ? new Date()
-        @endTime = options?.endTime ? Date.Timer._endOfTime.subtract(1000)
-        @includesStart = options?.includesStart ? true
-        @includesEnd = options?.includesEnd ? false
-        @skipsPast = options?.skipsPast ? false
-        @targetTime = @startTime
-        @_started = false
-        @onStart = eventField()
-        @onArrive.bind((event) =>
-            if @interval < Date.Timer.getPrecision() * 2
-                @stop()
-                return
-            now = new Date()
-            @targetTime =
-                if @skipsPast
-                    now - (now - event.idealTime) % @interval + @interval
-                else
-                    event.idealTime.add(@interval)
-            if not @_started
-                @_started = true
-                if not @includesStart
-                    @resetCounter()
-                    event.blocksListeners = true
-                @onStart.fire()
-            if (
-                if @includesEnd
-                    @targetTime > @endTime
-                else
-                    @targetTime >= @endTime
-            )
-                @stop()
+        me.interval: options'ok.interval ifnull 1000
+        me.startTime: options'ok.startTime ifnull Date()
+        me.endTime: options'ok.endTime ifnull Me.getEndOfTime()..subtract(1000)
+        me.includesStart: options'ok.includesStart ifnull true
+        me.includesEnd: options'ok.includesEnd ifnull false
+        me.skipsPast: options'ok.skipsPast ifnull false
+        me.targetTime: me.startTime
+        me._started: false
+        me.onStart: eventField()
+        me.onArrive.bind(event ->
+            if me.interval < Me.getPrecision() * 2
+                me.stop()
+            else
+                now: Date()
+                me.targetTime:
+                    if me.skipsPast
+                        now - (now - event.idealTime) rem me.interval + me.interval
+                    else
+                        event.idealTime..add(me.interval)
+                if not me._started
+                    me._started: true
+                    if not me.includesStart
+                        me.resetCounter()
+                        event.blocksListeners: true
+                    me.onStart.fire()
+                if (
+                    if me.includesEnd
+                        me.targetTime > me.endTime
+                    else
+                        me.targetTime ≥ me.endTime
+                )
+                    me.stop()
         )
 
 class Date.Observer extends Date.IntervalTimer
