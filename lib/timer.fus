@@ -115,36 +115,33 @@ IntervalTimer'export: class from Timer
                     me.stop()
         )
 
-class Date.Observer extends Date.IntervalTimer
-    @_error: new Error()
-    constructor: ->
-        [options, fun] =
-            if typeof arguments[0] == "object"
-                [arguments[0], arguments[1]]
-            else
-                [arguments[1], arguments[0]]
-        clonedOptions = if options? then Object.clone(options) else {}
-        clonedOptions.interval ?= 100
-        clonedOptions.skipsPast ?= true
+Observer'export: class from IntervalTimer
+    static _error: Error()
+    new: <>
+        [options, fun]: @0 is Function ? [@1, @0] | [@0, @1]
+        clonedOptions: options'ok ? Object..clone(options) | {}
+        clonedOptions.interval ifnull: 100
+        clonedOptions.skipsPast ifnull: true
         super(clonedOptions)
-        @_fun = fun
-        @onChange = eventField()
-        @onUpdate = eventField()
-        @onArrive.bind(=>
-            newValue =
+        me._fun: fun
+        me.onChange: eventField()
+        me.onUpdate: eventField()
+        me.onArrive.bind(<>
+            newValue:
                 try
-                    @_fun()
+                    me._fun()
                 catch
-                    Date.Observer._error
-            if newValue == undefined then newValue = Date.Observer._error
+                    Me._error
+            if newValue = void
+                newValue: Me._error
 
             # Must use `Object.is`, otherwise if NaN then the events will be fired endlessly.
-            if @_oldValue == undefined or not Object.is(newValue, @_oldValue)
-                @onUpdate.fire(value: newValue)
-                if @_oldValue != undefined
-                    @onChange.fire(
-                        oldValue: @_oldValue
+            if me._oldValue = void or not Object.is(newValue, me._oldValue)
+                me.onUpdate.fire{value: newValue}
+                if me._oldValue ≠ void
+                    me.onChange.fire{
+                        oldValue: me._oldValue
                         newValue: newValue
-                    )
-                @_oldValue = newValue
+                    }
+                me._oldValue: newValue
         )
