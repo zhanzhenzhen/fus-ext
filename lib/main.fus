@@ -235,8 +235,8 @@ IntervalTimer'export: class from Timer
 
 Observer'export: class from IntervalTimer
     static _error: Error()
-    new: <>
-        [options, fn]: @0 is Function ? [@1, @0] | [@0, @1]
+    new: (args...) ->
+        [options, fn]: args.0 is Function ? [args.1, args.0] | [args.0, args.1]
         clonedOptions: options'ok ? Object..clone(options) | {}
         clonedOptions.interval ifnull: 100
         clonedOptions.skipsPast ifnull: true
