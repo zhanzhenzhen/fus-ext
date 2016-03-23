@@ -80,7 +80,11 @@ multiply'export: (a, b) ->
     b: Point.from(b)
     Point(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x)
 
-divide'export: (a, b) -> cmath.multiply(a, cmath.reciprocal(b))
+divide'export: (a, b) ->
+    a: Point.from(a)
+    b: Point.from(b)
+    z: b.x * b.x + b.y * b.y
+    Point((a.x * b.x + a.y * b.y) / z, (a.y * b.x - a.x * b.y) / z)
 
 distance'export: (a, b) -> cmath.abs(cmath.subtract(a, b))
 
