@@ -945,4 +945,16 @@ describe("point", --
         ass.strictEqual(Point(1, 2).isOppositeTo(Point(-1, -2)), true)
         ass.strictEqual(Point(1, 2).isOppositeTo(Point(1, -2)), false)
     )
+    it("phase", --
+        ass.strictEqual(Point.from("1+2i").phase()..pad(1, 9), "1.107148718")
+    )
+    it("phaseTo", --
+        ass.strictEqual(Point.from("1+2i").phaseTo(Point.from("i"))..pad(1, 9), "0.463647609")
+    )
+    it("phaseInDegrees", --
+        ass.strictEqual(Point.from("1+2i").phaseInDegrees()..pad(1, 9), "63.434948823")
+    )
+    it("phaseInDegreesTo", --
+        ass.strictEqual(Point.from("1+2i").phaseInDegreesTo(Point.from("i"))..pad(1, 9), "26.565051177")
+    )
 )
