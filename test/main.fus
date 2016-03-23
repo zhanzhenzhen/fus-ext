@@ -898,4 +898,41 @@ describe("point", --
         ass.strictEqual(p2.x, 1)
         ass.strictEqual(p2.y, 2)
     )
+    it("equals", --
+        ass.strictEqual(Point.from("1+2i").equals(Point.from("1+2i")), true)
+        ass.strictEqual(Point.from("1+2i").equals(Point.from("1+3i")), false)
+    )
+    it("approxEquals", --
+        ass.strictEqual(Point.from("1+2i").approxEquals(Point.from("1+2.000000001i")), true)
+        ass.strictEqual(Point.from("1+2i").approxEquals(Point.from("1+2.001i")), false)
+    )
+    it("opposite", --
+        ass.strictEqual(Point.from("1+2i").opposite().toString(), "(-1,-2)")
+    )
+    it("reciprocal", --
+        ass.strictEqual(Point.from("1+2i").reciprocal().toString(), "(0.2,-0.4)")
+    )
+    it("conjugate", --
+        ass.strictEqual(Point.from("1+2i").conjugate().toString(), "(1,-2)")
+    )
+    it("abs", --
+        ass.strictEqual(Point.from("1+2i").abs(), 2.2360679774997896964)
+        ass.strictEqual(Point.from("-1").abs(), 1)
+        ass.strictEqual(Point.from("i").abs(), 1)
+    )
+    it("add", --
+        ass.strictEqual(Point.from("1+2i").add(Point.from("3+5i")).toString(), "(4,7)")
+    )
+    it("subtract", --
+        ass.strictEqual(Point.from("1+2i").subtract(Point.from("3+5i")).toString(), "(-2,-3)")
+    )
+    it("multiply", --
+        ass.strictEqual(Point.from("1+2i").multiply(Point.from("3+5i")).toString(), "(-7,11)")
+    )
+    it("divide", --
+        ass.strictEqual(Point.from("1+2i").divide(Point.from("3+4i")).toString(), "(0.44,0.08)")
+    )
+    it("distance", --
+        ass.strictEqual(Point.from("1+2i").distance(Point.from("3+5i"))..pad(1, 9), "3.605551275")
+    )
 )
