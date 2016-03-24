@@ -399,8 +399,15 @@ Point'export: class
         p: Point.from(p)
         Math..principalDegrees(p.phaseInDegrees() - me.phaseInDegrees())
 
-    scale: size ->
-        size: Point.from(size)
+    scale: (value, second) ->
+        size:
+            if value is Number
+                if second is Number
+                    Point(value, second)
+                else
+                    Point(value, value)
+            else
+                Point.from(value)
         Point(me.x * size.x, me.y * size.y)
 
     rotate: angle -> me.multiply(Point.fromPolar(1, angle))

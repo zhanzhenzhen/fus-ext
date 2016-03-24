@@ -957,4 +957,18 @@ describe("point", --
     it("phaseInDegreesTo", --
         ass.strictEqual(Point.from("1+2i").phaseInDegreesTo(Point.from("i"))..pad(1, 9), "26.565051177")
     )
+    it("scale", --
+        ass.strictEqual(Point(1, 2).scale(2).toString(), "(2,4)")
+        ass.strictEqual(Point(1, 2).scale(2, 3).toString(), "(2,6)")
+    )
+    it("rotate", --
+        p: Point(1, 2).rotate(Math.PI / 6)
+        ass.strictEqual(p.x..pad(1, 9), "-0.133974596")
+        ass.strictEqual(p.y..pad(1, 9), "2.232050808")
+    )
+    it("rotateDegrees", --
+        p: Point(1, 2).rotateDegrees(30)
+        ass.strictEqual(p.x..pad(1, 9), "-0.133974596")
+        ass.strictEqual(p.y..pad(1, 9), "2.232050808")
+    )
 )
