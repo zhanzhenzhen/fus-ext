@@ -891,6 +891,9 @@ describe("point", --
         ass.strictEqual(Point(0, -1).toComplexString(), "0-1i")
         ass.strictEqual(Point(-1, 0).toComplexString(), "-1+0i")
     )
+    it("toArray", --
+        ass.deepStrictEqual(Point(1, 2).toArray(), [1, 2])
+    )
     it("clone", --
         p1: Point(1, 2)
         p2: p1.clone()

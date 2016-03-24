@@ -363,6 +363,7 @@ Point'export: class
     toComplexString: <>
         sign: me.y ≥ 0 ? "+" | "-"
         "\(me.x)\(sign)\(Math.abs(me.y))i"
+    toArray: <> [me.x, me.y]
 
     clone: <> Point(me.x, me.y)
 
