@@ -266,6 +266,11 @@ flatten'export: (arr, level) ->
         else
             r
 
+forEach'export: (arr, callback) ->
+    arr.every (element, index) ->
+        callback(element, index) = break ? false | true
+    void
+
 toObject'export: arr ->
     r: {}
     arr.forEach(element ->

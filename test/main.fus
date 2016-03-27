@@ -359,6 +359,25 @@ describe("array", --
         ass.deepStrictEqual([1, [[2, 3], 4], 5]..flatten(), [1, 2, 3, 4, 5])
         ass.deepStrictEqual([1, [[2, 3], 4], 5]..flatten(1), [1, [2, 3], 4, 5])
     )
+    it("forEach: without break", --
+        r: 0
+        ret: [1, 2, 3, 4, 5]..forEach(element ->
+            r: r + element
+        )
+        ass.strictEqual(r, 15)
+        ass.strictEqual(ret, void)
+    )
+    it("forEach: with break", --
+        r: []
+        ret: [1, 2, 3, 4, 5]..forEach((element, index) ->
+            if index = 2
+                break
+            else
+                r.push(element)
+        )
+        ass.deepStrictEqual(r, [1, 2])
+        ass.strictEqual(ret, void)
+    )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
     )
