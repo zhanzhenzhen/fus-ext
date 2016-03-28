@@ -1,4 +1,4 @@
-fus 1.3.2
+fus 1.3.3
 import "./main" all
 
 approxEquals'export: (num, x) -> Math..approxEquals(num.valueOf(), x)
