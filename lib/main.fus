@@ -118,6 +118,9 @@ eventField'export: --
         f
     f
 
+setImmediate'export: (callback, args) -> setTimeout(callback, 0, args)
+clearImmediate'export: clearTimeout
+
 # Timers ========================================[
 # Why default precision is 30ms? Because in most cases we don't want it to bring more CPU usage.
 # In my test if it's 1ms then CPU usage will be around 5%. If 30ms then 0.4%.

@@ -10,6 +10,8 @@ fus 1.3.3, radical
     assert
     spread
     eventField
+    setImmediate
+    clearImmediate
     Timer
     IntervalTimer
     Observer
@@ -37,6 +39,8 @@ export compose
 export assert
 export spread
 export eventField
+export (sys.global.setImmediate ifvoid setImmediate) as setImmediate
+export (sys.global.clearImmediate ifvoid clearImmediate) as clearImmediate
 export Timer
 export IntervalTimer
 export Observer
