@@ -3,6 +3,27 @@ fus 1.3.3, radical
 import "./manifest" all
 ass: import "assert"
 
+describe("compatibility", --
+    it("setImmediate", done ->
+        value: 1
+        setImmediate <>
+            ass.strictEqual(value, 2)
+            done()
+        value: 2
+    )
+    it("clearImmediate", done ->
+        value: 1
+        timer: setImmediate(<>
+            value: 2
+        )
+        clearImmediate(timer)
+        setTimeout(<>
+            ass.strictEqual(value, 1)
+            done()
+        , 100)
+    )
+)
+
 describe("loop", --
     it("array: number, diamond function", --
         r: []
