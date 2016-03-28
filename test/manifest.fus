@@ -40,8 +40,8 @@ export compose
 export assert
 export spread
 export eventField
-export (sys.global.setImmediate ifvoid setImmediate) as setImmediate
-export (sys.global.clearImmediate ifvoid clearImmediate) as clearImmediate
+(sys.global.setImmediate ifvoid setImmediate) export as setImmediate
+(sys.global.clearImmediate ifvoid clearImmediate) export as clearImmediate
 export Timer
 export IntervalTimer
 export Observer
