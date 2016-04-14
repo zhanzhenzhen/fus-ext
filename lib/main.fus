@@ -162,10 +162,10 @@ Timer'export: class
     static _onCheck: eventField()
 
     new: options ->
-        o: (options ifvoid {}) |> feObject.clone |> feObject.absorb{
+        o: Object..absorb(Object..clone(options ifvoid {}), {
             targetTime: Me._endOfTime
             allowsEqual: true
-        }
+        })
         me.targetTime: o.targetTime
         me.allowsEqual: o.allowsEqual
         me._counter: 0
@@ -206,14 +206,14 @@ Timer'export: class
 IntervalTimer'export: class from Timer
     new: options ->
         super(options)
-        o: (options ifvoid {}) |> feObject.clone |> feObject.absorb{
+        o: Object..absorb(Object..clone(options ifvoid {}), {
             interval: 1000
             startTime: Date()
             endTime: Me.getEndOfTime()..subtract(1000)
             includesStart: true
             includesEnd: false
             skipsPast: false
-        }
+        })
         me.interval: o.interval
         me.startTime: o.startTime
         me.endTime: o.endTime

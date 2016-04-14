@@ -12,7 +12,7 @@ pad'export: (num, integerSize, fractionalSize) ->
     }
 
 format'export: (num, options) ->
-    o: (options ifvoid {}) |> feObject.clone |> feObject.absorb{
+    o: Object..absorb(Object..clone(options ifvoid {}), {
         integerSize: 1
         fractionalSize: 0
         forcesSign: false
@@ -23,7 +23,7 @@ format'export: (num, options) ->
         fractionalGroupEnabled: false
         fractionalGroupSeparator: " "
         fractionalGroupSize: 3
-    }
+    })
     if o.radix ≠ 10
         o.fractionalSize: 0
     x: num.valueOf()
