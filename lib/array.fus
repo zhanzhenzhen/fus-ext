@@ -36,11 +36,11 @@ _positionToIndex'export: (arr, pos) ->
             pos: {Reverse: -pos - 1}
     if pos is Number
         pos
-    else if pos'ok.Reverse'ok.Ratio'ok
+    else if pos'ok and pos.Reverse'ok and pos.Reverse.Ratio'ok
         arr.._reverseToIndex(arr.._ratioToIndex(pos.Reverse.Ratio))
-    else if pos'ok.Reverse'ok
+    else if pos'ok and pos.Reverse'ok
         arr.._reverseToIndex(pos.Reverse)
-    else if pos'ok.Ratio'ok
+    else if pos'ok and pos.Ratio'ok
         arr.._ratioToIndex(pos.Ratio)
     else
         fail()
@@ -51,7 +51,7 @@ _amountToLength'export: (arr, amount) ->
             amount: {Ratio: amount}
     if amount is Number
         amount
-    else if amount'ok.Ratio'ok
+    else if amount'ok and amount.Ratio'ok
         arr.._ratioToLength(amount.Ratio)
     else
         fail()

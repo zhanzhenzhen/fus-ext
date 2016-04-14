@@ -109,7 +109,7 @@ eventField'export: --
         f
     f.fire: arg ->
         f._listeners.every(listener ->
-            if arg'ok.blocksListeners
+            if arg'ok and arg.blocksListeners
                 false
             else
                 listener(arg)
@@ -162,8 +162,12 @@ Timer'export: class
     static _onCheck: eventField()
 
     new: options ->
-        me.targetTime: options'ok.targetTime ifnull Me._endOfTime
-        me.allowsEqual: options'ok.allowsEqual ifnull true
+        o: (options ifvoid {}) |> feObject.clone |> feObject.absorb{
+            targetTime: Me._endOfTime
+            allowsEqual: true
+        }
+        me.targetTime: o.targetTime
+        me.allowsEqual: o.allowsEqual
         me._counter: 0
         me._running: false
         me.onArrive: eventField()
@@ -202,12 +206,20 @@ Timer'export: class
 IntervalTimer'export: class from Timer
     new: options ->
         super(options)
-        me.interval: options'ok.interval ifnull 1000
-        me.startTime: options'ok.startTime ifnull Date()
-        me.endTime: options'ok.endTime ifnull Me.getEndOfTime()..subtract(1000)
-        me.includesStart: options'ok.includesStart ifnull true
-        me.includesEnd: options'ok.includesEnd ifnull false
-        me.skipsPast: options'ok.skipsPast ifnull false
+        o: (options ifvoid {}) |> feObject.clone |> feObject.absorb{
+            interval: 1000
+            startTime: Date()
+            endTime: Me.getEndOfTime()..subtract(1000)
+            includesStart: true
+            includesEnd: false
+            skipsPast: false
+        }
+        me.interval: o.interval
+        me.startTime: o.startTime
+        me.endTime: o.endTime
+        me.includesStart: o.includesStart
+        me.includesEnd: o.includesEnd
+        me.skipsPast: o.skipsPast
         me.targetTime: me.startTime
         me._started: false
         me.onStart: eventField()

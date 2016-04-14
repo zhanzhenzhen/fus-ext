@@ -12,25 +12,27 @@ pad'export: (num, integerSize, fractionalSize) ->
     }
 
 format'export: (num, options) ->
-    integerSize: options'ok.integerSize ifnull 1
-    fractionalSize: options'ok.fractionalSize ifnull 0
-    forcesSign: options'ok.forcesSign ifnull false
-    radix: options'ok.radix ifnull 10
-    integerGroupEnabled: options'ok.integerGroupEnabled ifnull false
-    integerGroupSeparator: options'ok.integerGroupSeparator ifnull ","
-    integerGroupSize: options'ok.integerGroupSize ifnull 3
-    fractionalGroupEnabled: options'ok.fractionalGroupEnabled ifnull false
-    fractionalGroupSeparator: options'ok.fractionalGroupSeparator ifnull " "
-    fractionalGroupSize: options'ok.fractionalGroupSize ifnull 3
-    if radix ≠ 10
+    o: (options ifvoid {}) |> feObject.clone |> feObject.absorb{
+        integerSize: 1
         fractionalSize: 0
+        forcesSign: false
+        radix: 10
+        integerGroupEnabled: false
+        integerGroupSeparator: ","
+        integerGroupSize: 3
+        fractionalGroupEnabled: false
+        fractionalGroupSeparator: " "
+        fractionalGroupSize: 3
+    }
+    if o.radix ≠ 10
+        o.fractionalSize: 0
     x: num.valueOf()
-    if integerSize > 80 or fractionalSize > 20 or x ≥ 1e21 or x ≤ -1e21
-    or integerGroupSize < 1 or fractionalGroupSize < 1
+    if o.integerSize > 80 or o.fractionalSize > 20 or x ≥ 1e21 or x ≤ -1e21
+    or o.integerGroupSize < 1 or o.fractionalGroupSize < 1
         fail("Number or argument out of range")
     s:
-        if radix = 10
-            t: Math..roundDecimal(x, fractionalSize).toString()
+        if o.radix = 10
+            t: Math..roundDecimal(x, o.fractionalSize).toString()
             ePos: t.indexOf("e")
             if ePos = -1
                 t
@@ -43,18 +45,18 @@ format'export: (num, options) ->
                     # But `toFixed` can't be used for all cases, because
                     # `(12345678901.2).toFixed(6)` will give "12345678901.200001",
                     # which looks ugly.
-                    x.toFixed(fractionalSize)
+                    x.toFixed(o.fractionalSize)
         else
-            Math.round(x).toString(radix)
+            Math.round(x).toString(o.radix)
     isNegative: s.0 = "-"
     if s.0 = "+" or s.0 = "-"
         s: s..remove(0)
     do --
         pos: s.indexOf(".")
         rawIntegerSize: pos = -1 ? s.length | pos
-        integerMissing: Math.max(integerSize - rawIntegerSize, 0)
+        integerMissing: Math.max(o.integerSize - rawIntegerSize, 0)
         rawFractionalSize: pos = -1 ? 0 | s.length - 1 - pos
-        fractionalMissing: fractionalSize - rawFractionalSize
+        fractionalMissing: o.fractionalSize - rawFractionalSize
 
         # For truncating. If `fractionalMissing` is negative then truncate, otherwise it
         # will remain unchanged.
@@ -62,24 +64,24 @@ format'export: (num, options) ->
         if s.(s.length - 1) = "."
             s: s.substr(0, s.length - 1)
 
-        if pos = -1 and fractionalSize > 0
+        if pos = -1 and o.fractionalSize > 0
             s: self + "."
         s: "0".repeat(integerMissing) + s + "0".repeat(Math.max(fractionalMissing, 0))
-    if integerGroupEnabled or fractionalGroupEnabled then do --
+    if o.integerGroupEnabled or o.fractionalGroupEnabled then do --
         pos: s.indexOf(".")
 
         # All these inserts must be from bottom to top, otherwise it will be harder
         # to locate the position to insert to.
-        if fractionalGroupEnabled
-            fractionalStart: (pos = -1 ? s.length | pos) + 1 + fractionalGroupSize
-            repeat{fractionalStart to s.length - 1 by fractionalGroupSize}
+        if o.fractionalGroupEnabled
+            fractionalStart: (pos = -1 ? s.length | pos) + 1 + o.fractionalGroupSize
+            repeat{fractionalStart to s.length - 1 by o.fractionalGroupSize}
             ..reverse()
-            .forEach(i -> s: s..insert(i, fractionalGroupSeparator))
-        if integerGroupEnabled
-            integerStart: (pos = -1 ? s.length | pos) - integerGroupSize
-            repeat{integerStart to 1 by -integerGroupSize}
-            .forEach(i -> s: s..insert(i, integerGroupSeparator))
-    if forcesSign
+            .forEach(i -> s: s..insert(i, o.fractionalGroupSeparator))
+        if o.integerGroupEnabled
+            integerStart: (pos = -1 ? s.length | pos) - o.integerGroupSize
+            repeat{integerStart to 1 by -o.integerGroupSize}
+            .forEach(i -> s: s..insert(i, o.integerGroupSeparator))
+    if o.forcesSign
         if isNegative
             s: "-" + s
         else
