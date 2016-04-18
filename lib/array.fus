@@ -1,4 +1,4 @@
-fus 2.0.0
+fus 2.0.2
 import "./main" all
 
 # If the element is a number or string, it will be more convenient

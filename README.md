@@ -19,7 +19,7 @@ You can remove some exports in the manifest. For example, you can remove `assert
 Your code can be like this:
 
 ```fus
-fus 2.0.0
+fus 2.0.2
 import "./manifest" all
 
 loop(10, i ->

@@ -1,4 +1,4 @@
-fus 2.0.0
+fus 2.0.2
 import "./main" all
 
 isFraction'export: (ns, x) -> x is Number and isFinite(x) and Math.floor(x) ≠ x
