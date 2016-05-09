@@ -24,7 +24,7 @@ request'export: options -> Promise((resolve, reject) ->
             xhr: XMLHttpRequest()
             xhr.open(method, uri)
             if headerFields'ok
-                Object.forEach(headerFields, (key, value) -> xhr.setRequestHeader(key, value))
+                Object..keyValues(headerFields).forEach([key, value] -> xhr.setRequestHeader(key, value))
             xhr.responseType:
                 if responseBodyType = "binary"
                     "arraybuffer"
