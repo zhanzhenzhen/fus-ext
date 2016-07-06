@@ -28,6 +28,8 @@ fus 2.0.5
     feJson
     feDate
     feConsole
+    feUint8Array
+    feUint8ArrayStatic
 }: import "fus-ext"
 
 export loop
@@ -57,5 +59,7 @@ export feMath
 export feJson
 export feDate
 export feConsole
+export feUint8Array
+export feUint8ArrayStatic
 
 global'export: sys.global
