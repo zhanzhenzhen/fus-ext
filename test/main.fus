@@ -1015,3 +1015,17 @@ describe("point", --
         ass.strictEqual(p.y..pad(1, 9), "2.232050808")
     )
 )
+
+describe("Uint8Array static", --
+    it("fromBase64", --
+        bytes: Uint8Array..fromBase64("AAECAw==")
+        ass(bytes is Uint8Array)
+        ass.deepStrictEqual(Array.from(bytes), [0, 1, 2, 3])
+    )
+)
+
+describe("Uint8Array", --
+    it("toBase64", --
+        ass.strictEqual(Uint8Array[0, 1, 2, 3]..toBase64(), "AAECAw==")
+    )
+)
