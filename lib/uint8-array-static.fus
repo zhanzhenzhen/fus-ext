@@ -1,0 +1,6 @@
+fus 2.0.5
+import "./main" all
+
+$base64: require("./base64")
+
+fromBase64'export: (ns, s) -> $base64.toByteArray(s)

@@ -465,6 +465,12 @@ export feDate
 feConsole: import "./console" all
 export feConsole
 
+feUint8Array: import "./uint8-array" all
+export feUint8Array
+
+feUint8ArrayStatic: import "./uint8-array-static" all
+export feUint8ArrayStatic
+
 ..'export: x ->
     if x = Number
         feNumberStatic
@@ -476,6 +482,8 @@ export feConsole
         feJson
     else if x = console
         feConsole
+    else if x = Uint8Array
+        feUint8ArrayStatic
     else if x is Number
         feNumber
     else if x is String
@@ -484,3 +492,5 @@ export feConsole
         feArray
     else if x is Date
         feDate
+    else if x is Uint8Array
+        feUint8Array
