@@ -30,6 +30,7 @@ fus 2.0.5
     feConsole
     feUint8Array
     feUint8ArrayStatic
+    fePromiseStatic
 }: import "fus-ext"
 
 export loop
@@ -61,5 +62,6 @@ export feDate
 export feConsole
 export feUint8Array
 export feUint8ArrayStatic
+export fePromiseStatic
 
 global'export: sys.global

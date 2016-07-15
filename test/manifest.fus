@@ -30,6 +30,7 @@ fus 2.0.5
     feConsole
     feUint8Array
     feUint8ArrayStatic
+    fePromiseStatic
     ..
 }: import "../target/main"
 
@@ -62,6 +63,7 @@ export feDate
 export feConsole
 export feUint8Array
 export feUint8ArrayStatic
+export fePromiseStatic
 export ..
 
 global'export: sys.global
