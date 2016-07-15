@@ -1029,3 +1029,13 @@ describe("Uint8Array", --
         ass.strictEqual(Uint8Array[0, 1, 2, 3]..toBase64(), "AAECAw==")
     )
 )
+
+describe("Promise static", --
+    it("delay", --
+        oldTime: Date()
+        Promise..delay(500).then(<>
+            actualMs: Date() - oldTime
+            ass(500 ≤ actualMs ≤ 525)
+        )
+    )
+)
