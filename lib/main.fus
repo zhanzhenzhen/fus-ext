@@ -471,6 +471,9 @@ export feUint8Array
 feUint8ArrayStatic: import "./uint8-array-static" all
 export feUint8ArrayStatic
 
+fePromiseStatic: import "./promise-static" all
+export fePromiseStatic
+
 ..'export: x ->
     if x = Number
         feNumberStatic
@@ -484,6 +487,8 @@ export feUint8ArrayStatic
         feConsole
     else if x = Uint8Array
         feUint8ArrayStatic
+    else if x = Promise
+        fePromiseStatic
     else if x is Number
         feNumber
     else if x is String

@@ -1,0 +1,9 @@
+fus 2.0.5
+import "./main" all
+
+delay'export: (ns, ms) ->
+    Promise((resolve, reject) ->
+        setTimeout(<>
+            resolve()
+        , ms)
+    )
