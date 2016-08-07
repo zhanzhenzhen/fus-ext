@@ -1,6 +1,9 @@
 fus 2.0.5
 import "./main" all
 
+sha256: import "./sha256"
 $base64: require("./base64")
 
 toBase64'export: bytes -> $base64.fromByteArray(bytes)
+
+computeSha256'export: bytes -> sha256(bytes)

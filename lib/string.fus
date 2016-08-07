@@ -90,3 +90,20 @@ ensureTrailingNewline'export: str ->
         str.valueOf() + "\n"
     else
         str.valueOf()
+
+toBytes'export: str ->
+    str: encodeURIComponent(str)
+    bytes: []
+    pos: 0
+    loop --
+        if pos < str.length
+            if str.(pos) = "%"
+                bytes.push(parseInt(str.substr(pos + 1, 2), 16))
+                pos: pos + 3
+            else
+                bytes.push(str.charCodeAt(pos))
+                pos: pos + 1
+        else
+            break
+    bytes: Uint8Array(bytes)
+    bytes
