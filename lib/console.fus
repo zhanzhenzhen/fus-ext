@@ -1,4 +1,4 @@
-fus 2.0.5
+fus 2.0.6
 import "./main" all
 
 logt'export: (ns, args...) -> console.log.apply(console, [Date().toISOString()].concat(args))

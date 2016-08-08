@@ -1,4 +1,4 @@
-fus 2.0.5, radical
+fus 2.0.6, radical
 import "./main" all
 
 # According to RFC-7230, for HTTP response status we use "status reason"
