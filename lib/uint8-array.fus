@@ -4,3 +4,6 @@ import "./main" all
 $base64: require("./base64")
 
 toBase64'export: bytes -> $base64.fromByteArray(bytes)
+
+toString'export: bytes ->
+    decodeURIComponent(bytes.map(m -> "%" + m.toString(16)..pad(2).toUpperCase()).join(""))
