@@ -1,3 +1,10 @@
+v1.4.0
+======
+
+2016-08-08T13:50:24Z
+
+Add `toString` method to `Uint8Array` instance, and `toBytes` method to `String` primitive.
+
 v1.3.0
 ======
 
