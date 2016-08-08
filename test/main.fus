@@ -184,6 +184,9 @@ describe("string", --
         ass.strictEqual("a\nb\n"..ensureTrailingNewline(), "a\nb\n")
         ass.strictEqual("a\nb"..ensureTrailingNewline(), "a\nb\n")
     )
+    it("toBytes", --
+        ass.deepStrictEqual("ABC"..toBytes(), Uint8Array[65, 66, 67])
+    )
 )
 
 describe("math", --
