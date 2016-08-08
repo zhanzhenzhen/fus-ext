@@ -8,6 +8,6 @@ toBase64'export: bytes -> $base64.fromByteArray(bytes)
 toString'export: bytes ->
     decodeURIComponent(
         Array.from(bytes)
-        .map(m -> "%" + m.toString(16)..pad(2).toUpperCase())
+        .map(m -> "%" + m..format{integerSize: 2, radix: 16}.toUpperCase())
         .join("")
     )
