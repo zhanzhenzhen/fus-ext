@@ -1,3 +1,11 @@
+v1.5.0
+======
+
+2016-08-09T10:42:41Z
+
+- Add some `Uint8Array` methods.
+- Add a handy `bound` method for string, array, and `Uint8Array`.
+
 v1.4.0
 ======
 
