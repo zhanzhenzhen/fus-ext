@@ -142,6 +142,10 @@ describe("eventField", --
 )
 
 describe("string", --
+    it("bound", --
+        ass.strictEqual(""..bound(), -1)
+        ass.strictEqual("aaa"..bound(), 2)
+    )
     it("format", --
         ass.strictEqual("a {0} b {1}"..format("qq", "r"), "a qq b r")
     )
@@ -259,6 +263,10 @@ describe("array", --
         b: a..clone()
         ass.notStrictEqual(b, a)
         ass.deepStrictEqual(b, a)
+    )
+    it("bound", --
+        ass.strictEqual([]..bound(), -1)
+        ass.strictEqual([1, 1, 1]..bound(), 2)
     )
     it("isEmpty", --
         ass.strictEqual([]..isEmpty(), true)
@@ -1031,6 +1039,10 @@ describe("Uint8Array static", --
 )
 
 describe("Uint8Array", --
+    it("bound", --
+        ass.strictEqual(Uint8Array[]..bound(), -1)
+        ass.strictEqual(Uint8Array[1, 1, 1]..bound(), 2)
+    )
     it("toBase64", --
         ass.strictEqual(Uint8Array[0, 1, 2, 3]..toBase64(), "AAECAw==")
     )
