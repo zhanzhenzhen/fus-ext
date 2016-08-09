@@ -1073,6 +1073,10 @@ describe("Uint8Array", --
             "A我们BC"
         )
     )
+    it("toHex", --
+        ass.strictEqual(Uint8Array[]..toHex(), "")
+        ass.strictEqual(Uint8Array[0x01, 0x0a]..toHex(), "010a")
+    )
 )
 
 describe("Promise static", --
