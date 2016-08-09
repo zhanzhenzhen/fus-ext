@@ -1036,6 +1036,27 @@ describe("Uint8Array static", --
         ass(bytes is Uint8Array)
         ass.deepStrictEqual(Array.from(bytes), [0, 1, 2, 3])
     )
+    it("fromString", --
+        ass.deepStrictEqual(
+            Uint8Array..fromString("A我们BC"),
+            Uint8Array[0x41, 0xe6, 0x88, 0x91, 0xe4, 0xbb, 0xac, 0x42, 0x43]
+        )
+    )
+    it("fromHex", --
+        # Node.js has a bug. The assertion doesn't work for empty `Uint8Array`.
+        # So we must use workaround.
+        bytes: Uint8Array..fromHex("")
+        ass(bytes is Uint8Array)
+        ass.deepStrictEqual(
+            Array.from(bytes),
+            []
+        )
+
+        ass.deepStrictEqual(
+            Uint8Array..fromHex("010a"),
+            Uint8Array[0x01, 0x0a]
+        )
+    )
 )
 
 describe("Uint8Array", --
