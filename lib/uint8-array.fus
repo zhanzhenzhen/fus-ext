@@ -11,3 +11,10 @@ toString'export: bytes ->
         .map(m -> "%" + m..format{integerSize: 2, radix: 16}.toUpperCase())
         .join("")
     )
+
+toHex'export: bytes ->
+    Array.from(bytes)
+    .map(m -> m..format{integerSize: 2, radix: 16})
+    .join("")
+
+bound'export: bytes -> bytes.length - 1

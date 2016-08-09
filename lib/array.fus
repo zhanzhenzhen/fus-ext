@@ -60,6 +60,8 @@ clone'export: arr -> arr.slice()
 
 isEmpty'export: arr -> arr.length = 0
 
+bound'export: arr -> arr.length - 1
+
 portion'export: (arr, startIndex, length, endIndex) ->
     startIndex: arr.._positionToIndex(startIndex)
     length: arr.._amountToLength(length) if length'ok
