@@ -1043,15 +1043,10 @@ describe("Uint8Array static", --
         )
     )
     it("fromHex", --
-        # Node.js has a bug. The assertion doesn't work for empty `Uint8Array`.
-        # So we must use workaround.
-        bytes: Uint8Array..fromHex("")
-        ass(bytes is Uint8Array)
         ass.deepStrictEqual(
-            Array.from(bytes),
-            []
+            Uint8Array..fromHex(""),
+            Uint8Array[]
         )
-
         ass.deepStrictEqual(
             Uint8Array..fromHex("010a"),
             Uint8Array[0x01, 0x0a]
