@@ -781,11 +781,14 @@ describe("timer", --
         ass.strictEqual(updateCount, 0)
         ass.strictEqual(changeCount, 0)
         value: 20
-        observer.update()
+        observer.check()
         ass.strictEqual(updateCount, 1)
         ass.strictEqual(changeCount, 0)
         value: 30
-        observer.update()
+        observer.check()
+        ass.strictEqual(updateCount, 2)
+        ass.strictEqual(changeCount, 1)
+        observer.check()
         ass.strictEqual(updateCount, 2)
         ass.strictEqual(changeCount, 1)
     )

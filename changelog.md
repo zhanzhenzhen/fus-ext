@@ -1,3 +1,10 @@
+v1.6.0
+======
+
+2016-08-14T17:03:13Z
+
+- Now observers can manually check the value.
+
 v1.5.0
 ======
 

@@ -260,9 +260,9 @@ Observer'export: class from IntervalTimer
         me.onChange: eventField()
         me.onUpdate: eventField()
         me.onArrive.bind(<>
-            me.update()
+            me.check()
         )
-    update: <>
+    check: <>
         newValue:
             try
                 me._fun()
