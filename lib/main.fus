@@ -260,24 +260,26 @@ Observer'export: class from IntervalTimer
         me.onChange: eventField()
         me.onUpdate: eventField()
         me.onArrive.bind(<>
-            newValue:
-                try
-                    me._fun()
-                catch
-                    Me._error
-            if newValue = void
-                newValue: Me._error
-
-            # Must use `Object.is`, otherwise if NaN then the events will be fired endlessly.
-            if me._oldValue = void or not Object.is(newValue, me._oldValue)
-                me.onUpdate.fire{value: newValue}
-                if me._oldValue ≠ void
-                    me.onChange.fire{
-                        oldValue: me._oldValue
-                        newValue: newValue
-                    }
-                me._oldValue: newValue
+            me.update()
         )
+    update: <>
+        newValue:
+            try
+                me._fun()
+            catch
+                Me._error
+        if newValue = void
+            newValue: Me._error
+
+        # Must use `Object.is`, otherwise if NaN then the events will be fired endlessly.
+        if me._oldValue = void or not Object.is(newValue, me._oldValue)
+            me.onUpdate.fire{value: newValue}
+            if me._oldValue ≠ void
+                me.onChange.fire{
+                    oldValue: me._oldValue
+                    newValue: newValue
+                }
+            me._oldValue: newValue
 
 # ]========================================
 
