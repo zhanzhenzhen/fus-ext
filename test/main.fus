@@ -769,6 +769,26 @@ describe("timer", --
         value: 2
         setTimeout(<> value: 3, 200)
     )
+    it("Observer: manual update", --
+        updateCount: 0
+        changeCount: 0
+        value: 10
+        observer: Observer(<> value).onUpdate(e ->
+            updateCount: self + 1
+        ).onChange(e ->
+            changeCount: self + 1
+        )
+        ass.strictEqual(updateCount, 0)
+        ass.strictEqual(changeCount, 0)
+        value: 20
+        observer.update()
+        ass.strictEqual(updateCount, 1)
+        ass.strictEqual(changeCount, 0)
+        value: 30
+        observer.update()
+        ass.strictEqual(updateCount, 2)
+        ass.strictEqual(changeCount, 1)
+    )
 )
 
 describe("cmath", --
