@@ -791,6 +791,9 @@ describe("timer", --
         observer.check()
         ass.strictEqual(updateCount, 2)
         ass.strictEqual(changeCount, 1)
+        observer.check(true)
+        ass.strictEqual(updateCount, 3)
+        ass.strictEqual(changeCount, 2)
     )
 )
 

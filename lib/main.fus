@@ -262,7 +262,7 @@ Observer'export: class from IntervalTimer
         me.onArrive.bind(<>
             me.check()
         )
-    check: <>
+    check: (forcesUpdate: false) ->
         newValue:
             try
                 me._fun()
@@ -272,7 +272,7 @@ Observer'export: class from IntervalTimer
             newValue: Me._error
 
         # Must use `Object.is`, otherwise if NaN then the events will be fired endlessly.
-        if me._oldValue = void or not Object.is(newValue, me._oldValue)
+        if forcesUpdate or me._oldValue = void or not Object.is(newValue, me._oldValue)
             me.onUpdate.fire{value: newValue}
             if me._oldValue ≠ void
                 me.onChange.fire{

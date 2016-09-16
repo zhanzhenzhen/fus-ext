@@ -1,3 +1,10 @@
+v1.7.0
+======
+
+2016-09-16T06:16:12Z
+
+- Now observers can force update the value.
+
 v1.6.0
 ======
 
