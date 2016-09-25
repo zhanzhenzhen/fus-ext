@@ -1,3 +1,10 @@
+v1.8.0
+======
+
+2016-09-25T10:43:38Z
+
+- `approxEquals` now better handles numbers near zero.
+
 v1.7.0
 ======
 
