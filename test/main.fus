@@ -190,7 +190,7 @@ describe("string", --
     )
     it("toBytes", --
         ass.deepStrictEqual(
-            "A我们BC"..toBytes(),
+            "A我们BC"..toBytes()
             Uint8Array[0x41, 0xe6, 0x88, 0x91, 0xe4, 0xbb, 0xac, 0x42, 0x43]
         )
     )
@@ -1099,17 +1099,17 @@ describe("Uint8Array static", --
     )
     it("fromString", --
         ass.deepStrictEqual(
-            Uint8Array..fromString("A我们BC"),
+            Uint8Array..fromString("A我们BC")
             Uint8Array[0x41, 0xe6, 0x88, 0x91, 0xe4, 0xbb, 0xac, 0x42, 0x43]
         )
     )
     it("fromHex", --
         ass.deepStrictEqual(
-            Uint8Array..fromHex(""),
+            Uint8Array..fromHex("")
             Uint8Array[]
         )
         ass.deepStrictEqual(
-            Uint8Array..fromHex("010a"),
+            Uint8Array..fromHex("010a")
             Uint8Array[0x01, 0x0a]
         )
         ass.throws(-- Uint8Array..fromHex("0"))
@@ -1126,7 +1126,7 @@ describe("Uint8Array", --
     )
     it("toString", --
         ass.strictEqual(
-            Uint8Array[0x41, 0xe6, 0x88, 0x91, 0xe4, 0xbb, 0xac, 0x42, 0x43]..toString(),
+            Uint8Array[0x41, 0xe6, 0x88, 0x91, 0xe4, 0xbb, 0xac, 0x42, 0x43]..toString()
             "A我们BC"
         )
     )

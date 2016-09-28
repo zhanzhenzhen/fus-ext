@@ -106,13 +106,13 @@ cos'export: p ->
         cmath.add(
             cmath.exp(
                 cmath.multiply(p, Point(0, 1))
-            ),
+            )
             cmath.exp(
                 cmath.multiply(
                     cmath.opposite(p), Point(0, 1)
                 )
             )
-        ),
+        )
         2
     )
 
@@ -121,13 +121,13 @@ sin'export: p ->
         cmath.subtract(
             cmath.exp(
                 cmath.multiply(p, Point(0, 1))
-            ),
+            )
             cmath.exp(
                 cmath.multiply(
                     cmath.opposite(p), Point(0, 1)
                 )
             )
-        ),
+        )
         Point(0, 2)
     )
 
@@ -138,20 +138,20 @@ acos'export: p ->
         cmath.multiply(
             cmath.log(
                 cmath.add(
-                    p,
+                    p
                     cmath.multiply(
                         cmath.sqrt(
                             cmath.add(
                                 cmath.opposite(
                                     cmath.multiply(p, p)
-                                ),
+                                )
                                 1
                             )
-                        ),
+                        )
                         Point(0, 1)
                     )
                 )
-            ),
+            )
             Point(0, 1)
         )
     )
@@ -161,17 +161,17 @@ asin'export: p ->
         cmath.multiply(
             cmath.log(
                 cmath.add(
-                    cmath.multiply(p, Point(0, 1)),
+                    cmath.multiply(p, Point(0, 1))
                     cmath.sqrt(
                         cmath.add(
                             cmath.opposite(
                                 cmath.multiply(p, p)
-                            ),
+                            )
                             1
                         )
                     )
                 )
-            ),
+            )
             Point(0, 1)
         )
     )
@@ -181,16 +181,16 @@ atan'export: p ->
         cmath.subtract(
             cmath.log(
                 cmath.subtract(
-                    1,
-                    cmath.multiply(p, Point(0, 1))
-                )
-            ),
-            cmath.log(
-                cmath.add(
-                    1,
+                    1
                     cmath.multiply(p, Point(0, 1))
                 )
             )
-        ),
+            cmath.log(
+                cmath.add(
+                    1
+                    cmath.multiply(p, Point(0, 1))
+                )
+            )
+        )
         Point(0, 0.5)
     )

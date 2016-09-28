@@ -312,7 +312,7 @@ Point'export: class
         normalMatch: adjustedString.match(r"^([^,]*),(.*)$")
         if normalMatch'ok
             Point(
-                Number..parseFloat(normalMatch.1),
+                Number..parseFloat(normalMatch.1)
                 Number..parseFloat(normalMatch.2)
             )
         else
@@ -356,7 +356,7 @@ Point'export: class
                 if real = "-" then real: "-1"
                 if imaginary = "-" then imaginary: "-1"
                 Point(
-                    parseFloat(real),
+                    parseFloat(real)
                     parseFloat(imaginary)
                 )
             else
