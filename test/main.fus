@@ -536,6 +536,15 @@ describe("array", --
         ass.deepStrictEqual(arr, [1, 10, 20, 2, 3, 4, 5])
         ass.throws(-- arr..insertBefore(6, 10, 20))
     )
+    it("insertBeforeIndex", --
+        arr: [1, 2, 3, 4, 5]
+        r: arr..insertBeforeIndex(2, 10, 20)
+        ass.strictEqual(r, arr)
+        ass.deepStrictEqual(arr, [1, 2, 10, 20, 3, 4, 5])
+        r: arr..insertBeforeIndex(7, 10, 20)
+        ass.strictEqual(r, arr)
+        ass.deepStrictEqual(arr, [1, 2, 10, 20, 3, 4, 5, 10, 20])
+    )
 )
 
 describe("date", --
