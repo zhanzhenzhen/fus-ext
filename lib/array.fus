@@ -334,3 +334,12 @@ removeAllMatch'export: (arr, predicate) ->
         else
             arr..removeAt(index)
     arr
+
+insertBefore'export: (arr, element, elements...) ->
+    index: arr.indexOf(element)
+    assert(index > -1)
+    arr..insertBeforeIndex(index, elements...)
+
+insertBeforeIndex'export: (arr, index, elements...) ->
+    arr.splice(index, 0, elements...)
+    arr
