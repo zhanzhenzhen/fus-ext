@@ -533,7 +533,7 @@ describe("array", --
         arr: [1, 2, 3, 4, 5]
         r: arr..insertBefore(2, 10, 20)
         ass.strictEqual(r, arr)
-        ass.deepStrictEqual(arr, [1, 2, 10, 20, 3, 4, 5])
+        ass.deepStrictEqual(arr, [1, 10, 20, 2, 3, 4, 5])
         ass.throws(-- arr..insertBefore(6, 10, 20))
     )
 )
