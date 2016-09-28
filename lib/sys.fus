@@ -1,4 +1,4 @@
-fus 2.0.6, radical
+fus 2.2.0, radical
 import "./main" all
 
 feVersion'export: require("../package.json").version
