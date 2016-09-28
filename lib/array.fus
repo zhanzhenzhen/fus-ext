@@ -343,3 +343,8 @@ insertBefore'export: (arr, element, elements...) ->
 insertBeforeIndex'export: (arr, index, elements...) ->
     arr.splice(index, 0, elements...)
     arr
+
+insertAfter'export: (arr, element, elements...) ->
+    index: arr.indexOf(element)
+    assert(index > -1)
+    arr..insertBeforeIndex(index + 1, elements...)
