@@ -1,3 +1,10 @@
+v1.9.0
+======
+
+2016-09-28T09:16:08Z
+
+- Implement array's insert methods.
+
 v1.8.0
 ======
 
