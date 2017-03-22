@@ -34,27 +34,30 @@ request'export: options -> Promise((resolve, reject) ->
                     "text"
             xhr.timeout: timeout ifnull 0
             xhr.onload: <>
-                response: {
-                    statusCode: xhr.status
-                    statusReason: xhr.statusText
-                    headerFields:
-                        xhr.getAllResponseHeaders()
-                        ..stripTrailingNewline()
-                        ..split("\r\n", ": ", 1)
-                        .map(field -> [field.0.toLowerCase(), field.1])
-                        ..toObject()
-                    body:
-                        if responseBodyType = "binary"
-                            Uint8Array(xhr.response)
-                        else if responseBodyType = "text"
-                            xhr.response
-                        else if responseBodyType = "json"
-                            JSON.parse(xhr.response)
-                }
-                if (200 <= response.statusCode and response.statusCode < 300)
-                    resolve(response)
-                else
-                    reject(response)
+                try
+                    response: {
+                        statusCode: xhr.status
+                        statusReason: xhr.statusText
+                        headerFields:
+                            xhr.getAllResponseHeaders()
+                            ..stripTrailingNewline()
+                            ..split("\r\n", ": ", 1)
+                            .map(field -> [field.0.toLowerCase(), field.1])
+                            ..toObject()
+                        body:
+                            if responseBodyType = "binary"
+                                Uint8Array(xhr.response)
+                            else if responseBodyType = "text"
+                                xhr.response
+                            else if responseBodyType = "json"
+                                JSON.parse(xhr.response)
+                    }
+                    if (200 <= response.statusCode and response.statusCode < 300)
+                        resolve(response)
+                    else
+                        reject(response)
+                catch
+                    reject(Error())
             xhr.onerror: <>
                 reject(Error())
             xhr.ontimeout: <>
@@ -80,22 +83,25 @@ request'export: options -> Promise((resolve, reject) ->
                         data: Buffer.concat[data, chunk]
                     )
                     rawResponse.on("end", <>
-                        response: {
-                            statusCode: rawResponse.statusCode
-                            statusReason: rawResponse.statusMessage
-                            headerFields: rawResponse.headers
-                            body:
-                                if responseBodyType = "binary"
-                                    Uint8Array(data)
-                                else if responseBodyType = "text"
-                                    data.toString()
-                                else if responseBodyType = "json"
-                                    JSON.parse(data.toString())
-                        }
-                        if (200 <= response.statusCode and response.statusCode < 300)
-                            resolve(response)
-                        else
-                            reject(response)
+                        try
+                            response: {
+                                statusCode: rawResponse.statusCode
+                                statusReason: rawResponse.statusMessage
+                                headerFields: rawResponse.headers
+                                body:
+                                    if responseBodyType = "binary"
+                                        Uint8Array(data)
+                                    else if responseBodyType = "text"
+                                        data.toString()
+                                    else if responseBodyType = "json"
+                                        JSON.parse(data.toString())
+                            }
+                            if (200 <= response.statusCode and response.statusCode < 300)
+                                resolve(response)
+                            else
+                                reject(response)
+                        catch
+                            reject(Error())
                     )
             )
             if timeout'ok
