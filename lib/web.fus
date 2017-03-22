@@ -56,10 +56,10 @@ request'export: options -> Promise((resolve, reject) ->
                         resolve(response)
                     else
                         reject(response)
-                catch
-                    reject(Error())
-            xhr.onerror: <>
-                reject(Error())
+                catch ex
+                    reject(ex)
+            xhr.onerror: e ->
+                reject(e)
             xhr.ontimeout: <>
                 reject(Error("timeout"))
             xhr.send(body)
@@ -100,8 +100,8 @@ request'export: options -> Promise((resolve, reject) ->
                                 resolve(response)
                             else
                                 reject(response)
-                        catch
-                            reject(Error())
+                        catch ex
+                            reject(ex)
                     )
             )
             if timeout'ok
@@ -110,7 +110,7 @@ request'export: options -> Promise((resolve, reject) ->
                     reject(Error("timeout"))
                 )
             rawRequest.on("error", e ->
-                reject(Error())
+                reject(e)
             ).end(body is Uint8Array ? Buffer(body) | body)
     catch ex
         reject(ex)
