@@ -113,9 +113,9 @@ request'export: options -> Promise((resolve, reject) ->
                 )
             rawRequest.on("error", e ->
                 reject(e)
-            rawRequest.on("abort", e ->
+            ).on("abort", e ->
                 reject(Error("abort"))
-            rawRequest.on("aborted", e ->
+            ).on("aborted", e ->
                 reject(Error("abort"))
             ).end(body is Uint8Array ? Buffer(body) | body)
     catch ex
