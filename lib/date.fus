@@ -1,4 +1,4 @@
-fus 2.2.0
+fus 2.4.0
 import "./main" all
 
 add'export: (date, x) -> # `x` must be a number
