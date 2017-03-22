@@ -1,3 +1,10 @@
+v1.9.1
+======
+
+2017-03-22T17:19:34Z
+
+- Fix a bug that `web` errors are sometimes not turned into promise rejections.
+
 v1.9.0
 ======
 
