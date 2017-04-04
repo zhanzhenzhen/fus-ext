@@ -178,6 +178,9 @@ describe("eventField", --
         ass.strictEqual(listener1Holder, obj)
         ass.strictEqual(listener2Holder, obj)
         ass.deepStrictEqual(callOrder, [1, 1, 2])
+        ass.strictEqual(obj.onClick.getListeners().length, 2)
+        ass.strictEqual(obj.onClick.getListeners().0, listener1)
+        ass.strictEqual(obj.onClick.getListeners().1, listener2)
     )
 )
 
