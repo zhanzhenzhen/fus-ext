@@ -182,6 +182,25 @@ describe("eventField", --
         ass.strictEqual(obj.onClick.getListeners().0, listener1)
         ass.strictEqual(obj.onClick.getListeners().1, listener2)
     )
+    it("unbind", --
+        r: []
+        Obj: class
+            new: --
+                me.onClick: eventField()
+            makeClick: -- me.onClick.fire()
+        obj: Obj()
+        obj.onClick((--
+            r.push(true)
+        ) as listener1).onClick((--
+            r.push(false)
+        ) as listener2)
+        obj.makeClick()
+        ass.deepStrictEqual(r, [true, false])
+        r: []
+        obj.onClick.unbind(listener2)
+        obj.makeClick()
+        ass.deepStrictEqual(r, [true])
+    )
 )
 
 describe("string", --
