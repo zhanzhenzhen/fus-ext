@@ -98,6 +98,10 @@ eventField'export: --
         me
     f._holder: null
     f._listeners: []
+    f.setHolder: holder ->
+        f._holder: holder
+    f.getHolder: --
+        f._holder
     f.getListeners: --
         f._listeners..clone()
     f.bind: listener ->
@@ -114,9 +118,7 @@ eventField'export: --
             if arg'ok and arg.blocksListeners
                 false
             else
-                if arg'ok
-                    arg.holder: f._holder
-                listener(arg)
+                listener(arg, f._holder)
                 true
         )
         f

@@ -126,7 +126,7 @@ describe("spread", --
 )
 
 describe("eventField", --
-    it("eventField", --
+    it("general", --
         r: null
         Obj: class
             new: --
@@ -138,6 +138,19 @@ describe("eventField", --
         )
         obj.makeClick()
         ass.strictEqual(r, true)
+    )
+    it("holder", --
+        r: null
+        Obj: class
+            new: --
+                me.onClick: eventField()
+            makeClick: -- me.onClick.fire()
+        obj: Obj()
+        obj.onClick((e, holder) ->
+            r: holder
+        )
+        obj.makeClick()
+        ass.strictEqual(r, obj)
     )
 )
 
