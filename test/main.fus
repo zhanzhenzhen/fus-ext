@@ -140,17 +140,20 @@ describe("eventField", --
         ass.strictEqual(r, true)
     )
     it("holder", --
-        r: null
+        r1: null
+        r2: null
         Obj: class
             new: --
                 me.onClick: eventField()
-            makeClick: -- me.onClick.fire()
+            makeClick: -- me.onClick.fire{a: 5}
         obj: Obj()
         obj.onClick((e, holder) ->
-            r: holder
+            r1: e
+            r2: holder
         )
         obj.makeClick()
-        ass.strictEqual(r, obj)
+        ass.strictEqual(r1.a, 5)
+        ass.strictEqual(r2, obj)
     )
 )
 
