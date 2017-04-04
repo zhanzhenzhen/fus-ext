@@ -202,10 +202,14 @@ describe("eventField", --
         obj.onClick.unbind(listener2)
         obj.makeClick()
         ass.deepStrictEqual(r, [true, 10])
+        ass.strictEqual(obj.onClick.getListeners().length, 2)
+        ass.strictEqual(obj.onClick.getListeners().0, listener1)
+        ass.strictEqual(obj.onClick.getListeners().1, listener3)
         r: []
         obj.onClick.unbindAll()
         obj.makeClick()
         ass.deepStrictEqual(r, [])
+        ass.strictEqual(obj.onClick.getListeners().length, 0)
     )
 )
 
