@@ -93,8 +93,10 @@ eventField'export: --
             arg: method
             method: "bind"
         assert(method is String)
+        f._holder ifnull: me
         f.(method)(arg)
         me
+    f._holder: null
     f._listeners: []
     f.getListeners: --
         f._listeners..clone()
@@ -112,6 +114,8 @@ eventField'export: --
             if arg'ok and arg.blocksListeners
                 false
             else
+                if arg'ok
+                    arg.holder: f._holder
                 listener(arg)
                 true
         )
