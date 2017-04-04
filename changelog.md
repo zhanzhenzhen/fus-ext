@@ -1,3 +1,10 @@
+v1.10.0
+=======
+
+2017-04-04T06:14:30Z
+
+- Add `holder` argument to event listener.
+
 v1.9.1
 ======
 
