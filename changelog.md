@@ -1,3 +1,10 @@
+v1.10.1
+=======
+
+2017-05-05T12:24:22Z
+
+- `web` can parse UTF-16LE responses or responses with BOM in Node.js.
+
 v1.10.0
 =======
 
