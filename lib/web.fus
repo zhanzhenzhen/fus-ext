@@ -93,10 +93,37 @@ request'export: options -> Promise((resolve, reject) ->
                                 body:
                                     if responseBodyType = "binary"
                                         Uint8Array(data)
-                                    else if responseBodyType = "text"
-                                        data.toString()
-                                    else if responseBodyType = "json"
-                                        JSON.parse(data.toString())
+                                    else if responseBodyType in ["text", "json"]
+                                        bodyString:
+                                            # Per RFC, BOM has higher priority than HTTP header for
+                                            # determining encoding.
+                                            if data.0 = 0xef and data.1 = 0xbb and data.2 = 0xbf
+                                                data.toString(void, 3)
+                                            else if data.0 = 0xff and data.1 = 0xfe
+                                                data.toString("utf16le", 2)
+                                            else if data.0 = 0xfe and data.1 = 0xff
+                                                fail()
+                                            else
+                                                contentType: rawResponse.headers."content-type".toLowerCase()
+                                                if contentType'ok
+                                                    contentEncodingMatches:
+                                                        contentType.match(r";\s*charset=([^\s;]+)\s*(;|$)")
+                                                    if contentEncodingMatches'ok
+                                                        encoding: contentEncodingMatches.1
+                                                        if encoding = "utf-8"
+                                                            data.toString()
+                                                        else if encoding in ["utf-16", "utf-16le"]
+                                                            data.toString("utf16le")
+                                                        else
+                                                            fail()
+                                                    else
+                                                        data.toString()
+                                                else
+                                                    data.toString()
+                                        if responseBodyType = "text"
+                                            bodyString
+                                        else
+                                            JSON.parse(bodyString)
                             }
                             if (200 <= response.statusCode and response.statusCode < 300)
                                 resolve(response)
