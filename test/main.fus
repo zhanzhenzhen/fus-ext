@@ -212,6 +212,24 @@ describe("eventField", --
         ass.deepStrictEqual(r, [])
         ass.strictEqual(obj.onClick.getListeners().length, 0)
     )
+    it("async", --
+        r: []
+        Obj: class
+            new: --
+                me.onClick: eventField()
+            makeClick: --
+                me.onClick.asyncFire()'wait
+                ass.deepStrictEqual(r, [1, 2])
+        obj: Obj()
+        obj.onClick(--
+            Promise..delay(100)'wait
+            r.push(1)
+        ).onClick(--
+            Promise..delay(100)'wait
+            r.push(2)
+        )
+        obj.makeClick()'wait
+    )
 )
 
 describe("string", --
