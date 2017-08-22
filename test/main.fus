@@ -510,6 +510,20 @@ describe("array", --
         ass.strictEqual(ret, void)
         ass(150 ≤ actualMs ≤ 190)
     )
+    it("asyncForEach: with break", --
+        r: 0
+        oldTime: Date()
+        ret: [1, 2, 3]..asyncForEach((element, index) ->
+            Promise..delay(50)'wait
+            r: r + element
+            if index = 1
+                break
+        )'wait
+        actualMs: Date() - oldTime
+        ass.strictEqual(r, 3)
+        ass.strictEqual(ret, void)
+        ass(100 ≤ actualMs ≤ 130)
+    )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
     )
