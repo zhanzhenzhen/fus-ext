@@ -554,6 +554,36 @@ describe("array", --
         ass.strictEqual(r, false)
         ass(0 ≤ actualMs ≤ 10)
     )
+    it("asyncEvery", --
+        oldTime: Date()
+        r: [1, 2, 3]..asyncEvery(element ->
+            Promise..delay(50)'wait
+            element > 0
+        )'wait
+        actualMs: Date() - oldTime
+        ass.strictEqual(r, true)
+        ass(150 ≤ actualMs ≤ 190)
+    )
+    it("asyncEvery: empty 1", --
+        oldTime: Date()
+        r: []..asyncEvery(element ->
+            Promise..delay(50)'wait
+            true
+        )'wait
+        actualMs: Date() - oldTime
+        ass.strictEqual(r, true)
+        ass(0 ≤ actualMs ≤ 10)
+    )
+    it("asyncEvery: empty 2", --
+        oldTime: Date()
+        r: []..asyncEvery(element ->
+            Promise..delay(50)'wait
+            false
+        )'wait
+        actualMs: Date() - oldTime
+        ass.strictEqual(r, true)
+        ass(0 ≤ actualMs ≤ 10)
+    )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
     )
