@@ -582,7 +582,7 @@ describe("array", --
         )'wait
         actualMs: Date() - oldTime
         ass.strictEqual(r, false)
-        ass(100 ≤ actualMs ≤ 130)
+        ass(150 ≤ actualMs ≤ 190)
     )
     it("asyncEvery: empty 1", --
         oldTime: Date()
