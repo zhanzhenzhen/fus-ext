@@ -534,6 +534,26 @@ describe("array", --
         ass.strictEqual(r, true)
         ass(50 ≤ actualMs ≤ 70)
     )
+    it("asyncSome: empty 1", --
+        oldTime: Date()
+        r: []..asyncSome(element ->
+            Promise..delay(50)'wait
+            true
+        )'wait
+        actualMs: Date() - oldTime
+        ass.strictEqual(r, false)
+        ass(0 ≤ actualMs ≤ 10)
+    )
+    it("asyncSome: empty 2", --
+        oldTime: Date()
+        r: []..asyncSome(element ->
+            Promise..delay(50)'wait
+            false
+        )'wait
+        actualMs: Date() - oldTime
+        ass.strictEqual(r, false)
+        ass(0 ≤ actualMs ≤ 10)
+    )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
     )
