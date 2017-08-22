@@ -213,22 +213,26 @@ describe("eventField", --
         ass.strictEqual(obj.onClick.getListeners().length, 0)
     )
     it("async", --
+        oldTime: Date()
         r: []
         Obj: class
             new: --
                 me.onClick: eventField()
             makeClick: --
                 me.onClick.asyncFire()'wait
-                ass.deepStrictEqual(r, [1, 2])
+                r.push(3)
         obj: Obj()
         obj.onClick(--
-            Promise..delay(100)'wait
+            Promise..delay(50)'wait
             r.push(1)
         ).onClick(--
-            Promise..delay(100)'wait
+            Promise..delay(50)'wait
             r.push(2)
         )
         obj.makeClick()'wait
+        actualMs: Date() - oldTime
+        ass.deepStrictEqual(r, [1, 2, 3])
+        ass(100 ≤ actualMs ≤ 130)
     )
 )
 
