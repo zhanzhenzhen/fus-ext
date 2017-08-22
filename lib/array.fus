@@ -306,6 +306,22 @@ asyncEvery'export: (arr, callback) ->
         )
     promise.then(m -> m ? true | false)
 
+asyncMap'export: (arr, callback) ->
+    r: []
+    if arr.length = 0
+        Promise.resolve(r)
+    else
+        promise: Promise.resolve()
+        arr.forEach (element, index) ->
+            promise: promise.then(value ->
+                r.push(value) if index > 0
+                callback(element, index)
+            )
+        promise.then(value ->
+            r.push(value)
+            r
+        )
+
 toObject'export: arr ->
     r: {}
     arr.forEach(element ->

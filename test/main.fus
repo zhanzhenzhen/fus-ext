@@ -626,6 +626,16 @@ describe("array", --
         ass.strictEqual(r, true)
         ass(0 ≤ actualMs ≤ 10)
     )
+    it("asyncMap", --
+        oldTime: Date()
+        r: [1, 2, 3]..asyncMap(element ->
+            Promise..delay(50)'wait
+            element * 2
+        )'wait
+        actualMs: Date() - oldTime
+        ass.deepStrictEqual(r, [2, 4, 6])
+        ass(150 ≤ actualMs ≤ 190)
+    )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})
     )
