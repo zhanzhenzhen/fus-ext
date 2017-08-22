@@ -578,11 +578,11 @@ describe("array", --
         oldTime: Date()
         r: [1, 2, 3]..asyncEvery(element ->
             Promise..delay(50)'wait
-            element < 3
+            element > 3
         )'wait
         actualMs: Date() - oldTime
         ass.strictEqual(r, false)
-        ass(150 ≤ actualMs ≤ 190)
+        ass(50 ≤ actualMs ≤ 70)
     )
     it("asyncEvery: empty 1", --
         oldTime: Date()
