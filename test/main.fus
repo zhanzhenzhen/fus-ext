@@ -524,7 +524,7 @@ describe("array", --
         ass.strictEqual(ret, void)
         ass(100 ≤ actualMs ≤ 130)
     )
-    it("asyncSome", --
+    it("asyncSome: match", --
         oldTime: Date()
         r: [1, 2, 3]..asyncSome(element ->
             Promise..delay(50)'wait
@@ -533,6 +533,16 @@ describe("array", --
         actualMs: Date() - oldTime
         ass.strictEqual(r, true)
         ass(50 ≤ actualMs ≤ 70)
+    )
+    it("asyncSome: not match", --
+        oldTime: Date()
+        r: [1, 2, 3]..asyncSome(element ->
+            Promise..delay(50)'wait
+            element > 3
+        )'wait
+        actualMs: Date() - oldTime
+        ass.strictEqual(r, false)
+        ass(150 ≤ actualMs ≤ 190)
     )
     it("asyncSome: empty 1", --
         oldTime: Date()
@@ -554,7 +564,7 @@ describe("array", --
         ass.strictEqual(r, false)
         ass(0 ≤ actualMs ≤ 10)
     )
-    it("asyncEvery", --
+    it("asyncEvery: match", --
         oldTime: Date()
         r: [1, 2, 3]..asyncEvery(element ->
             Promise..delay(50)'wait
@@ -563,6 +573,16 @@ describe("array", --
         actualMs: Date() - oldTime
         ass.strictEqual(r, true)
         ass(150 ≤ actualMs ≤ 190)
+    )
+    it("asyncEvery: not match", --
+        oldTime: Date()
+        r: [1, 2, 3]..asyncEvery(element ->
+            Promise..delay(50)'wait
+            element < 3
+        )'wait
+        actualMs: Date() - oldTime
+        ass.strictEqual(r, false)
+        ass(100 ≤ actualMs ≤ 130)
     )
     it("asyncEvery: empty 1", --
         oldTime: Date()
