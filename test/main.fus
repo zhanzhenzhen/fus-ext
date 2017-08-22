@@ -1,5 +1,6 @@
 fus 2.4.1, radical
 
+import "babel-polyfill"
 import "./manifest" all
 ass: import "assert"
 
@@ -496,6 +497,18 @@ describe("array", --
         )
         ass.deepStrictEqual(r, [1, 2])
         ass.strictEqual(ret, void)
+    )
+    it("asyncForEach: without break", --
+        r: 0
+        oldTime: Date()
+        ret: [1, 2, 3]..asyncForEach(element ->
+            Promise..delay(50)'wait
+            r: r + element
+        )'wait
+        actualMs: Date() - oldTime
+        ass.strictEqual(r, 6)
+        ass.strictEqual(ret, void)
+        ass(150 ≤ actualMs ≤ 190)
     )
     it("toObject", --
         ass.deepStrictEqual([["a", 1], ["b", 2]]..toObject(), {a: 1, b: 2})

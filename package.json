@@ -22,7 +22,8 @@
     "dependencies": {
     },
     "devDependencies": {
-        "babel": "5.x"
+        "babel": "5.x",
+        "babel-polyfill": "6.x"
     },
     "main": "./target/main"
 }
