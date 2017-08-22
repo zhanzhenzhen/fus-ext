@@ -1,3 +1,11 @@
+v1.11.0
+=======
+
+2017-08-22T15:40:22Z
+
+- Add array's `asyncForEach`, `asyncMap`, `asyncSome`, `asyncEvery` methods.
+- Add `eventField`'s `asyncFire` method.
+
 v1.10.1
 =======
 
