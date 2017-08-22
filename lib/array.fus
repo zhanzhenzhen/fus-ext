@@ -273,6 +273,39 @@ forEach'export: (arr, callback) ->
         callback(element, index) = break ? false | true
     void
 
+asyncForEach'export: (arr, callback) ->
+    promise: Promise.resolve()
+    arr.forEach (element, index) ->
+        promise: promise.then(value ->
+            if value = break
+                break
+            else
+                callback(element, index)
+        )
+    promise.then(<>) # `forEach` returns void so in its async form we also need to return void
+
+asyncSome'export: (arr, callback) ->
+    promise: Promise.resolve(false)
+    arr.forEach (element, index) ->
+        promise: promise.then(value ->
+            if value
+                true
+            else
+                callback(element, index)
+        )
+    promise.then(m -> m ? true | false)
+
+asyncEvery'export: (arr, callback) ->
+    promise: Promise.resolve(true)
+    arr.forEach (element, index) ->
+        promise: promise.then(value ->
+            if not value
+                false
+            else
+                callback(element, index)
+        )
+    promise.then(m -> m ? true | false)
+
 toObject'export: arr ->
     r: {}
     arr.forEach(element ->

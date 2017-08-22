@@ -118,6 +118,16 @@ eventField'export: --
                 true
         )
         f
+
+    # This function isn't "chainable" because it must return a promise.
+    f.asyncFire: arg ->
+        f._listeners..asyncForEach(listener ->
+            if arg'ok and arg.blocksListeners
+                break
+            else
+                listener(arg, f._holder)
+        )
+
     f
 
 setImmediate'export: (callback, args) -> setTimeout(callback, 0, args)
