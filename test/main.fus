@@ -1,6 +1,5 @@
 fus 2.4.1, radical
 
-import "babel-polyfill"
 import "./manifest" all
 ass: import "assert"
 
