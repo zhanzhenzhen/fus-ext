@@ -4,6 +4,9 @@ import "./main" all
 # According to RFC-7230, for HTTP response status we use "status reason"
 # instead of status text or status message.
 
+# On browser, we don't need to implement redirection, because browser automatically
+# does it. But on Node, we must implement redirection.
+
 NODE_MAX_REDIRECT_COUNT: 20
 
 request'export: options -> Promise((resolve, reject) ->
