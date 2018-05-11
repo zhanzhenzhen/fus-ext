@@ -22,7 +22,8 @@
     "dependencies": {
     },
     "devDependencies": {
-        "babel-cli": "6.x"
+        "babel-cli": "6.x",
+        "babel-plugin-transform-es2015-modules-commonjs": "6.x"
     },
     "main": "./target/main"
 }
