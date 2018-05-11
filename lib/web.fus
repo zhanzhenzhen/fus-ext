@@ -52,7 +52,7 @@ request'export: options -> Promise((resolve, reject) ->
                             else if responseBodyType = "json"
                                 JSON.parse(xhr.response)
                     }
-                    if (200 <= response.statusCode and response.statusCode < 300)
+                    if 200 ≤ response.statusCode < 300
                         resolve(response)
                     else
                         reject(response)
@@ -125,7 +125,7 @@ request'export: options -> Promise((resolve, reject) ->
                                         else
                                             JSON.parse(bodyString)
                             }
-                            if (200 <= response.statusCode and response.statusCode < 300)
+                            if 200 ≤ response.statusCode < 300
                                 resolve(response)
                             else
                                 reject(response)

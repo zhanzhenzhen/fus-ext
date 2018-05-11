@@ -24,7 +24,7 @@ format'export: (str, args...) ->
             else if cur = "}" and next = "}"
                 m.push("}", "")
                 i: self + 1
-            else if cur = "{" and next >= "0" and next <= "9" and s.(i + 2) = "}"
+            else if cur = "{" and next ≥ "0" and next ≤ "9" and s.(i + 2) = "}"
                 m.push(args.(parseInt(next, 10)).toString(), "", "")
                 i: self + 2
             else
