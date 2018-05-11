@@ -91,7 +91,7 @@ request'export: options -> Promise((resolve, reject) ->
                         headers: headerFields
                     }
                     rawResponse ->
-                        data: Buffer(0)
+                        data: Buffer.alloc(0)
                         rawResponse.on("data", chunk ->
                             data: Buffer.concat[data, chunk]
                         )
@@ -164,7 +164,7 @@ request'export: options -> Promise((resolve, reject) ->
                     reject(Error("abort"))
                 ).on("aborted", e ->
                     reject(Error("abort"))
-                ).end(body is Uint8Array ? Buffer(body) | body)
+                ).end(body is Uint8Array ? Buffer.from(body.buffer) | body)
 
             internalRequest(uri)
     catch ex
