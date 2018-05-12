@@ -216,3 +216,46 @@ jsonPost'export: (uri, body, options) ->
     }
     Object.assign(actualOptions, options)
     web.request(actualOptions)
+
+Socket'export: class
+    new: uri ->
+        me.uri: uri
+        me.onOpen: eventField()
+        me.onClose: eventField()
+        me.onMessage: eventField()
+        me.onError: eventField()
+        me._rawSocket: null
+        me._fulfilled: false
+    open: <> Promise((resolve, reject) ->
+        assert(not me._fulfilled)
+        if not sys.isNode then do --
+            me._rawSocket: WebSocket(me.uri)
+            me._rawSocket.onopen: <>
+                me._fulfilled: true
+                me.onOpen.fire()
+                resolve()
+            me._rawSocket.onclose: <>
+                me.onClose.fire()
+                if not me._fulfilled
+                    reject()
+            me._rawSocket.onmessage: e ->
+                me.onMessage.fire(e.data)
+            me._rawSocket.onerror: e ->
+                me.onError.fire(e)
+                if not me._fulfilled
+                    reject()
+    )
+    send: data ->
+        if not sys.isNode then do --
+            me._rawSocket.send(data)
+    close: <> Promise((resolve, reject) ->
+        assert(me._fulfilled)
+        if not sys.isNode then do --
+            me._rawSocket.onclose: <>
+                me.onClose.fire()
+                resolve()
+            me._rawSocket.onerror: e ->
+                me.onError.fire(e)
+                reject()
+            me._rawSocket.close()
+    )
