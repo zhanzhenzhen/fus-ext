@@ -226,8 +226,10 @@ Socket'export: class
         me.onError: eventField()
         me._rawSocket: null
         me._fulfilled: false
+        me._triedOpen: false
     open: <> Promise((resolve, reject) ->
-        assert(not me._fulfilled)
+        assert(not me._triedOpen)
+        me._triedOpen: true
         if not sys.isNode then do --
             me._rawSocket: WebSocket(me.uri)
             me._rawSocket.onopen: <>
@@ -244,10 +246,16 @@ Socket'export: class
                 me.onError.fire(e)
                 if not me._fulfilled
                     reject()
+        else do --
+            # TODO: need to implement later
+            reject()
     )
     send: data ->
         if not sys.isNode then do --
             me._rawSocket.send(data)
+        else do --
+            # TODO: need to implement later
+            fail()
     close: <> Promise((resolve, reject) ->
         assert(me._fulfilled)
         if not sys.isNode then do --
@@ -258,4 +266,7 @@ Socket'export: class
                 me.onError.fire(e)
                 reject()
             me._rawSocket.close()
+        else do --
+            # TODO: need to implement later
+            reject()
     )
