@@ -1,3 +1,12 @@
+v1.12.0
+=======
+
+2018-05-12T08:35:00Z
+
+- `web.request` now supports redirection.
+- Add an experimental `web.Socket` class, but just for browser. In the future we'll make it run on Node.js.
+- In the compilation process of this project, we use Babel 6 instead of Babel 5. Now only the ES imports and exports are converted by Babel. Others are not converted.
+
 v1.11.0
 =======
 
