@@ -10,165 +10,162 @@ import "./main" all
 NODE_MAX_REDIRECT_COUNT: 20
 
 request'export: options -> Promise((resolve, reject) ->
-    try
-        method: options.method
-        uri: options.uri
-        headerFields: options.headerFields ifnull null
-        body: options.body ifnull null
-        timeout: options.timeout ifnull null
-        responseBodyType: options.responseBodyType ifnull "text"
-        if not method'ok
-            fail()
-        if not uri'ok
-            fail()
-        if body'ok and body isnt String and body isnt Uint8Array
-            fail()
-        if responseBodyType not in ["binary", "text", "json"]
-            fail()
-        if not sys.isNode then do --
-            xhr: XMLHttpRequest()
-            xhr.open(method, uri)
-            if headerFields'ok
-                Object..keyValues(headerFields).forEach([key, value] -> xhr.setRequestHeader(key, value))
-            xhr.responseType:
-                if responseBodyType = "binary"
-                    "arraybuffer"
-                else if responseBodyType = "text"
-                    "text"
-                else if responseBodyType = "json"
-                    "text"
-            xhr.timeout: timeout ifnull 0
-            xhr.onload: <>
-                try
-                    response: {
-                        statusCode: xhr.status
-                        statusReason: xhr.statusText
-                        headerFields:
-                            xhr.getAllResponseHeaders()
-                            ..stripTrailingNewline()
-                            ..split("\r\n", ": ", 1)
-                            .map(field -> [field.0.toLowerCase(), field.1])
-                            ..toObject()
-                        body:
-                            if responseBodyType = "binary"
-                                Uint8Array(xhr.response)
-                            else if responseBodyType = "text"
-                                xhr.response
-                            else if responseBodyType = "json"
-                                JSON.parse(xhr.response)
-                    }
-                    if 200 ≤ response.statusCode < 300
-                        resolve(response)
-                    else
-                        reject(response)
-                catch ex
-                    reject(ex)
-            xhr.onerror: e ->
-                reject(e)
-            xhr.ontimeout: <>
-                reject(Error("timeout"))
-            xhr.onabort: <>
-                reject(Error("abort"))
-            xhr.send(body)
-        else do --
-            http: module.require("http")
-            https: module.require("https")
-            urlMod: module.require("url")
+    method: options.method
+    uri: options.uri
+    headerFields: options.headerFields ifnull null
+    body: options.body ifnull null
+    timeout: options.timeout ifnull null
+    responseBodyType: options.responseBodyType ifnull "text"
+    if not method'ok
+        fail()
+    if not uri'ok
+        fail()
+    if body'ok and body isnt String and body isnt Uint8Array
+        fail()
+    if responseBodyType not in ["binary", "text", "json"]
+        fail()
+    if not sys.isNode then do --
+        xhr: XMLHttpRequest()
+        xhr.open(method, uri)
+        if headerFields'ok
+            Object..keyValues(headerFields).forEach([key, value] -> xhr.setRequestHeader(key, value))
+        xhr.responseType:
+            if responseBodyType = "binary"
+                "arraybuffer"
+            else if responseBodyType = "text"
+                "text"
+            else if responseBodyType = "json"
+                "text"
+        xhr.timeout: timeout ifnull 0
+        xhr.onload: <>
+            try
+                response: {
+                    statusCode: xhr.status
+                    statusReason: xhr.statusText
+                    headerFields:
+                        xhr.getAllResponseHeaders()
+                        ..stripTrailingNewline()
+                        ..split("\r\n", ": ", 1)
+                        .map(field -> [field.0.toLowerCase(), field.1])
+                        ..toObject()
+                    body:
+                        if responseBodyType = "binary"
+                            Uint8Array(xhr.response)
+                        else if responseBodyType = "text"
+                            xhr.response
+                        else if responseBodyType = "json"
+                            JSON.parse(xhr.response)
+                }
+                if 200 ≤ response.statusCode < 300
+                    resolve(response)
+                else
+                    reject(response)
+            catch ex
+                reject(ex)
+        xhr.onerror: e ->
+            reject(e)
+        xhr.ontimeout: <>
+            reject(Error("timeout"))
+        xhr.onabort: <>
+            reject(Error("abort"))
+        xhr.send(body)
+    else do --
+        http: module.require("http")
+        https: module.require("https")
+        urlMod: module.require("url")
 
-            redirectCount: 0
+        redirectCount: 0
 
-            internalRequest: internalUri ->
-                if redirectCount > NODE_MAX_REDIRECT_COUNT
-                    fail()
-                parsedUri: urlMod.parse(internalUri)
-                httpOrHttps: parsedUri.protocol = "https:" ? https | http
-                rawRequest: httpOrHttps.request(
-                    {
-                        method: method
-                        hostname: parsedUri.hostname
-                        port: parsedUri.port
-                        path: parsedUri.path
-                        headers: headerFields
-                    }
-                    rawResponse ->
-                        data: Buffer.alloc(0)
-                        rawResponse.on("data", chunk ->
-                            data: Buffer.concat[data, chunk]
-                        )
-                        rawResponse.on("end", <>
-                            try
-                                if method = "GET"
-                                and 300 ≤ rawResponse.statusCode < 400
-                                and rawResponse.headers."location" ≠ void
-                                    redirectCount: self + 1
-                                    internalRequest(rawResponse.headers."location")
-                                else
-                                    response: {
-                                        statusCode: rawResponse.statusCode
-                                        statusReason: rawResponse.statusMessage
-                                        headerFields: rawResponse.headers
-                                        body:
-                                            if responseBodyType = "binary"
-                                                Uint8Array(data)
-                                            else if responseBodyType in ["text", "json"]
-                                                bodyString:
-                                                    # Per RFC, BOM has higher priority than HTTP header for
-                                                    # determining encoding.
-                                                    if data.0 = 0xef and data.1 = 0xbb and data.2 = 0xbf
-                                                        data.toString(void, 3)
-                                                    else if data.0 = 0xff and data.1 = 0xfe
-                                                        data.toString("utf16le", 2)
-                                                    else if data.0 = 0xfe and data.1 = 0xff
-                                                        fail()
-                                                    else
-                                                        contentType:
-                                                            rawResponse.headers."content-type".toLowerCase()
-                                                        if contentType'ok
-                                                            contentEncodingMatches:
-                                                                contentType.match(
-                                                                    r";\s*charset=([^\s;]+)\s*(;|$)"
-                                                                )
-                                                            if contentEncodingMatches'ok
-                                                                encoding: contentEncodingMatches.1
-                                                                if encoding = "utf-8"
-                                                                    data.toString()
-                                                                else if encoding in ["utf-16", "utf-16le"]
-                                                                    data.toString("utf16le")
-                                                                else
-                                                                    fail()
-                                                            else
+        internalRequest: internalUri ->
+            if redirectCount > NODE_MAX_REDIRECT_COUNT
+                fail()
+            parsedUri: urlMod.parse(internalUri)
+            httpOrHttps: parsedUri.protocol = "https:" ? https | http
+            rawRequest: httpOrHttps.request(
+                {
+                    method: method
+                    hostname: parsedUri.hostname
+                    port: parsedUri.port
+                    path: parsedUri.path
+                    headers: headerFields
+                }
+                rawResponse ->
+                    data: Buffer.alloc(0)
+                    rawResponse.on("data", chunk ->
+                        data: Buffer.concat[data, chunk]
+                    )
+                    rawResponse.on("end", <>
+                        try
+                            if method = "GET"
+                            and 300 ≤ rawResponse.statusCode < 400
+                            and rawResponse.headers."location" ≠ void
+                                redirectCount: self + 1
+                                internalRequest(rawResponse.headers."location")
+                            else
+                                response: {
+                                    statusCode: rawResponse.statusCode
+                                    statusReason: rawResponse.statusMessage
+                                    headerFields: rawResponse.headers
+                                    body:
+                                        if responseBodyType = "binary"
+                                            Uint8Array(data)
+                                        else if responseBodyType in ["text", "json"]
+                                            bodyString:
+                                                # Per RFC, BOM has higher priority than HTTP header for
+                                                # determining encoding.
+                                                if data.0 = 0xef and data.1 = 0xbb and data.2 = 0xbf
+                                                    data.toString(void, 3)
+                                                else if data.0 = 0xff and data.1 = 0xfe
+                                                    data.toString("utf16le", 2)
+                                                else if data.0 = 0xfe and data.1 = 0xff
+                                                    fail()
+                                                else
+                                                    contentType:
+                                                        rawResponse.headers."content-type".toLowerCase()
+                                                    if contentType'ok
+                                                        contentEncodingMatches:
+                                                            contentType.match(
+                                                                r";\s*charset=([^\s;]+)\s*(;|$)"
+                                                            )
+                                                        if contentEncodingMatches'ok
+                                                            encoding: contentEncodingMatches.1
+                                                            if encoding = "utf-8"
                                                                 data.toString()
+                                                            else if encoding in ["utf-16", "utf-16le"]
+                                                                data.toString("utf16le")
+                                                            else
+                                                                fail()
                                                         else
                                                             data.toString()
-                                                if responseBodyType = "text"
-                                                    bodyString
-                                                else
-                                                    JSON.parse(bodyString)
-                                    }
-                                    if 200 ≤ response.statusCode < 300
-                                        resolve(response)
-                                    else
-                                        reject(response)
-                            catch ex
-                                reject(ex)
-                        )
-                )
-                if timeout'ok
-                    rawRequest.setTimeout(timeout, <>
-                        reject(Error("timeout"))
-                        rawRequest.abort()
+                                                    else
+                                                        data.toString()
+                                            if responseBodyType = "text"
+                                                bodyString
+                                            else
+                                                JSON.parse(bodyString)
+                                }
+                                if 200 ≤ response.statusCode < 300
+                                    resolve(response)
+                                else
+                                    reject(response)
+                        catch ex
+                            reject(ex)
                     )
-                rawRequest.on("error", e ->
-                    reject(e)
-                ).on("abort", e ->
-                    reject(Error("abort"))
-                ).on("aborted", e ->
-                    reject(Error("abort"))
-                ).end(body is Uint8Array ? Buffer.from(body.buffer) | body)
+            )
+            if timeout'ok
+                rawRequest.setTimeout(timeout, <>
+                    reject(Error("timeout"))
+                    rawRequest.abort()
+                )
+            rawRequest.on("error", e ->
+                reject(e)
+            ).on("abort", e ->
+                reject(Error("abort"))
+            ).on("aborted", e ->
+                reject(Error("abort"))
+            ).end(body is Uint8Array ? Buffer.from(body.buffer) | body)
 
-            internalRequest(uri)
-    catch ex
-        reject(ex)
+        internalRequest(uri)
 )
 
 get'export: (uri, options) ->
