@@ -1,3 +1,10 @@
+v1.13.0
+=======
+
+2018-05-15T14:35:40Z
+
+Support relative URI in `web.Socket` constructor.
+
 v1.12.0
 =======
 
