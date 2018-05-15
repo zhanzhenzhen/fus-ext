@@ -1,3 +1,3 @@
 # FutureScript Extension
 
-Check [http://zizisoft.com/fus-ext](http://zizisoft.com/fus-ext) for documentation.
+Check [https://zizisoft.com/fus-ext](https://zizisoft.com/fus-ext) for documentation.
