@@ -245,7 +245,7 @@ Socket'export: class
                         mapProtocol() + "//" + location.host + me.uri
                     else
                         fail()
-            me._rawSocket: WebSocket(me.uri)
+            me._rawSocket: WebSocket(uri)
             me._rawSocket.onopen: <>
                 me._fulfilled: true
                 me.onOpen.fire()

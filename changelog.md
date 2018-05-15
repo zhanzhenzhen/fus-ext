@@ -1,3 +1,10 @@
+v1.13.1
+=======
+
+2018-05-15T15:01:57Z
+
+Fix a bug in `web.Socket` constructor.
+
 v1.13.0
 =======
 
