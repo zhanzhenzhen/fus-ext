@@ -231,6 +231,23 @@ Socket'export: class
         assert(not me._triedOpen)
         me._triedOpen: true
         if not sys.isNode then do --
+            uri:
+                if me.uri.startsWith("ws:") or me.uri.startsWith("wss:")
+                    me.uri
+                else
+                    mapProtocol: <>
+                        if location.protocol = "http:"
+                            "ws:"
+                        else if location.protocol = "https:"
+                            "wss:"
+                        else
+                            fail()
+                    if me.uri.startsWith("//")
+                        mapProtocol() + me.uri
+                    else if me.uri.startsWith("/")
+                        mapProtocol() + "//" + location.host + me.uri
+                    else
+                        fail()
             me._rawSocket: WebSocket(me.uri)
             me._rawSocket.onopen: <>
                 me._fulfilled: true
@@ -248,7 +265,7 @@ Socket'export: class
                     reject()
         else do --
             # TODO: need to implement later
-            reject()
+            fail()
     )
     send: data ->
         if not sys.isNode then do --
@@ -268,5 +285,5 @@ Socket'export: class
             me._rawSocket.close()
         else do --
             # TODO: need to implement later
-            reject()
+            fail()
     )
