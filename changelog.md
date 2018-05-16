@@ -1,3 +1,10 @@
+v1.13.2
+=======
+
+2018-05-16T17:46:32Z
+
+Fix a bug of `onMessage` event in `web.Socket`.
+
 v1.13.1
 =======
 

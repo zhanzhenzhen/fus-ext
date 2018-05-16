@@ -255,7 +255,7 @@ Socket'export: class
                 if not me._fulfilled
                     reject()
             me._rawSocket.onmessage: e ->
-                me.onMessage.fire(e.data)
+                me.onMessage.fire{data: e.data}
             me._rawSocket.onerror: e ->
                 me.onError.fire(e)
                 if not me._fulfilled
