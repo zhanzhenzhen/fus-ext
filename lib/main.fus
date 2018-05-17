@@ -218,9 +218,10 @@ Timer'export: class
 IntervalTimer'export: class from Timer
     new: options ->
         super(options)
+        nowTime: Date()
         o: Object..absorb(Object..clone(options ifvoid {}), {
             interval: 1000
-            startTime: Date()
+            startTime: nowTime
             endTime: Me.getEndOfTime()..subtract(1000)
             includesStart: true
             includesEnd: false
@@ -232,24 +233,27 @@ IntervalTimer'export: class from Timer
         me.includesStart: o.includesStart
         me.includesEnd: o.includesEnd
         me.skipsPast: o.skipsPast
-        me.targetTime: me.startTime
+        me.targetTime:
+            if me.skipsPast and me.startTime < nowTime
+                Date(nowTime - (nowTime - me.startTime) mod me.interval + me.interval)
+            else
+                me.startTime
         me._started: false
         me.onStart: eventField()
-        me.onArrive.bind(event ->
+        me.onArrive.bind(e ->
             if me.interval < Me.getPrecision() * 2
                 me.stop()
             else
-                now: Date()
                 me.targetTime:
                     if me.skipsPast
-                        Date(now - (now - event.idealTime) rem me.interval + me.interval)
+                        Date(e.nowTime - (e.nowTime - e.idealTime) mod me.interval + me.interval)
                     else
-                        event.idealTime..add(me.interval)
+                        e.idealTime..add(me.interval)
                 if not me._started
                     me._started: true
                     if not me.includesStart
                         me.resetCounter()
-                        event.blocksListeners: true
+                        e.blocksListeners: true
                     me.onStart.fire()
                 if (
                     if me.includesEnd
