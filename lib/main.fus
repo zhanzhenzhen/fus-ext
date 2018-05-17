@@ -235,7 +235,8 @@ IntervalTimer'export: class from Timer
         me.skipsPast: o.skipsPast
         me.targetTime:
             if me.skipsPast and me.startTime < nowTime
-                Date(nowTime - (nowTime - me.startTime) mod me.interval + me.interval)
+                remainder: (nowTime - me.startTime) mod me.interval
+                Date(remainder = 0 ? nowTime | nowTime - remainder + me.interval)
             else
                 me.startTime
         me._started: false
