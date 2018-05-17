@@ -1109,6 +1109,36 @@ describe("timer", --
                 done()
         sleep(300)
     )
+    it("IntervalTimer: heavy work, skipsPast", done ->
+        initTime: Date()
+        timer: IntervalTimer{interval: 100, skipsPast}
+        ass(0 ≤ timer.startTime - initTime < 20)
+        count: 0
+        timer.onArrive e ->
+            now: Date()
+            ass(e.idealTime is Date)
+            if count = 0
+                ass(e.idealTime..equals(timer.startTime))
+            else if count = 1
+                ass(e.idealTime..equals(timer.startTime..add(300)))
+            else if count = 2
+                ass(e.idealTime..equals(timer.startTime..add(400)))
+            ass(e.nowTime is Date)
+            ass(0 ≤ now - e.nowTime < 20)
+            if count = 0
+                ass(230 ≤ e.nowTime - e.idealTime < 300)
+            else
+                ass(0 ≤ e.nowTime - e.idealTime < 50)
+            ass.strictEqual(e.index, count)
+            ass.strictEqual(timer.getCounter(), e.index + 1)
+            ass.strictEqual(timer.getRunning(), true)
+            count: self + 1
+            if count = 3
+                timer.stop()
+                ass.strictEqual(timer.getRunning(), false)
+                done()
+        sleep(250)
+    )
     it("Observer: change", done ->
         value: 1
         Observer(<> value).onChange(e ->
