@@ -985,11 +985,13 @@ describe("object", --
 )
 
 describe("timer", --
-    it("IntervalTimer", done ->
+    it("IntervalTimer: normal", done ->
         timer: IntervalTimer{interval: 100}
         count: 0
         timer.onArrive e ->
             now: Date()
+            ass(e.idealTime is Date)
+            ass(e.nowTime is Date)
             ass(now - e.nowTime < 200)
             ass(0 ≤ e.nowTime - e.idealTime < 200)
             ass.strictEqual(e.index, count)
