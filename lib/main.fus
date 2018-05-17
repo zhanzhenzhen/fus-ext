@@ -242,7 +242,7 @@ IntervalTimer'export: class from Timer
                 now: Date()
                 me.targetTime:
                     if me.skipsPast
-                        now - (now - event.idealTime) rem me.interval + me.interval
+                        Date(now - (now - event.idealTime) rem me.interval + me.interval)
                     else
                         event.idealTime..add(me.interval)
                 if not me._started
