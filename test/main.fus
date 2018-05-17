@@ -1037,6 +1037,39 @@ describe("timer", --
             if count = 3
                 done()
     )
+    it("IntervalTimer: skipsPast, startTime < now, not includesStart, includesEnd", done ->
+        initTime: Date()
+        timer: IntervalTimer{
+            interval: 100
+            startTime: initTime..subtract(200)
+            endTime: initTime..add(300)
+            includesStart: false
+            includesEnd
+            skipsPast
+        }
+        count: 0
+        timer.onArrive e ->
+            now: Date()
+            ass(e.idealTime is Date)
+            if count = 0
+                ass(e.idealTime..equals(initTime..add(100)))
+            else if count = 1
+                ass(e.idealTime..equals(initTime..add(200)))
+            else if count = 2
+                ass(e.idealTime..equals(initTime..add(300)))
+            ass(e.nowTime is Date)
+            ass(0 ≤ now - e.nowTime < 20)
+            ass(0 ≤ e.nowTime - e.idealTime < 50)
+            ass.strictEqual(e.index, count)
+            ass.strictEqual(timer.getCounter(), e.index + 1)
+            if count < 2
+                ass.strictEqual(timer.getRunning(), true)
+            else
+                ass.strictEqual(timer.getRunning(), false)
+            count: self + 1
+            if count = 3
+                done()
+    )
     it("Observer: change", done ->
         value: 1
         Observer(<> value).onChange(e ->
