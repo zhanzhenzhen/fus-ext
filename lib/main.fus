@@ -240,21 +240,20 @@ IntervalTimer'export: class from Timer
                 Date(remainder = 0 ? nowTime | nowTime - remainder + me.interval)
             else
                 me.startTime
-        me._started: false
         me._counter: 0
         me.onStart: eventField()
         me.onArrive.bind(e ->
             if me.interval < Me.getPrecision() * 2
                 me.stop()
             else
+                me._counter: self + 1
                 me.targetTime:
                     if me.skipsPast
                         Date(e.nowTime - (e.nowTime - e.idealTime) mod me.interval + me.interval)
                     else
                         e.idealTime..add(me.interval)
-                if not me._started
-                    me._started: true
-                    if not me.includesStart and not me._isStartTimePast
+                if me._counter = 1 and not me._isStartTimePast
+                    if not me.includesStart
                         me.resetCounter()
                         e.blocksListeners: true
                     me.onStart.fire()
