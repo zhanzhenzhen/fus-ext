@@ -988,11 +988,12 @@ describe("timer", --
     it("IntervalTimer: normal", done ->
         initTime: Date()
         timer: IntervalTimer{interval: 100}
+        ass(0 ≤ timer.startTime - initTime < 20)
         count: 0
         timer.onArrive e ->
             now: Date()
             ass(e.idealTime is Date)
-            ass(e.idealTime..equals(initTime..add(count * 100)))
+            ass(e.idealTime..equals(timer.startTime..add(count * 100)))
             ass(e.nowTime is Date)
             ass(0 ≤ now - e.nowTime < 20)
             ass(0 ≤ e.nowTime - e.idealTime < 50)
