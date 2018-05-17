@@ -1,3 +1,10 @@
+v1.13.3
+=======
+
+2018-05-17T21:41:28Z
+
+Fix a bug in `IntervalTimer` when `skipsPast` is set to true.
+
 v1.13.2
 =======
 
