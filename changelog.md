@@ -1,3 +1,10 @@
+v1.13.4
+=======
+
+2018-05-21T23:38:30Z
+
+Fix a bug of `sum`, `average` and `product` method of `Array` when operating on an empty array.
+
 v1.13.3
 =======
 
