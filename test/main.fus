@@ -459,16 +459,20 @@ describe("array", --
     )
     it("sum", --
         ass.strictEqual([1, 2, 3, 4, 5]..sum(), 15)
+        ass.strictEqual([]..sum(), 0)
     )
     it("average", --
         ass.strictEqual([1, 2, 3, 4, 5]..average(), 3)
+        ass.throws(-- []..average())
     )
     it("median", --
         ass.strictEqual([1, 2, 3, 4, 10]..median(), 3)
         ass.strictEqual([1, 2, 3, 4, 5, 10]..median(), 3.5)
+        ass.throws(-- []..median())
     )
     it("product", --
         ass.strictEqual([1, 2, 3, 4, 5]..product(), 120)
+        ass.strictEqual([]..product(), 1)
     )
     it("group", --
         ass.deepStrictEqual([1, 2, 3, 4, 5, 6]..group(m -> m mod 2), [

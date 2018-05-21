@@ -154,7 +154,9 @@ max'export: (arr, selector) -> _elementOrUseSelector(arr..withMax(selector), sel
 min'export: (arr, selector) -> _elementOrUseSelector(arr..withMin(selector), selector)
 
 sum'export: (arr, selector) ->
-    if arr.length = 1
+    if arr.length = 0
+        0
+    else if arr.length = 1
         _elementOrUseSelector(arr..first(), selector)
     else
         arr.reduce((a, b, index) ->
@@ -162,7 +164,11 @@ sum'export: (arr, selector) ->
             + _elementOrUseSelector(b, selector)
         )
 
-average'export: (arr, selector) -> arr..sum(selector) / arr.length
+average'export: (arr, selector) ->
+    if arr.length = 0
+        fail()
+    else
+        arr..sum(selector) / arr.length
 
 median'export: (arr, selector) ->
     sorted: arr..sort(selector)
@@ -173,7 +179,9 @@ median'export: (arr, selector) ->
     (m + n) / 2
 
 product'export: (arr, selector) ->
-    if arr.length = 1
+    if arr.length = 0
+        1
+    else if arr.length = 1
         _elementOrUseSelector(arr..first(), selector)
     else
         arr.reduce((a, b, index) ->
