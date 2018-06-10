@@ -121,7 +121,10 @@ request'export: options -> Promise((resolve, reject) ->
                                                     fail()
                                                 else
                                                     contentType:
-                                                        rawResponse.headers."content-type".toLowerCase()
+                                                        if rawResponse.headers."content-type"'ok
+                                                            rawResponse.headers."content-type".toLowerCase()
+                                                        else
+                                                            null
                                                     if contentType'ok
                                                         contentEncodingMatches:
                                                             contentType.match(
