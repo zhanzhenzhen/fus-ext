@@ -1,3 +1,10 @@
+v1.13.5
+=======
+
+2018-06-10T17:04:38Z
+
+Fix a `web` bug that response with no "Content-Type" header will result in error on Node.js.
+
 v1.13.4
 =======
 
