@@ -1456,6 +1456,19 @@ describe("point", --
     )
 )
 
+describe("AsyncQueue", --
+    it("add", --
+        r: []
+        queue: AsyncQueue()
+        queue.add <>
+            Promise..delay(50)'wait
+            r.push(1'wait)
+        queue.add <>
+            r.push(2'wait)
+        ass.deepStrictEqual(r, [1, 2])
+    )
+)
+
 describe("Uint8Array static", --
     it("fromBase64", --
         bytes: Uint8Array..fromBase64("AAECAw==")
