@@ -1,3 +1,12 @@
+v1.14.0
+=======
+
+2018-06-12T18:39:02Z
+
+- Introduce `AsyncQueue`.
+- `Point` is now more reliable when stringified to JSON.
+- Fix a bug that `Point` mistakenly uses JS's `constructor` keyword.
+
 v1.13.5
 =======
 
