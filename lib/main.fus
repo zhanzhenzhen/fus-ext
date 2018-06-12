@@ -457,7 +457,7 @@ AsyncQueue'export: class
         list.forEach callback ->
             me._length: self + 1
             me._promise: me._promise.then(<>
-                callback()
+                callback()'wait
                 me._length: self - 1
             )
 
