@@ -1461,11 +1461,17 @@ describe("AsyncQueue", --
         r: []
         queue: AsyncQueue()
         queue.add <>
-            Promise..delay(50)'wait
-            r.push(1'wait)
+            r.push(1)
         queue.add <>
+            Promise..delay(50)'wait
             r.push(2'wait)
-        ass.deepStrictEqual(r, [1, 2])
+        queue.add <>
+            r.push(3'wait)
+        ass.deepStrictEqual(r, [])
+        Promise..delay(25)'wait
+        ass.deepStrictEqual(r, [1])
+        Promise..delay(75)'wait
+        ass.deepStrictEqual(r, [1, 2, 3])
     )
 )
 
