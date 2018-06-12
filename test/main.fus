@@ -1477,8 +1477,15 @@ describe("AsyncQueue", --
         Promise..delay(25)'wait
         ass.deepStrictEqual(r, [1])
         ass.strictEqual(queue.length, 2)
-        Promise..delay(75)'wait
+        Promise..delay(50)'wait
         ass.deepStrictEqual(r, [1, 2, 3])
+        ass.strictEqual(queue.length, 0)
+        queue.add <>
+            r.push(4'wait)
+        ass.deepStrictEqual(r, [1, 2, 3])
+        ass.strictEqual(queue.length, 1)
+        Promise..delay(25)'wait
+        ass.deepStrictEqual(r, [1, 2, 3, 4])
         ass.strictEqual(queue.length, 0)
     )
 )
