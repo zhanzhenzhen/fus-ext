@@ -1468,10 +1468,13 @@ describe("AsyncQueue", --
         queue.add <>
             r.push(3'wait)
         ass.deepStrictEqual(r, [])
+        ass.strictEqual(queue.length, 3)
         Promise..delay(25)'wait
         ass.deepStrictEqual(r, [1])
+        ass.strictEqual(queue.length, 2)
         Promise..delay(75)'wait
         ass.deepStrictEqual(r, [1, 2, 3])
+        ass.strictEqual(queue.length, 0)
     )
 )
 
