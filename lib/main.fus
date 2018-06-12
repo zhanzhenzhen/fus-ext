@@ -298,7 +298,7 @@ Observer'export: class from IntervalTimer
 # This class is a combination of 3 things: complex number, 2d point, and 2d vector.
 # It can even be used for all "ordered pair" things such as size (width and height).
 Point'export: class
-    constructor: (x, y) ->
+    new: (x, y) ->
         me.x: x
         me.y: y
 
