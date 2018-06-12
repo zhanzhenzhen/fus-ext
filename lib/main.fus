@@ -443,6 +443,18 @@ Point'export: class
     rotate: angle -> me.multiply(Point.fromPolar(1, angle))
     rotateDegrees: angle -> me.multiply(Point.fromPolarInDegrees(1, angle))
 
+AsyncQueue'export: class
+    # TODO: We may want to add some options such as whether the first task
+    # should start synchronously.
+    new: <>
+        me._promise: Promise.resolve()
+
+    # `arg` can be a callback or an array of callbacks.
+    add: arg ->
+        list: arg is Array ? arg | [arg]
+        list.forEach callback ->
+            me._promise: me._promise.then(callback)
+
 sys: import "./sys" all
 export sys
 

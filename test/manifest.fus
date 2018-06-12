@@ -16,6 +16,7 @@ fus 2.4.1
     IntervalTimer
     Observer
     Point
+    AsyncQueue
     sys
     web
     cmath
@@ -49,6 +50,7 @@ export Timer
 export IntervalTimer
 export Observer
 export Point
+export AsyncQueue
 export sys
 export web
 export cmath

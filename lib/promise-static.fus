@@ -7,3 +7,8 @@ delay'export: (ns, ms) ->
             resolve()
         , ms)
     )
+
+runSync'export: (ns, callback) ->
+    Promise((resolve, reject) ->
+        resolve(callback())
+    )
