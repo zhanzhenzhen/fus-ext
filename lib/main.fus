@@ -393,6 +393,7 @@ Point'export: class
         sign: me.y ≥ 0 ? "+" | "-"
         "\(me.x)\(sign)\(Math.abs(me.y))i"
     toArray: <> [me.x, me.y]
+    toJSON: <> {x: me.x, y: me.y}
 
     clone: <> Point(me.x, me.y)
 

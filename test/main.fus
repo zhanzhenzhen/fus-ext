@@ -1371,6 +1371,9 @@ describe("point", --
     it("toArray", --
         ass.deepStrictEqual(Point(1, 2).toArray(), [1, 2])
     )
+    it("toJSON", --
+        ass.deepStrictEqual(Point(1, 2).toJSON(), {x: 1, y: 2})
+    )
     it("clone", --
         p1: Point(1, 2)
         p2: p1.clone()
