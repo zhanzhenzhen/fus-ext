@@ -1143,32 +1143,6 @@ describe("timer", --
                 done()
         sleep(250)
     )
-    it("IntervalTimer: return promise, skipsPast", done ->
-        timer: IntervalTimer{interval: 100, skipsPast}
-        r: []
-        timer.onArrive e ->
-            if e.index ≤ 1
-                r.push(1)
-                Promise..delay(200)'wait
-                r.push(2)
-                if e.index = 1
-                    timer.stop()
-                    ass.deepStrictEqual(r, [1, 1, 2, 2])
-                    done()
-    )
-    it("IntervalTimer: return promise, skipsPast, blocksEventAfterLongAsync", done ->
-        timer: IntervalTimer{interval: 100, skipsPast, blocksEventAfterLongAsync}
-        r: []
-        timer.onArrive e ->
-            if e.index ≤ 1
-                r.push(1)
-                Promise..delay(200)'wait
-                r.push(2)
-                if e.index = 1
-                    timer.stop()
-                    ass.deepStrictEqual(r, [1, 2, 1, 2])
-                    done()
-    )
     it("Observer: change", done ->
         value: 1
         Observer(<> value).onChange(e ->
