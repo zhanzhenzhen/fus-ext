@@ -226,6 +226,7 @@ IntervalTimer'export: class from Timer
             includesStart: true
             includesEnd: false
             skipsPast: false
+            blocksEventAfterLongAsync: false
         })
         me.interval: o.interval
         me.startTime: o.startTime
@@ -233,6 +234,7 @@ IntervalTimer'export: class from Timer
         me.includesStart: o.includesStart
         me.includesEnd: o.includesEnd
         me.skipsPast: o.skipsPast
+        me.blocksEventAfterLongAsync: o.blocksEventAfterLongAsync
         me.targetTime: me.startTime
         me._started: false
         me.onStart: eventField()

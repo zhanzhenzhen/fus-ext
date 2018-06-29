@@ -1156,8 +1156,8 @@ describe("timer", --
                     ass.deepStrictEqual(r, [1, 1, 2, 2])
                     done()
     )
-    it("IntervalTimer: return promise, skipsPast, skipsPastAppliesToAsync", done ->
-        timer: IntervalTimer{interval: 100, skipsPast, skipsPastAppliesToAsync}
+    it("IntervalTimer: return promise, skipsPast, blocksEventAfterLongAsync", done ->
+        timer: IntervalTimer{interval: 100, skipsPast, blocksEventAfterLongAsync}
         r: []
         timer.onArrive e ->
             if e.index ≤ 1
