@@ -553,6 +553,20 @@ describe("array", --
         ass.strictEqual(ret, void)
         ass(100 ≤ actualMs ≤ 130)
     )
+    it("asyncForEach: throw", --
+        r: 0
+        oldTime: Date()
+        try
+            ret: [1, 2, 3]..asyncForEach(element ->
+                Promise..delay(50)'wait
+                r: r + element
+                fail()
+            )'wait
+        actualMs: Date() - oldTime
+        ass.strictEqual(r, 1)
+        ass.strictEqual(ret, void)
+        ass(50 ≤ actualMs ≤ 70)
+    )
     it("asyncSome: match", --
         oldTime: Date()
         r: [1, 2, 3]..asyncSome(element ->
