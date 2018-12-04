@@ -1,7 +1,8 @@
 fus 2.5.3, radical
 import "./main" all
+packageInfo: import "./package-info"
 
-feVersion'export: require("../package.json").version
+feVersion'export: packageInfo.version
 
 isNode'export: js"
     typeof process === "object" &&
