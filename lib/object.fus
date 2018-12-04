@@ -1,4 +1,4 @@
-fus 2.5.1
+fus 2.5.2
 import "./main" all
 
 # `deepAssign` and `deepAbsorb` should use "merge" only when both source and target

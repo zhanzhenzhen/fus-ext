@@ -1,4 +1,4 @@
-fus 2.5.1
+fus 2.5.2
 import "./main" all
 
 # Many degree methods and radian methods are independent, to avoid degrees approximation.

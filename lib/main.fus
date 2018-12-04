@@ -1,4 +1,4 @@
-fus 2.5.1, radical
+fus 2.5.2, radical
 
 internalLoop: (data, enablesReturns) ->
     theBreak: break # compatibility for embedded JS (`break` is a JS keyword)

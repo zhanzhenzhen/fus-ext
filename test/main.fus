@@ -1,4 +1,4 @@
-fus 2.5.1, radical
+fus 2.5.2, radical
 
 import "./manifest" all
 ass: import "assert"
