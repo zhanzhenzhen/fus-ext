@@ -1,4 +1,4 @@
-fus 2.5.2
+fus 2.5.3
 
 export: {
     name: "fus-ext"
