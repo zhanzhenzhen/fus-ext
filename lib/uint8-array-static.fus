@@ -1,7 +1,7 @@
 fus 2.5.3
 import "./main" all
 
-$base64: require("./base64")
+$base64: import "./base64" all
 
 fromBase64'export: (ns, s) -> $base64.toByteArray(s)
 
