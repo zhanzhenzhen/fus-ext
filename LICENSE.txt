@@ -19,7 +19,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ================================================================================
 
-"lib/base64.js" is authored by T. Jameson Little. Its license is as follows:
+"lib/base64.mjs" is originally authored by T. Jameson Little. Its license is as
+follows:
 
 The MIT License (MIT)
 
