@@ -70,9 +70,9 @@ request'export: options -> Promise((resolve, reject) ->
             reject(Error("abort"))
         xhr.send(body)
     else do --
-        http: module.require("http")
-        https: module.require("https")
-        urlMod: module.require("url")
+        http: js"import('http')"'wait
+        https: js"import('https')"'wait
+        urlMod: js"import('url')"'wait
 
         redirectCount: 0
 
