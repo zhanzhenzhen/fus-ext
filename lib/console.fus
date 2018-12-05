@@ -1,4 +1,4 @@
 fus 2.5.3
-import "./main" all
+import "./main.mjs" all
 
 logt'export: (ns, args...) -> console.log.apply(console, [Date().toISOString()].concat(args))

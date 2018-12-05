@@ -1,5 +1,5 @@
 fus 2.5.3
-import "./main" all
+import "./main.mjs" all
 
 approxEquals'export: (num, x) -> Math..approxEquals(num.valueOf(), x)
 approxGreaterThan'export: (num, x) -> Math..approxGreaterThan(num.valueOf(), x)

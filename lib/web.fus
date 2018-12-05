@@ -1,5 +1,5 @@
 fus 2.5.3, radical
-import "./main" all
+import "./main.mjs" all
 
 # According to RFC-7230, for HTTP response status we use "status reason"
 # instead of status text or status message.

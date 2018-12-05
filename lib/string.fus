@@ -1,5 +1,5 @@
 fus 2.5.3
-import "./main" all
+import "./main.mjs" all
 
 # TODO: This code is from my website in 2011. Needs arrangement.
 # 这个函数是模拟C#中的String.Format，但我不用静态方法的风格，而是用更简洁的字符串对象的方法的风格。

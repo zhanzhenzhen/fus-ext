@@ -1,5 +1,5 @@
 fus 2.5.3
-import "./main" all
+import "./main.mjs" all
 
 # If the element is a number or string, it will be more convenient
 # to use the element itself without a selector.

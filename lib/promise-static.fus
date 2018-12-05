@@ -1,5 +1,5 @@
 fus 2.5.3
-import "./main" all
+import "./main.mjs" all
 
 delay'export: (ns, ms) ->
     Promise((resolve, reject) ->

@@ -1,5 +1,5 @@
 fus 2.5.3
-import "./main" all
+import "./main.mjs" all
 
 isFraction'export: (ns, x) -> x is Number and isFinite(x) and Math.floor(x) ≠ x
 

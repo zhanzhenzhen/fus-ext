@@ -1,6 +1,6 @@
 fus 2.5.3, radical
 
-import "./manifest" all
+import "./manifest.mjs" all
 ass: import "assert"
 
 sleep: ms ->

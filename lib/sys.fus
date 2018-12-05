@@ -1,6 +1,6 @@
 fus 2.5.3, radical
-import "./main" all
-packageInfo: import "./package-info"
+import "./main.mjs" all
+packageInfo: import "./package-info.mjs"
 
 feVersion'export: packageInfo.version
 

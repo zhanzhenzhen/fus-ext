@@ -463,49 +463,49 @@ AsyncQueue'export: class
 
     length'get: <> me._length
 
-sys: import "./sys" all
+sys: import "./sys.mjs" all
 export sys
 
-web: import "./web" all
+web: import "./web.mjs" all
 export web
 
-cmath: import "./cmath" all
+cmath: import "./cmath.mjs" all
 export cmath
 
-feNumber: import "./number" all
+feNumber: import "./number.mjs" all
 export feNumber
 
-feNumberStatic: import "./number-static" all
+feNumberStatic: import "./number-static.mjs" all
 export feNumberStatic
 
-feString: import "./string" all
+feString: import "./string.mjs" all
 export feString
 
-feObject: import "./object" all
+feObject: import "./object.mjs" all
 export feObject
 
-feArray: import "./array" all
+feArray: import "./array.mjs" all
 export feArray
 
-feMath: import "./math" all
+feMath: import "./math.mjs" all
 export feMath
 
-feJson: import "./json" all
+feJson: import "./json.mjs" all
 export feJson
 
-feDate: import "./date" all
+feDate: import "./date.mjs" all
 export feDate
 
-feConsole: import "./console" all
+feConsole: import "./console.mjs" all
 export feConsole
 
-feUint8Array: import "./uint8-array" all
+feUint8Array: import "./uint8-array.mjs" all
 export feUint8Array
 
-feUint8ArrayStatic: import "./uint8-array-static" all
+feUint8ArrayStatic: import "./uint8-array-static.mjs" all
 export feUint8ArrayStatic
 
-fePromiseStatic: import "./promise-static" all
+fePromiseStatic: import "./promise-static.mjs" all
 export fePromiseStatic
 
 ..'export: x ->

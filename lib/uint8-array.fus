@@ -1,7 +1,7 @@
 fus 2.5.3
-import "./main" all
+import "./main.mjs" all
 
-$base64: import "./base64" all
+$base64: import "./base64.mjs" all
 
 toBase64'export: bytes -> $base64.fromByteArray(bytes)
 

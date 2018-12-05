@@ -1,5 +1,5 @@
 fus 2.5.3
-import "./main" all
+import "./main.mjs" all
 
 # `Point`'s non-static methods are not allowed to be written here. This is to
 # avoid circular calling.

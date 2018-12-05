@@ -1,5 +1,5 @@
 fus 2.5.3
-import "./main" all
+import "./main.mjs" all
 
 # `deepAssign` and `deepAbsorb` should use "merge" only when both source and target
 # are non-array objects. It will look unnatural and weird to merge arrays.
