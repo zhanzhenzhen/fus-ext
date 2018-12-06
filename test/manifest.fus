@@ -33,7 +33,7 @@ fus 2.5.3
     feUint8ArrayStatic
     fePromiseStatic
     ..
-}: import "../target/main"
+}: import "../target/main.mjs"
 
 export loop
 export repeat
