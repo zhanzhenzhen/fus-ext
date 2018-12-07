@@ -25,3 +25,5 @@ done
 
 cd ..
 rm -Rf test-target
+
+node -e 'console.log(JSON.stringify(require("./target-cjs/package-info.mjs").default, null, 4))' > package.json
