@@ -15,3 +15,5 @@ node_modules
 
 /target
 /test-target
+/target-cjs
+/test-target-cjs
