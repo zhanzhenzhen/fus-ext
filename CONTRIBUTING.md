@@ -3,7 +3,7 @@
 Before testing or publishing, it must be compiled to JS using:
 
 ```bash
-rm -Rf target && rm -Rf test-target && fus c lib target && npx babel --plugins=transform-es2015-modules-commonjs -x .mjs -d target-cjs target && fus c test test-target && npx babel --plugins=transform-es2015-modules-commonjs -x .mjs -d test-target-cjs test-target
+rm -Rf target && rm -Rf test-target && rm -Rf target-cjs && rm -Rf test-target-cjs && fus c lib target && npx babel --plugins=transform-es2015-modules-commonjs -x .mjs -d target-cjs target && fus c test test-target && npx babel --plugins=transform-es2015-modules-commonjs -x .mjs -d test-target-cjs test-target
 ```
 
 Before publishing write the changelog.
