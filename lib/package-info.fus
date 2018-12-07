@@ -26,6 +26,7 @@ export: {
     devDependencies: {
         "babel-cli": "6.x"
         "babel-plugin-transform-es2015-modules-commonjs": "6.x"
+        "babel-plugin-syntax-dynamic-import": "6.x"
     }
     engines: {
         "node": ">=10.0.0"
