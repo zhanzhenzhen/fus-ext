@@ -22,3 +22,5 @@ cd ../test-target-cjs
 for file in *.js; do
     mv "$file" "$(basename "$file" .js).mjs.js"
 done
+
+cd ..
