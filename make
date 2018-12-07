@@ -24,3 +24,4 @@ for file in *.js; do
 done
 
 cd ..
+rm -Rf test-target

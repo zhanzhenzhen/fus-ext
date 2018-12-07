@@ -11,5 +11,5 @@ Before publishing write the changelog.
 # Test
 
 ```bash
-mocha test-target/main
+mocha test-target-cjs/main.mjs
 ```
