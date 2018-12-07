@@ -1,4 +1,4 @@
-fus 2.5.3
+fus 2.5.4
 import "./main.mjs" all
 
 clone'export: (ns, x) -> JSON.parse(JSON.stringify(x))

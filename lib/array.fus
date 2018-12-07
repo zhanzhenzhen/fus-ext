@@ -1,4 +1,4 @@
-fus 2.5.3
+fus 2.5.4
 import "./main.mjs" all
 
 # If the element is a number or string, it will be more convenient
