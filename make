@@ -7,7 +7,7 @@ rm -Rf test-target
 rm -Rf target-cjs
 rm -Rf test-target-cjs
 
-fus c lib/package-info.fus package.json.mjs
+fus c lib/package.json.fus package.json.mjs
 node --experimental-modules --no-warnings make-package-json.mjs > package.json
 rm package.json.mjs
 
