@@ -1,3 +1,10 @@
+v1.15.0
+=======
+
+2018-12-08T23:39:10Z
+
+Now the published package includes the library in ES modules. ES modules are in `target` directory, and CommonJS equivalents are in `target-cjs` directory.
+
 v1.14.0
 =======
 
