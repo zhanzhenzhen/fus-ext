@@ -7,6 +7,12 @@ rm -Rf test-target
 rm -Rf target-cjs
 rm -Rf test-target-cjs
 
+fus c lib/package-info.fus package.json.mjs
+node --experimental-modules --no-warnings make-package-json.mjs > package.json
+rm package.json.mjs
+
+npm update
+
 fus c lib target
 npx babel --plugins=transform-es2015-modules-commonjs,syntax-dynamic-import -x .mjs -d target-cjs target
 
@@ -25,5 +31,3 @@ done
 
 cd ..
 rm -Rf test-target
-
-node -e 'console.log(JSON.stringify(require("./target-cjs/package-info.mjs").default, null, 4))' > package.json
